@@ -1,0 +1,25 @@
+{
+  "name": "ccclient",
+  "version": "1.0.0",
+  "description": "Client for Confecciones Colombia haskell app",
+  "main": "./app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogithub/ccclient.git"
+  },
+  "keywords": [
+    "client",
+    "app",
+    "confecciones",
+    "colombia"
+  ],
+  "author": "rodrigo debian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rogithub/ccclient/issues"
+  },
+  "homepage": "https://github.com/rogithub/ccclient#readme"
+}
