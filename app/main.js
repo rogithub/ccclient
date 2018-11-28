@@ -1,15 +1,12 @@
-const {app, BrowserWindow, ipcMain, Menu } = require ('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require ('electron');
+const menuBuilder = require ('./menu');
 let mainWindow = null;
-
-const menuTemplate = [{
-  label: 'Archivo'
-}];
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({ show: false });
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  const mainMenu = Menu.buildFromTemplate(menuTemplate);
+  const mainMenu = Menu.buildFromTemplate(menuBuilder.getMenu());
   Menu.setApplicationMenu(mainMenu);
 
   mainWindow.once('ready-to-show', () => {
@@ -18,6 +15,7 @@ app.on('ready', () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+    app.quit();
   });
 });
 
