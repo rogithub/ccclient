@@ -1,6 +1,5 @@
-const {app, BrowserWindow} = require ('electron');
+const {app, BrowserWindow, ipcMain } = require ('electron');
 let mainWindow = null;
-
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({ show: false });
@@ -13,4 +12,9 @@ app.on('ready', () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-})
+});
+
+ipcMain.on("user:submit", (event, user) => {
+  user["id"] = 1;
+  mainWindow.webContents.send("user:saved", user);  
+});
