@@ -1,8 +1,9 @@
 const { app, BrowserWindow } = require ('electron');
 
 function createWindow(config, fileName) {
-    const window = new BrowserWindow(config);
+    let window = new BrowserWindow(config);
     window.loadURL(`file://${__dirname}/${fileName}.html`);
+    window.on('closed', () => { window = null; });
     return window;
 };
 
@@ -31,13 +32,22 @@ module.exports = {
                 }, {
                     label: 'Buscar'
                 }]
-            },
-            {
+            }, {
                 label: 'Inventario',
                 submenu: [{
-                label: 'Nuevo'
+                    label: 'Nuevo'
                 }, {
-                label: 'Buscar'
+                    label: 'Buscar'
+                }]
+            }, {
+                label: 'Administración',
+                submenu: [{
+                    label: 'Dev Tools',
+                    click(item, focusedWindow) {
+                        focusedWindow.toggleDevTools();
+                    }
+                }, {
+                    label: 'Configuración'
             }]
         }];
     }

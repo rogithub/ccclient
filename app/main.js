@@ -23,3 +23,8 @@ ipcMain.on("user:submit", (event, user) => {
   user["id"] = 1;
   mainWindow.webContents.send("user:saved", user);  
 });
+
+ipcMain.on("widow:close", (event, user) => {
+  user["id"] = 1;
+  mainWindow.webContents.send("user:saved", user);  
+});
