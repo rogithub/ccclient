@@ -1,6 +1,55 @@
 import React, { Component } from 'react';
 
-class App extends Component {
+class LeftMenu extends Component {
+  render() {
+    return(
+      <nav className="col-md-1 d-none d-md-block bg-light sidebar">
+        <div className="sidebar-sticky">
+          <ul className="nav flex-column">
+            <li className="nav-item">
+              <a className="nav-link active" href="#">
+                <i className="fas fa-pencil-alt"></i>
+                &nbsp;Libro Diario <span className="sr-only">(current)</span>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                <i className="far fa-file-alt"></i>
+                &nbsp;Presupuestos
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                <i className="fas fa-shopping-cart"></i>
+                &nbsp;Productos
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                <i className="fas fa-users"></i>
+                &nbsp;Clientes
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                <i className="fas fa-dolly"></i>
+                &nbsp;Proveedores
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                <i className="fas fa-clipboard-list"></i>
+                &nbsp;Inventario
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    );
+  }
+}
+
+class LibroDiario extends Component {
   render() {
     return (
       <div className="App table-responsive">
@@ -24,6 +73,20 @@ class App extends Component {
             </tr>
           </tbody>
         </table>
+      </div>
+    );
+  }
+}
+
+class App extends Component {
+  render() {
+    return (
+      <div className="row">
+        <LeftMenu />
+        <main role="main" className="col-md-10 ml-sm-auto col-lg-11 px-4">
+          <h2>Libro Diario</h2>
+          <LibroDiario />
+        </main>
       </div>
     );
   }
