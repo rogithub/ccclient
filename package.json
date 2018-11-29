@@ -1,30 +1,46 @@
 {
   "name": "ccclient",
-  "version": "1.0.0",
-  "description": "Client for Confecciones Colombia haskell app",
-  "main": "./app/main.js",
-  "scripts": {
-    "start": "electron . --disable-gpu",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rogithub/ccclient.git"
-  },
-  "keywords": [
-    "client",
-    "app",
-    "confecciones",
-    "colombia"
-  ],
-  "author": "rodrigo debian",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rogithub/ccclient/issues"
-  },
-  "homepage": "https://github.com/rogithub/ccclient#readme",
+  "main": "public/electron.js",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "./",
   "dependencies": {
-    "electron": "^3.0.10"
+    "concurrently": "^4.1.0",
+    "electron": "^3.0.10",
+    "electron-builder": "^20.38.1",
+    "electron-is-dev": "^1.0.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-scripts": "2.1.1",
+    "wait-on": "^3.2.0"
   },
+  "scripts": {
+    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron . --disable-gpu\"",
+    "start": "react-scripts start",
+    "build": "react-scripts build",    
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron-pack": "build --em.main=build/electron.js",
+    "preelectron-pack": "npm build"  
+  },
+  "build": {
+    "appId": "confeccionescolombia.electron",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories":{
+      "buildResources": "assets"
+    }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "devDependencies": {}
 }
