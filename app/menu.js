@@ -46,6 +46,8 @@ module.exports = {
                     click(item, focusedWindow) {
                         focusedWindow.toggleDevTools();
                     }
+                },{
+                    role: 'reload'                    
                 }, {
                     label: 'Configuración'
             }]
