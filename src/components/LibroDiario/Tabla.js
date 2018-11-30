@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-class LibroDiario extends Component {
+class Tabla extends Component {
   render() {
     return (
       <div className="App table-responsive">
@@ -29,4 +29,4 @@ class LibroDiario extends Component {
     );
   }
 }
-export default LibroDiario;
+export default Tabla;

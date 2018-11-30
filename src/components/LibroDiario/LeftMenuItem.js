@@ -10,7 +10,7 @@ class LeftMenuItem extends Component {
           <i className={this.props.icon}></i>
           &nbsp;{this.props.text}
           {this.props.isSelected === true &&
-            <span className="sr-only">(current)</span>            
+            <span className="sr-only">(current)</span>
           }
         </a>
       </li>
