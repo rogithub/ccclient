@@ -4,7 +4,7 @@ import Tabla from './tabla';
 
 export default props => (
   <div>
-    <h2>Inicio</h2>
+    <h2>Proveedores</h2>
     <LeftMenu />
     <Tabla />
   </div>
