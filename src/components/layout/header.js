@@ -10,6 +10,7 @@ import List from '@material-ui/core/List';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import ContactPhone from '@material-ui/icons/ContactPhone';
 import LocalOffer from '@material-ui/icons/LocalOffer';
@@ -25,7 +26,29 @@ const styles = {
   fullList: {
     width: 'auto',
   },
+  linkMenu: {
+    textDecoration: 'none'
+  }
 };
+
+class ListItemLink extends React.Component {
+  renderLink = itemProps => <Link to={this.props.to} {...itemProps} />;
+
+  render() {
+    const { icon, primary, secondary, onClick, selected } = this.props;
+    return (
+      <li>
+        <ListItem button
+          component={this.renderLink}
+          onClick={onClick}
+          selected={selected}>
+          {icon && <ListItemIcon>{icon}</ListItemIcon>}
+          <ListItemText inset primary={primary} secondary={secondary} />
+        </ListItem>
+      </li>
+    );
+  }
+}
 
 class MenuAppBar extends React.Component {
   state = {
@@ -47,29 +70,36 @@ class MenuAppBar extends React.Component {
 
   render() {
     const { classes } = this.props;
+
+
     const sideList = (
       <div className={classes.list}>
-        <List>
-          <ListItem button key="Inicio" onClick={this.setTitle('Inicio')} >
-            <ListItemIcon><HomeIcon /></ListItemIcon>
-            <Link to="/">Inicio</Link>
-          </ListItem>
-          <ListItem button key="Proveedores" onClick={this.setTitle('Proveedores')}>
-            <ListItemIcon><ContactPhone /></ListItemIcon>
-            <Link to="/proveedores">Proveedores</Link>
-          </ListItem>
-          <ListItem button key="Materiales" onClick={this.setTitle('Materiales')}>
-            <ListItemIcon><Store /></ListItemIcon>
-            <Link to="/materiales">Materiales</Link>
-          </ListItem>
-          <ListItem button key="Cotizaciones" onClick={this.setTitle('Cotizaciones')}>
-            <ListItemIcon><Description /></ListItemIcon>
-            <Link to="/cotizaciones">Cotizaciones</Link>
-          </ListItem>
-          <ListItem button key="Inventario" onClick={this.setTitle('Inventario')}>
-            <ListItemIcon><LocalOffer /></ListItemIcon>
-            <Link to="/inventario">Inventario</Link>
-          </ListItem>
+        <List component="nav">
+          <ListItemLink to="/" primary="Inbox"
+            icon={<HomeIcon />}
+            onClick={this.setTitle('Inicio')}
+            selected={this.state.title === 'Inicio'}
+          />
+          <ListItemLink to="/proveedores" primary="Proveedores"
+            icon={<ContactPhone />}
+            onClick={this.setTitle('Proveedores')}
+            selected={this.state.title === 'Proveedores'}
+          />
+          <ListItemLink to="/materiales" primary="Materiales"
+            icon={<Store />}
+            onClick={this.setTitle('Materiales')}
+            selected={this.state.title === 'Materiales'}
+          />
+          <ListItemLink to="/cotizaciones" primary="Cotizaciones"
+            icon={<Description />}
+            onClick={this.setTitle('Cotizaciones')}
+            selected={this.state.title === 'Cotizaciones'}
+          />
+          <ListItemLink to="/inventario" primary="Inventario"
+            icon={<LocalOffer />}
+            onClick={this.setTitle('Inventario')}
+            selected={this.state.title === 'Inventario'}
+          />
         </List>
       </div>
     );
