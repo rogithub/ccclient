@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from 'react';
-
-
 import Inicio from './inicio';
 import { Header, Footer } from './layout';
 
