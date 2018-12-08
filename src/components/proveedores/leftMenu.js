@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LeftMenuItem from './LeftMenuItem';
+import LeftMenuItem from './leftMenuItem';
 
 class LeftMenu extends Component {
   render() {

@@ -1,6 +1,6 @@
 export default (state = [], action) => {
   switch (action.type) {
-    case 'FETCH_LIBRO_DIARIO':
+    case 'FETCH_PROVEEDORES':
       return action.payload;
     default:
       return state;

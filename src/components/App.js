@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 
-import LibroDiario from './LibroDiario';
+import Inicio from './inicio';
 import { Header, Footer } from './layout';
 
 export default class extends Component {
@@ -9,9 +9,7 @@ export default class extends Component {
     return (
       <Fragment>
         <Header />
-
-        <LibroDiario />
-
+        <Inicio />
         <Footer />
       </Fragment>
     );
