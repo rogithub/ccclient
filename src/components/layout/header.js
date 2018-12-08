@@ -57,13 +57,14 @@ class MenuAppBar extends React.Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}>
 
+
                 <MenuItem onClick={this.handleClose}>
                   <Link to="/">Inicio</Link>
                 </MenuItem>
                 <MenuItem onClick={this.handleClose}>
                   <Link to="/proveedores/">Proveedores</Link>
                 </MenuItem>
-                  
+
               </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Inicio
