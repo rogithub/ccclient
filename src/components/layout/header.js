@@ -6,40 +6,52 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem'
+import List from '@material-ui/core/List';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HomeIcon from '@material-ui/icons/Home';
+import MailIcon from '@material-ui/icons/Mail';
 import { Link } from "react-router-dom";
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
+  list: {
+    width: 250,
   },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
+  fullList: {
+    width: 'auto',
   },
 };
 
 class MenuAppBar extends React.Component {
   state = {
-    anchorEl: null,
+    left: false
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+  toggleDrawer = (side, open) => () => {
+     this.setState({
+       [side]: open
+     });
+   };
 
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
+    const sideList = (
+      <div className={classes.list}>
+        <List>
+          <ListItem button key="Inicio">
+            <ListItemIcon><HomeIcon /></ListItemIcon>
+            <Link to="/">Inicio</Link>
+          </ListItem>
+          <ListItem button key="Proveedores">
+            <ListItemIcon><MailIcon /></ListItemIcon>
+            <Link to="/proveedores">Proveedores</Link>
+          </ListItem>
+        </List>
+      </div>
+    );
+
 
     return (
       <div className={classes.root}>
@@ -48,24 +60,21 @@ class MenuAppBar extends React.Component {
             <IconButton className={classes.menuButton}
               color="inherit"
               aria-label="Menu"
-              aria-owns={anchorEl ? 'app-menu' : undefined}
-              aria-haspopup="true"
-              onClick={this.handleClick}>
+              onClick={this.toggleDrawer('left', true)} >
               <MenuIcon />
             </IconButton>
-            <Menu id="app-menu" anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={this.handleClose}>
-
-
-                <MenuItem onClick={this.handleClose}>
-                  <Link to="/">Inicio</Link>
-                </MenuItem>
-                <MenuItem onClick={this.handleClose}>
-                  <Link to="/proveedores/">Proveedores</Link>
-                </MenuItem>
-
-              </Menu>
+            <SwipeableDrawer
+              open={this.state.left}
+              onClose={this.toggleDrawer('left', false)}
+              onOpen={this.toggleDrawer('left', true)} >
+              <div
+                tabIndex={0}
+                role="button"
+                onClick={this.toggleDrawer('left', false)}
+                onKeyDown={this.toggleDrawer('left', false)} >
+                {sideList}
+              </div>
+            </SwipeableDrawer>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Inicio
             </Typography>
