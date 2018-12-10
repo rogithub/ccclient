@@ -16,7 +16,7 @@ import ContactPhone from '@material-ui/icons/ContactPhone';
 import LocalOffer from '@material-ui/icons/LocalOffer';
 import Store from '@material-ui/icons/Store';
 import Description from '@material-ui/icons/Description';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 
 const styles = {
@@ -35,13 +35,13 @@ class ListItemLink extends React.Component {
   renderLink = itemProps => <Link to={this.props.to} {...itemProps} />;
 
   render() {
-    const { icon, primary, secondary, onClick, selected } = this.props;
+    const { icon, primary, secondary, pathname } = this.props;
+
     return (
       <li>
         <ListItem button
           component={this.renderLink}
-          onClick={onClick}
-          selected={selected}>
+          selected={pathname === this.props.to} >
           {icon && <ListItemIcon>{icon}</ListItemIcon>}
           <ListItemText inset primary={primary} secondary={secondary} />
         </ListItem>
@@ -52,8 +52,7 @@ class ListItemLink extends React.Component {
 
 class MenuAppBar extends React.Component {
   state = {
-    menuOpen: false,
-    title: "Inicio"
+    menuOpen: false
   };
 
   toggleDrawer = (open) => () => {
@@ -62,43 +61,38 @@ class MenuAppBar extends React.Component {
      });
    };
 
-   setTitle = (title) => () => {
-      this.setState({
-        title: title
-      });
-    };
-
   render() {
     const { classes } = this.props;
+    const { pathname } = this.props.location;
 
 
     const sideList = (
       <div className={classes.list}>
         <List component="nav">
-          <ListItemLink to="/" primary="Inbox"
+          <ListItemLink to="/"
+            primary="Inicio"
             icon={<HomeIcon />}
-            onClick={this.setTitle('Inicio')}
-            selected={this.state.title === 'Inicio'}
+            pathname={pathname}
           />
-          <ListItemLink to="/proveedores" primary="Proveedores"
+          <ListItemLink to="/proveedores"
+            primary="Proveedores"
             icon={<ContactPhone />}
-            onClick={this.setTitle('Proveedores')}
-            selected={this.state.title === 'Proveedores'}
+            pathname={pathname}
           />
-          <ListItemLink to="/materiales" primary="Materiales"
+          <ListItemLink to="/materiales"
+            primary="Materiales"
             icon={<Store />}
-            onClick={this.setTitle('Materiales')}
-            selected={this.state.title === 'Materiales'}
+            pathname={pathname}
           />
-          <ListItemLink to="/cotizaciones" primary="Cotizaciones"
+          <ListItemLink to="/cotizaciones"
+            primary="Cotizaciones"
             icon={<Description />}
-            onClick={this.setTitle('Cotizaciones')}
-            selected={this.state.title === 'Cotizaciones'}
+            pathname={pathname}
           />
-          <ListItemLink to="/inventario" primary="Inventario"
+          <ListItemLink to="/inventario"
+            primary="Inventario"
             icon={<LocalOffer />}
-            onClick={this.setTitle('Inventario')}
-            selected={this.state.title === 'Inventario'}
+            pathname={pathname}
           />
         </List>
       </div>
@@ -128,7 +122,7 @@ class MenuAppBar extends React.Component {
               </div>
             </SwipeableDrawer>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              {this.state.title}
+              {pathname === "/" ? "inicio" : pathname.substring(1) }
             </Typography>
           </Toolbar>
         </AppBar>
@@ -141,4 +135,4 @@ MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MenuAppBar);
+export default withStyles(styles)(withRouter(MenuAppBar));

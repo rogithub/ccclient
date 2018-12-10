@@ -45,7 +45,7 @@ class TblProveedores extends React.Component {
 
   constructor(props) {
     super(props);
-    this.classes = this.props;    
+    this.classes = this.props;
   }
 
   componentDidMount() {
