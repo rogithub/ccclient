@@ -29,18 +29,6 @@ const styles = theme => ({
   },
 });
 
-function createData(id, empresa, contacto, domicilio, telefono, email, comentarios) {
-  return { id, empresa, contacto, domicilio, telefono, email, comentarios };
-}
-
-const rows = [
-  createData(1100, 'Lafayette', 'Juan Nepomuseno Cortina', 'Privada de diligencias #56 fraccionamento el mirador', '452-132-96-04', 'juannc@mailinator.com' ,'Nada que comentar'),
-  createData(1200, 'NatZipp', 'Juan Nepomuseno Cortina', 'Privada de diligencias #56 fraccionamento el mirador', '452-132-96-04', 'juannc@mailinator.com', 'Nada que comentar'),
-  createData(1300, 'Sprandley', 'Juan Nepomuseno Cortina', 'Privada de diligencias #56 fraccionamento el mirador', '452-132-96-04', 'juannc@mailinator.com', 'Nada que comentar'),
-  createData(1400, 'La Nacional', 'Juan Nepomuseno Cortina', 'Privada de diligencias #56 fraccionamento el mirador', '452-132-96-04', 'juannc@mailinator.com', 'Nada que comentar'),
-  createData(1500, 'El Bigotaco', 'Juan Nepomuseno Cortina', 'Privada de diligencias #56 fraccionamento el mirador', '452-132-96-04', 'juannc@mailinator.com', 'Nada que comentar')
-];
-
 class TblProveedores extends React.Component {
 
   constructor(props) {
@@ -52,7 +40,9 @@ class TblProveedores extends React.Component {
     this.props.fetchProveedores();
   }
 
-  render (){
+  render () {
+    const rows = this.props.proveedores || [];
+    
     return (
       <Paper className={this.classes.root}>
         <Table className={this.classes.table}>
@@ -69,25 +59,25 @@ class TblProveedores extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => {
-              return (
-                <TableRow key={row.id}>
-                  <TableCell numeric>{row.id}</TableCell>
-                  <TableCell>{row.empresa}</TableCell>
-                  <TableCell>{row.contacto}</TableCell>
-                  <TableCell>{row.telefono}</TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.domicilio}</TableCell>
-                  <TableCell>{row.comentarios}</TableCell>
-                  <TableCell>
-                  <Button variant="contained" color="primary" className={this.classes.button}>
-                    Editar
-                    <EditIcon className={this.classes.rightIcon}>send</EditIcon>
-                  </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+          {rows.map(row => {
+            return (
+              <TableRow key={row.idProveedor}>
+                <TableCell numeric>{row.idProveedor}</TableCell>
+                <TableCell>{row.empresa}</TableCell>
+                <TableCell>{row.contacto}</TableCell>
+                <TableCell>{row.telefono}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.domicilio}</TableCell>
+                <TableCell>{row.comentarios}</TableCell>
+                <TableCell>
+                <Button variant="contained" color="primary" className={this.classes.button}>
+                  Editar
+                  <EditIcon className={this.classes.rightIcon}>send</EditIcon>
+                </Button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
           </TableBody>
         </Table>
       </Paper>
@@ -96,7 +86,7 @@ class TblProveedores extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-  return { proveedores: state.proveedores };
+  return { proveedores: state.proveedores.data };
 }
 
 TblProveedores.propTypes = {
