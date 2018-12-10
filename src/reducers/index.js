@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import proveedoresReducer from './proveedoresReducer';
+import proveedoresReducer from './proveedores';
 
 export default combineReducers({
-  libroDiario: proveedoresReducer
+  proveedores: proveedoresReducer
 });
