@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import { fetchProveedores } from '../../actions';
+import { Route } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -42,7 +43,7 @@ class TblProveedores extends React.Component {
 
   render () {
     const rows = this.props.proveedores || [];
-    
+
     return (
       <Paper className={this.classes.root}>
         <Table className={this.classes.table}>
@@ -70,10 +71,13 @@ class TblProveedores extends React.Component {
                 <TableCell>{row.domicilio}</TableCell>
                 <TableCell>{row.comentarios}</TableCell>
                 <TableCell>
-                <Button variant="contained" color="primary" className={this.classes.button}>
-                  Editar
-                  <EditIcon className={this.classes.rightIcon}>send</EditIcon>
-                </Button>
+                 <Route render={({ history}) => (
+                    <Button variant="contained" color="primary" className={this.classes.button}
+                      onClick={() => history.push('/editProveedor') } >
+                      Editar
+                      <EditIcon className={this.classes.rightIcon}>send</EditIcon>
+                    </Button>
+                 )} />
                 </TableCell>
               </TableRow>
             );
@@ -86,7 +90,7 @@ class TblProveedores extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-  return { proveedores: state.proveedores.data };
+  return { proveedores: state.proveedores.all };
 }
 
 TblProveedores.propTypes = {
