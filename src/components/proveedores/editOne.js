@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { fetchOneProveedor } from '../../actions';
 
 
-class EditOneProveedor extends React.Component {  
+class EditOneProveedor extends React.Component {
 
   componentDidMount() {
-    this.props.fetchOneProveedor();
+    this.props.fetchOneProveedor(45);
   }
 
   render () {
@@ -14,7 +14,7 @@ class EditOneProveedor extends React.Component {
 
     return (
       <div>
-        id={proveedor.proveedorId}
+        {JSON.stringify(proveedor.proveedorId)}
       </div>
     );
   }
