@@ -73,7 +73,7 @@ class TblProveedores extends React.Component {
                 <TableCell>
                  <Route render={({ history}) => (
                     <Button variant="contained" color="primary" className={this.classes.button}
-                      onClick={() => history.push('/editProveedor') } >
+                      onClick={() => history.push(`/proveedores/${row.idProveedor}`) } >
                       Editar
                       <EditIcon className={this.classes.rightIcon}>send</EditIcon>
                     </Button>

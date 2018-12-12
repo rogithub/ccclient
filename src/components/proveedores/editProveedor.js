@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchOneProveedor } from '../../actions';
+import { withRouter } from "react-router";
 
-
-class EditOneProveedor extends React.Component {
+class EditProveedor extends React.Component {
 
   componentDidMount() {
-    this.props.fetchOneProveedor(45);
+    const id = parseInt(this.props.match.params.id);
+    this.props.fetchOneProveedor(id);
   }
 
   render () {
@@ -14,7 +15,7 @@ class EditOneProveedor extends React.Component {
 
     return (
       <div>
-        {JSON.stringify(proveedor.proveedorId)}
+        id={JSON.stringify(proveedor)}
       </div>
     );
   }
@@ -25,4 +26,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, { fetchOneProveedor }) (EditOneProveedor);
+export default connect(mapStateToProps, { fetchOneProveedor }) ( withRouter(EditProveedor ));

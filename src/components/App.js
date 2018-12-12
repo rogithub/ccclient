@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Inicio from './inicio';
 import Proveedores from './proveedores';
-import EditProveedor from './proveedores/editOne';
+import EditProveedor from './proveedores/editProveedor';
 import { Header, Footer } from './layout';
 import { BrowserRouter, Route } from "react-router-dom";
 
@@ -12,8 +12,8 @@ export default class extends Component {
         <Fragment>
           <Header />
           <Route path="/" exact component={Inicio} />
-          <Route path="/proveedores" component={Proveedores} />
-          <Route path="/editProveedor" component={EditProveedor} />
+          <Route path="/proveedores" exact component={Proveedores} />
+          <Route path="/proveedores/:id" component={EditProveedor} />
           <Footer />
         </Fragment>
       </BrowserRouter>

@@ -6,6 +6,6 @@ export const fetchProveedores = () =>  async (dispatch) => {
 };
 
 export const fetchOneProveedor = (id) =>  async (dispatch) => {
-    const response = await api.get('/proveedores/?id=' + id);
+    const response = await api.get(`/proveedores/?id=${id}`);
     dispatch({ type: "FETCH_ONE_PROVEEDORES", payload: response });
 };
