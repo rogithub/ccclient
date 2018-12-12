@@ -27,6 +27,7 @@ class EditProveedor extends React.Component {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <Field name="id" component={Input} label="Id" />
+        <button>Guardar</button>
       </form>
     );
   }
