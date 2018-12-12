@@ -1,10 +1,11 @@
 import React from 'react';
 
-export default ({ meta }) => {
+export default ({ meta: { touched, error, warning } }) => {
 
   return (
     <div>
-      <div>{meta.error}</div>
+      <span>{error}</span>
+      <span>{warning}</span>
     </div>
   );
 }

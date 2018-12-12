@@ -7,7 +7,7 @@ export default (state = {}, action) => {
     case 'FETCH_ONE_PROVEEDORES':
       return Object.assign({}, state, {
         selected: action.payload.data
-      });
+      });    
     default:
       return state;
   }

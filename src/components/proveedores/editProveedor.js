@@ -9,7 +9,7 @@ class EditProveedor extends React.Component {
 
   componentDidMount() {
     const id = parseInt(this.props.match.params.id);
-    this.props.fetchOneProveedor(id);
+    this.props.fetchOne(id);
   }
 
   onSubmit (formValues) {
@@ -17,24 +17,24 @@ class EditProveedor extends React.Component {
   }
 
   render () {
-    const p = this.props.proveedor;
+    const p = this.props.initialValues;
     if (p === null){
       return <div>Proveedor no encontrado.</div>
     }
 
-    console.log(p);
-
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="id" component={Input} label="Id" />
-        <button>Guardar</button>
+        <Field name="idProveedor" type="text" component={Input} label="Id" />
+        <button type="submit">Guardar</button>
       </form>
     );
   }
 };
 
-const mapStateToProps = (state) => {
-  return { proveedor: state.proveedores.selected };
+const mapStateToProps = (state) => {  
+  return {
+    initialValues: state.proveedores.selected
+   };
 }
 
 EditProveedor = withRouter(EditProveedor);
@@ -44,7 +44,7 @@ EditProveedor = reduxForm({
 })(EditProveedor);
 
 EditProveedor = connect(mapStateToProps, {
-  fetchOneProveedor
+  fetchOne: fetchOneProveedor
 })(EditProveedor)
 
 export default EditProveedor;

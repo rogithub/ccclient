@@ -1,13 +1,14 @@
 import React from 'react';
 import Error from './error';
 
-export default ({ input, label, meta }) => {
-  console.log(input);
+export default ({ input, label, type, meta }) => {  
   return (
     <div>
       <label>{label}</label>
-      <input {...input} autoComplete="off" />
-      <Error meta={meta} />
+      <div>
+        <input {...input} placeholder={label} type={type} />
+        <Error meta={meta} />
+      </div>
     </div>
   );
 }
