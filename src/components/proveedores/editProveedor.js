@@ -11,7 +11,10 @@ class EditProveedor extends React.Component {
   }
 
   render () {
-    const proveedor = this.props.proveedor || [];
+    const proveedor = this.props.proveedor;
+    if (proveedor === null){
+      return <div>Proveedor no encontrado.</div>
+    }
 
     return (
       <div>
