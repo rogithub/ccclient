@@ -7,9 +7,8 @@ import { Field, reduxForm } from "redux-form";
 
 class EditProveedor extends React.Component {
 
-  componentDidMount() {
-    const id = parseInt(this.props.match.params.id);
-    this.props.fetchOne(id);
+  componentDidMount() {    
+    this.props.fetchOne(this.props.match.params.id);
   }
 
   onSubmit (formValues) {
@@ -31,7 +30,7 @@ class EditProveedor extends React.Component {
   }
 };
 
-const mapStateToProps = (state) => {  
+const mapStateToProps = (state) => {
   return {
     initialValues: state.proveedores.selected
    };
