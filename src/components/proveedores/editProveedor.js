@@ -7,7 +7,7 @@ import { Field, reduxForm } from "redux-form";
 
 class EditProveedor extends React.Component {
 
-  componentDidMount() {    
+  componentDidMount() {
     this.props.fetchOne(this.props.match.params.id);
   }
 
@@ -39,7 +39,8 @@ const mapStateToProps = (state) => {
 EditProveedor = withRouter(EditProveedor);
 
 EditProveedor = reduxForm({
-    form: 'editProveedor'
+  form: 'editProveedor',
+  enableReinitialize: true
 })(EditProveedor);
 
 EditProveedor = connect(mapStateToProps, {
