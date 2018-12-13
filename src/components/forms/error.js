@@ -1,11 +1,12 @@
 import React from 'react';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 export default ({ meta: { touched, error, warning } }) => {
 
   return (
     <div>
-      <span>{error}</span>
-      <span>{warning}</span>
+      <FormHelperText>{error}</FormHelperText>
+      <FormHelperText>{warning}</FormHelperText>
     </div>
   );
 }

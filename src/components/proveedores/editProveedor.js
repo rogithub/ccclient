@@ -16,21 +16,17 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   folio: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    margin: theme.spacing.unit,
     width: 100,
+    marginTop: 19,
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    margin: theme.spacing.unit,
     width: 200,
-  },
-  dense: {
     marginTop: 19,
   },
   button: {
     margin: theme.spacing.unit,
-    height: 40,
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
@@ -40,8 +36,10 @@ const styles = theme => ({
 class EditProveedor extends React.Component {
 
   componentDidMount() {
-    this.props.fetchOne(this.props.match.params.id);
-    this.props.setAppTitle(`Editar Proveedor ${this.props.match.params.id}`);
+    const { fetchOne, setAppTitle, match } = this.props;
+    const id = match.params.id;
+    fetchOne(id);
+    setAppTitle(`Editar Proveedor ${id}`);
   }
   componentWillUnmount() {
     this.props.setAppTitle(undefined);
@@ -61,17 +59,22 @@ class EditProveedor extends React.Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit)} noValidate autoComplete="off">
         <div className={classes.container}>
-          <Field name="idProveedor" label="Folio" disabled={true} component={Input} className={classes.folio} />
-          <Field name="empresa" label="Empresa" component={Input} className={classes.textField} />
-          <Field name="contacto" label="Contacto" component={Input} className={classes.textField} />
-          <Field name="domicilio" label="Domicilio" component={Input} className={classes.textField}
-          rowsMax="4"
-          multiline={true} />
-          <Field name="telefono" label="Teléfono" component={Input} className={classes.textField} />
-          <Field name="email" label="Email" component={Input} className={classes.textField} />
-          <Field name="comentarios" label="Comentarios" component={Input} className={classes.textField}
-          rowsMax="4"
-          multiline={true} />
+          <Field name="idProveedor" label="Folio" disabled={true}
+                 className={classes.folio} component={Input} />
+          <Field name="empresa" label="Empresa"
+                 className={classes.textField} component={Input} />
+          <Field name="contacto" label="Contacto"
+                 className={classes.textField} component={Input} />
+          <Field name="domicilio" label="Domicilio"
+                 className={classes.textField} component={Input}
+                 rowsMax="4" multiline={true} />
+          <Field name="telefono" label="Teléfono"
+                 className={classes.textField} component={Input} />
+          <Field name="email" label="Email"
+                 className={classes.textField} component={Input} />
+          <Field name="comentarios" label="Comentarios"
+                 className={classes.textField} component={Input}
+                 rowsMax="4" multiline={true} />
         </div>
         <div>
           <Button type="submit" variant="contained" color="default" className={classes.button}>
@@ -90,10 +93,38 @@ class EditProveedor extends React.Component {
   }
 };
 
+const validate = values => {
+  const errors = {}
+  if (!values.empresa) {
+    errors.empresa = '* Requerido'
+  }
+
+  if (!values.contacto) {
+    errors.contacto = '* Requerido'
+  }
+
+  if (!values.domicilio) {
+    errors.domicilio = '* Requerido'
+  }
+
+  if (!values.telefono) {
+    errors.telefono = '* Requerido'
+  }
+
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Email no valido.'
+  }
+
+  return errors
+};
+
 EditProveedor = withRouter(EditProveedor);
 
 EditProveedor = reduxForm({
   form: 'editProveedor',
+  validate,
   enableReinitialize: true
 })(EditProveedor);
 
