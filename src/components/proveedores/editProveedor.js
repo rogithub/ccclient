@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { Route } from 'react-router-dom'
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
+import Save from '@material-ui/icons/Save';
 
 const styles = theme => ({
   container: {
@@ -77,16 +78,17 @@ class EditProveedor extends React.Component {
                  rowsMax="4" multiline={true} />
         </div>
         <div>
-          <Button type="submit" variant="contained" color="default" className={classes.button}>
-            Guardar
-          </Button>
           <Route render={({ history}) => (
-             <Button variant="contained" color="primary" className={classes.button}
+             <Button variant="contained" color="default" className={classes.button}
                onClick={() => history.push(`/proveedores`) } >
-               Regresar
+               Cancelar
               <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
              </Button>
           )} />
+          <Button type="submit" variant="contained" color="primary" className={classes.button}>
+            Guardar
+            <Save className={classes.rightIcon}>send</Save>
+          </Button>
         </div>
       </form>
     );
