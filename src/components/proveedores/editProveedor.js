@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchOneProveedor, setAppTitle } from '../../actions';
+import { fetchOneProveedor, setAppTitle, updateProveedor } from '../../actions';
 import Input from '../forms/input';
 import { withRouter } from "react-router";
 import { Field, reduxForm } from "redux-form";
@@ -46,8 +46,8 @@ class EditProveedor extends React.Component {
     this.props.setAppTitle(undefined);
   }
 
-  onSubmit (formValues) {
-    alert(JSON.stringify(formValues));
+  onSubmit = formValues => {
+    this.props.update(formValues);
   }
 
   render () {
@@ -144,7 +144,8 @@ const mapStateToProps = (state) => {
 
 EditProveedor = connect(mapStateToProps, {
   fetchOne: fetchOneProveedor,
-  setAppTitle: setAppTitle
+  setAppTitle: setAppTitle,
+  update: updateProveedor
 })(EditProveedor)
 
 export default EditProveedor;
