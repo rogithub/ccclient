@@ -5,11 +5,11 @@ import TextField from '@material-ui/core/TextField';
 
 class Input extends React.Component {
   render () {
-    const { input, label, name, type, meta, className, multiline, rowsMax, disabled } = this.props;
-
+    const { input, label, meta, className, multiline, rowsMax, disabled } = this.props;    
     return (
       <div>
         <TextField
+          error={meta.invalid}
           className={className}
           label={label}
           {...input}
