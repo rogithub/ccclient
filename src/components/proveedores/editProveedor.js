@@ -20,9 +20,9 @@ class EditProveedor extends React.Component {
     if (p === null){
       return <div>Proveedor no encontrado.</div>
     }
-    
+
     return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+      <form onSubmit={this.props.handleSubmit(this.onSubmit)} noValidate autoComplete="off">
         <Field name="idProveedor" label="Id" component={Input} type="text" />
         <Field name="empresa" label="Empresa" component={Input} type="text" />
         <Field name="contacto" label="Contacto" component={Input} type="text" />
