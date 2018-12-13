@@ -4,6 +4,33 @@ import { fetchOneProveedor } from '../../actions';
 import Input from '../forms/input';
 import { withRouter } from "react-router";
 import { Field, reduxForm } from "redux-form";
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  folio: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 100,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  button: {
+    margin: theme.spacing.unit,
+    height: 40,
+  },
+});
 
 class EditProveedor extends React.Component {
 
@@ -17,20 +44,31 @@ class EditProveedor extends React.Component {
 
   render () {
     const p = this.props.initialValues;
+    const { classes, handleSubmit } = this.props;
     if (p === null){
       return <div>Proveedor no encontrado.</div>
     }
 
     return (
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)} noValidate autoComplete="off">
-        <Field name="idProveedor" label="Id" component={Input} type="text" />
-        <Field name="empresa" label="Empresa" component={Input} type="text" />
-        <Field name="contacto" label="Contacto" component={Input} type="text" />
-        <Field name="domicilio" label="Domicilio" component={Input} type="text" />
-        <Field name="telefono" label="Teléfono" component={Input} type="text" />
-        <Field name="email" label="Email" component={Input} type="text" />
-        <Field name="comentarios" label="Comentarios" component={Input} type="text" />
-        <button type="submit">Guardar</button>
+      <form onSubmit={handleSubmit(this.onSubmit)} noValidate autoComplete="off">
+        <div className={classes.container}>
+          <Field name="idProveedor" label="Folio" disabled={true} component={Input} className={classes.folio} />
+          <Field name="empresa" label="Empresa" component={Input} className={classes.textField} />
+          <Field name="contacto" label="Contacto" component={Input} className={classes.textField} />
+          <Field name="domicilio" label="Domicilio" component={Input} className={classes.textField}
+          rowsMax="4"
+          multiline={true} />
+          <Field name="telefono" label="Teléfono" component={Input} className={classes.textField} />
+          <Field name="email" label="Email" component={Input} className={classes.textField} />
+          <Field name="comentarios" label="Comentarios" component={Input} className={classes.textField}
+          rowsMax="4"
+          multiline={true} />
+        </div>
+        <div>
+          <Button type="submit" variant="contained" color="primary" className={classes.button}>
+            Guardar
+          </Button>
+        </div>
       </form>
     );
   }
@@ -52,5 +90,11 @@ EditProveedor = reduxForm({
 EditProveedor = connect(mapStateToProps, {
   fetchOne: fetchOneProveedor
 })(EditProveedor)
+
+EditProveedor.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+EditProveedor = withStyles(styles)(EditProveedor);
 
 export default EditProveedor;
