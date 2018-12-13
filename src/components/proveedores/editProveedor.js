@@ -20,10 +20,16 @@ class EditProveedor extends React.Component {
     if (p === null){
       return <div>Proveedor no encontrado.</div>
     }
-
+    
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="idProveedor" type="text" component={Input} label="Id" />
+        <Field name="idProveedor" label="Id" component={Input} type="text" />
+        <Field name="empresa" label="Empresa" component={Input} type="text" />
+        <Field name="contacto" label="Contacto" component={Input} type="text" />
+        <Field name="domicilio" label="Domicilio" component={Input} type="text" />
+        <Field name="telefono" label="Teléfono" component={Input} type="text" />
+        <Field name="email" label="Email" component={Input} type="text" />
+        <Field name="comentarios" label="Comentarios" component={Input} type="text" />
         <button type="submit">Guardar</button>
       </form>
     );
