@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
-import { fetchProveedores } from '../../actions';
+import { fetchProveedores, setAppTitle } from '../../actions';
 import { Route } from 'react-router-dom'
 
 const styles = theme => ({
@@ -39,6 +39,10 @@ class TblProveedores extends React.Component {
 
   componentDidMount() {
     this.props.fetchProveedores();
+    this.props.setAppTitle("Proveedores");
+  }
+  componentWillUnmount() {
+    this.props.setAppTitle(undefined);
   }
 
   render () {
@@ -90,14 +94,18 @@ class TblProveedores extends React.Component {
   }
 };
 
-const mapStateToProps = (state) => {
-  return { proveedores: state.proveedores.all };
-}
-
 TblProveedores.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 TblProveedores = withStyles(styles)(TblProveedores);
 
-export default connect(mapStateToProps, { fetchProveedores }) ( TblProveedores );
+const mapStateToProps = (state) => {
+  return {
+    proveedores: state.proveedores.all
+  };
+}
+
+TblProveedores = connect(mapStateToProps, { fetchProveedores, setAppTitle }) (TblProveedores);
+
+export default TblProveedores;

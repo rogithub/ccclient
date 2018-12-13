@@ -17,6 +17,7 @@ import LocalOffer from '@material-ui/icons/LocalOffer';
 import Store from '@material-ui/icons/Store';
 import Description from '@material-ui/icons/Description';
 import { Link, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 
 const styles = {
@@ -62,7 +63,7 @@ class MenuAppBar extends React.Component {
    };
 
   render() {
-    const { classes } = this.props;
+    const { classes, appTitle } = this.props;
     const { pathname } = this.props.location;
 
 
@@ -98,7 +99,6 @@ class MenuAppBar extends React.Component {
       </div>
     );
 
-
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -122,7 +122,7 @@ class MenuAppBar extends React.Component {
               </div>
             </SwipeableDrawer>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              {pathname === "/" ? "inicio" : pathname.substring(1) }
+              { appTitle || pathname }              
             </Typography>
           </Toolbar>
         </AppBar>
@@ -134,5 +134,13 @@ class MenuAppBar extends React.Component {
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+MenuAppBar = withRouter(MenuAppBar);
+MenuAppBar = withStyles(styles)(MenuAppBar);
 
-export default withStyles(styles)(withRouter(MenuAppBar));
+const mapStateToProps = (state) => {
+  return { appTitle: state.app.title };
+}
+
+MenuAppBar = connect(mapStateToProps) (MenuAppBar);
+
+export default MenuAppBar;

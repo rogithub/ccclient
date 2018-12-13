@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchOneProveedor } from '../../actions';
+import { fetchOneProveedor, setAppTitle } from '../../actions';
 import Input from '../forms/input';
 import { withRouter } from "react-router";
 import { Field, reduxForm } from "redux-form";
@@ -41,6 +41,10 @@ class EditProveedor extends React.Component {
 
   componentDidMount() {
     this.props.fetchOne(this.props.match.params.id);
+    this.props.setAppTitle(`Editar Proveedor ${this.props.match.params.id}`);
+  }
+  componentWillUnmount() {
+    this.props.setAppTitle(undefined);
   }
 
   onSubmit (formValues) {
@@ -86,12 +90,6 @@ class EditProveedor extends React.Component {
   }
 };
 
-const mapStateToProps = (state) => {
-  return {
-    initialValues: state.proveedores.selected
-   };
-}
-
 EditProveedor = withRouter(EditProveedor);
 
 EditProveedor = reduxForm({
@@ -99,14 +97,21 @@ EditProveedor = reduxForm({
   enableReinitialize: true
 })(EditProveedor);
 
-EditProveedor = connect(mapStateToProps, {
-  fetchOne: fetchOneProveedor
-})(EditProveedor)
-
 EditProveedor.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 EditProveedor = withStyles(styles)(EditProveedor);
+
+const mapStateToProps = (state) => {
+  return {
+    initialValues: state.proveedores.selected
+   };
+};
+
+EditProveedor = connect(mapStateToProps, {
+  fetchOne: fetchOneProveedor,
+  setAppTitle: setAppTitle
+})(EditProveedor)
 
 export default EditProveedor;
