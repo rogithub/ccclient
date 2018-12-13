@@ -43,10 +43,11 @@ class TblProveedores extends React.Component {
 
   render () {
     const rows = this.props.proveedores || [];
+    const { classes } = this.props;
 
     return (
-      <Paper className={this.classes.root}>
-        <Table className={this.classes.table}>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell numeric>Folio</TableCell>
@@ -72,10 +73,10 @@ class TblProveedores extends React.Component {
                 <TableCell>{row.comentarios}</TableCell>
                 <TableCell>
                  <Route render={({ history}) => (
-                    <Button variant="contained" color="primary" className={this.classes.button}
+                    <Button variant="contained" color="primary" className={classes.button}
                       onClick={() => history.push(`/proveedores/${row.idProveedor}`) } >
                       Editar
-                      <EditIcon className={this.classes.rightIcon}>send</EditIcon>
+                      <EditIcon className={classes.rightIcon}>send</EditIcon>
                     </Button>
                  )} />
                 </TableCell>
@@ -97,5 +98,6 @@ TblProveedores.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+TblProveedores = withStyles(styles)(TblProveedores);
 
-export default connect(mapStateToProps, { fetchProveedores }) ( withStyles(styles)(TblProveedores) );
+export default connect(mapStateToProps, { fetchProveedores }) ( TblProveedores );

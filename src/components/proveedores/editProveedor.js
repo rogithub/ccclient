@@ -7,6 +7,8 @@ import { Field, reduxForm } from "redux-form";
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import { Route } from 'react-router-dom'
+import NavigateBefore from '@material-ui/icons/NavigateBefore';
 
 const styles = theme => ({
   container: {
@@ -29,6 +31,9 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     height: 40,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
   },
 });
 
@@ -65,9 +70,16 @@ class EditProveedor extends React.Component {
           multiline={true} />
         </div>
         <div>
-          <Button type="submit" variant="contained" color="primary" className={classes.button}>
+          <Button type="submit" variant="contained" color="default" className={classes.button}>
             Guardar
           </Button>
+          <Route render={({ history}) => (
+             <Button variant="contained" color="primary" className={classes.button}
+               onClick={() => history.push(`/proveedores`) } >
+               Regresar
+              <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
+             </Button>
+          )} />
         </div>
       </form>
     );
