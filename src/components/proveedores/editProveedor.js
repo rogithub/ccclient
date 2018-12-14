@@ -52,7 +52,7 @@ class EditProveedor extends React.Component {
 
   render () {
     const p = this.props.initialValues;
-    const { classes, handleSubmit } = this.props;
+    const { classes, handleSubmit, pristine, invalid } = this.props;
     if (p === null){
       return <div>Proveedor no encontrado.</div>
     }
@@ -80,12 +80,15 @@ class EditProveedor extends React.Component {
         <div>
           <Route render={({ history}) => (
              <Button variant="contained" color="default" className={classes.button}
-               onClick={() => history.push(`/proveedores`) } >
+               onClick={ () => history.push(`/proveedores`) } >
                Cancelar
               <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
              </Button>
           )} />
-          <Button type="submit" variant="contained" color="primary" className={classes.button}>
+          <Button type="submit"
+                  disabled={pristine || invalid}
+                  variant="contained" color="primary"
+                  className={classes.button}>
             Guardar
             <Save className={classes.rightIcon}>send</Save>
           </Button>
@@ -103,10 +106,6 @@ const validate = values => {
 
   if (!values.contacto) {
     errors.contacto = '* Requerido'
-  }
-
-  if (!values.domicilio) {
-    errors.domicilio = '* Requerido'
   }
 
   if (!values.telefono) {
