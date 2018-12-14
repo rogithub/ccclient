@@ -10,8 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
+import PersonAdd from '@material-ui/icons/PersonAdd';
 import { fetchProveedores, setAppTitle } from '../../actions';
-import { Route } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -47,10 +47,15 @@ class TblProveedores extends React.Component {
 
   render () {
     const rows = this.props.proveedores || [];
-    const { classes } = this.props;
+    const { classes, history } = this.props;
 
     return (
       <Paper className={classes.root}>
+        <Button variant="contained" color="primary" className={classes.button}
+          onClick={() => history.push(`/proveedores/nuevo`) } >
+          Nuevo
+          <PersonAdd className={classes.rightIcon}>send</PersonAdd>
+        </Button>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -76,13 +81,11 @@ class TblProveedores extends React.Component {
                 <TableCell>{row.domicilio}</TableCell>
                 <TableCell>{row.comentarios}</TableCell>
                 <TableCell>
-                 <Route render={({ history}) => (
-                    <Button variant="contained" color="primary" className={classes.button}
-                      onClick={() => history.push(`/proveedores/${row.idProveedor}`) } >
-                      Editar
-                      <EditIcon className={classes.rightIcon}>send</EditIcon>
-                    </Button>
-                 )} />
+                <Button variant="contained" color="primary" className={classes.button}
+                  onClick={() => history.push(`/proveedores/editar/${row.idProveedor}`) } >
+                  Editar
+                  <EditIcon className={classes.rightIcon}>send</EditIcon>
+                </Button>
                 </TableCell>
               </TableRow>
             );

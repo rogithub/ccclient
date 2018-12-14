@@ -8,9 +8,9 @@ import Error from './error';
 class Input extends React.Component {
   render () {
     const { input, label, meta, className, multiline, rowsMax, disabled } = this.props;
+    const showErrors = meta.touched && meta.invalid;
     return (
-
-      <FormControl className={className} error={meta.invalid} variant="outlined">
+      <FormControl className={className} error={showErrors} variant="outlined">
         <InputLabel
           ref={ref => {
             this.labelRef = ReactDOM.findDOMNode(ref);
@@ -22,7 +22,7 @@ class Input extends React.Component {
                        multiline={multiline}
                        labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
                        />
-        <Error meta={meta} />
+        {showErrors ? (<Error meta={meta} />) : null}        
       </FormControl>
     );
   }

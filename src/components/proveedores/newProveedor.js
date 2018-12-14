@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchOneProveedor, setAppTitle, updateProveedor } from '../../actions';
+import { setAppTitle, saveProveedor } from '../../actions';
 import Input from '../forms/input';
 import { withRouter } from "react-router";
 import { Field, reduxForm } from "redux-form";
@@ -36,7 +36,7 @@ const styles = theme => ({
 class NewProveedor extends React.Component {
 
   componentDidMount() {
-    setAppTitle(`Nuevo Proveedor`);
+    this.props.setAppTitle(`Nuevo Proveedor`);
   }
   componentWillUnmount() {
     this.props.setAppTitle(undefined);
@@ -53,8 +53,6 @@ class NewProveedor extends React.Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit)} noValidate autoComplete="off">
         <div className={classes.container}>
-          <Field name="idProveedor" label="Folio" disabled={true}
-                 className={classes.folio} component={Input} />
           <Field name="empresa" label="Empresa"
                  className={classes.textField} component={Input} />
           <Field name="contacto" label="Contacto"

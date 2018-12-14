@@ -25,6 +25,12 @@ export const updateProveedor = data => async dispatch => {
     api.put(`/proveedores/${data.idProveedor}`, data));
 };
 
+export const saveProveedor = data => async dispatch => {
+  runPromise(dispatch,
+    "UPDATE_ONE_PROVEEDOR",
+    api.post(`/proveedores`, data));
+};
+
 export const setAppTitle = title => {
   return { type: "SET_APP_TITLE", title }
 }
