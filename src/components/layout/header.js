@@ -18,6 +18,7 @@ import Store from '@material-ui/icons/Store';
 import Description from '@material-ui/icons/Description';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 
 const styles = {
@@ -63,7 +64,7 @@ class MenuAppBar extends React.Component {
    };
 
   render() {
-    const { classes, appTitle } = this.props;
+    const { classes, appTitle, callbackInProcess } = this.props;
     const { pathname } = this.props.location;
 
 
@@ -122,10 +123,11 @@ class MenuAppBar extends React.Component {
               </div>
             </SwipeableDrawer>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              { appTitle || pathname }              
+              { appTitle || pathname }
             </Typography>
           </Toolbar>
         </AppBar>
+        {callbackInProcess ? (<LinearProgress color="secondary" />) : null}
       </div>
     );
   }
@@ -138,7 +140,10 @@ MenuAppBar = withRouter(MenuAppBar);
 MenuAppBar = withStyles(styles)(MenuAppBar);
 
 const mapStateToProps = (state) => {
-  return { appTitle: state.app.title };
+  return {
+    appTitle: state.app.title,
+    callbackInProcess: state.app.callbackInProcess
+  };
 }
 
 MenuAppBar = connect(mapStateToProps) (MenuAppBar);

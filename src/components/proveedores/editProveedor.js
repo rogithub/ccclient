@@ -46,17 +46,16 @@ class EditProveedor extends React.Component {
   }
 
   onSubmit = formValues => {
-    this.props.update(formValues);
-    this.props.history.push(`/proveedores`);
+    var promise = this.props.update(formValues);
+    promise.then(() => this.props.history.push(`/proveedores`));
   }
 
   render () {
     const p = this.props.initialValues;
-    const { classes, handleSubmit, pristine, invalid, history } = this.props;
+    const { classes, handleSubmit, pristine, invalid, history, callbackInProcess } = this.props;
     if (p === null){
       return <div>Proveedor no encontrado.</div>
     }
-    console.log(this.props);
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)} noValidate autoComplete="off">
@@ -80,12 +79,13 @@ class EditProveedor extends React.Component {
         </div>
         <div>
           <Button variant="contained" color="default" className={classes.button}
-                  onClick={ () => history.push(`/proveedores`) } >
+                  onClick={ () => history.push(`/proveedores`) }
+                  disabled={callbackInProcess} >
             Cancelar
             <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
           </Button>
           <Button type="submit"
-                  disabled={pristine || invalid}
+                  disabled={pristine || invalid || callbackInProcess}
                   variant="contained" color="primary"
                   className={classes.button}>
             Guardar
@@ -136,7 +136,8 @@ EditProveedor = withStyles(styles)(EditProveedor);
 
 const mapStateToProps = (state) => {
   return {
-    initialValues: state.proveedores.selected
+    initialValues: state.proveedores.selected,
+    callbackInProcess: state.app.callbackInProcess
    };
 };
 
