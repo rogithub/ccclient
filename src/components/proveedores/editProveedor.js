@@ -7,7 +7,6 @@ import { Field, reduxForm } from "redux-form";
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import { Route } from 'react-router-dom'
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
 
@@ -48,14 +47,16 @@ class EditProveedor extends React.Component {
 
   onSubmit = formValues => {
     this.props.update(formValues);
+    this.props.history.push(`/proveedores`);
   }
 
   render () {
     const p = this.props.initialValues;
-    const { classes, handleSubmit, pristine, invalid } = this.props;
+    const { classes, handleSubmit, pristine, invalid, history } = this.props;
     if (p === null){
       return <div>Proveedor no encontrado.</div>
     }
+    console.log(this.props);
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)} noValidate autoComplete="off">
@@ -78,13 +79,11 @@ class EditProveedor extends React.Component {
                  rowsMax="4" multiline={true} />
         </div>
         <div>
-          <Route render={({ history}) => (
-             <Button variant="contained" color="default" className={classes.button}
-               onClick={ () => history.push(`/proveedores`) } >
-               Cancelar
-              <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
-             </Button>
-          )} />
+          <Button variant="contained" color="default" className={classes.button}
+                  onClick={ () => history.push(`/proveedores`) } >
+            Cancelar
+            <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
+          </Button>
           <Button type="submit"
                   disabled={pristine || invalid}
                   variant="contained" color="primary"
