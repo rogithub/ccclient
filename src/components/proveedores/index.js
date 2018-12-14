@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import PersonAdd from '@material-ui/icons/PersonAdd';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 import { fetchProveedores, setAppTitle } from '../../actions';
 
 const styles = theme => ({
@@ -23,6 +25,9 @@ const styles = theme => ({
     minWidth: 700,
   },
   button: {
+    margin: theme.spacing.unit,
+  },
+  margin: {
     margin: theme.spacing.unit,
   },
   rightIcon: {
@@ -81,11 +86,13 @@ class TblProveedores extends React.Component {
                 <TableCell>{row.domicilio}</TableCell>
                 <TableCell>{row.comentarios}</TableCell>
                 <TableCell>
-                <Button variant="contained" color="primary" className={classes.button}
-                  onClick={() => history.push(`/proveedores/editar/${row.idProveedor}`) } >
-                  Editar
-                  <EditIcon className={classes.rightIcon}>send</EditIcon>
-                </Button>
+                  <IconButton aria-label="Edit" className={classes.margin}
+                  onClick={() => history.push(`/proveedores/editar/${row.idProveedor}`) }>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton aria-label="Delete" className={classes.margin}>
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );
