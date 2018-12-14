@@ -43,7 +43,11 @@ class NewProveedor extends React.Component {
   }
 
   onSubmit = formValues => {
-    var promise = this.props.save(formValues);
+    var postData = Object.assign({}, formValues, {
+      idProveedor: 0,
+      activo: true
+    });
+    var promise = this.props.save(postData);
     promise.then(() => this.props.history.push(`/proveedores`));
   }
 
