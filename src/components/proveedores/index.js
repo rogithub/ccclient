@@ -77,7 +77,7 @@ class TblProveedores extends React.Component {
           <TableBody>
           {rows.map(row => {
             return (
-              <TableRow key={row.idProveedor}>
+              <TableRow hover key={row.idProveedor}>
                 <TableCell numeric>{row.idProveedor}</TableCell>
                 <TableCell>{row.empresa}</TableCell>
                 <TableCell>{row.contacto}</TableCell>
