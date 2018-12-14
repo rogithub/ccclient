@@ -69,8 +69,7 @@ class TblProveedores extends React.Component {
               <TableCell>Contacto</TableCell>
               <TableCell>Teléfono</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Domicilio</TableCell>
-              <TableCell>Comentarios</TableCell>
+              <TableCell>Domicilio y Comentarios</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
@@ -83,8 +82,14 @@ class TblProveedores extends React.Component {
                 <TableCell>{row.contacto}</TableCell>
                 <TableCell>{row.telefono}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{row.domicilio}</TableCell>
-                <TableCell>{row.comentarios}</TableCell>
+                <TableCell>
+                  <p>
+                  {row.domicilio}
+                  </p>
+                  <p>
+                  {row.comentarios}
+                  </p>
+                </TableCell>
                 <TableCell>
                   <IconButton aria-label="Edit" className={classes.margin}
                   onClick={() => history.push(`/proveedores/editar/${row.idProveedor}`) }>
