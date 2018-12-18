@@ -31,6 +31,16 @@ export const saveProveedor = data => async dispatch => {
     api.post(`/proveedores`, data));
 };
 
+export const confirmDelProveedor = id => {
+  return { type: "CONFIRM_DEL_PROVEEDOR", id }
+};
+
+export const delProveedor = id => async dispatch => {
+  runPromise(dispatch,
+    "DELETE_ONE_PROVEEDORES",
+    api.delete(`/proveedores/${id}`));
+};
+
 export const setAppTitle = title => {
   return { type: "SET_APP_TITLE", title }
 }

@@ -13,7 +13,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import { fetchProveedores, setAppTitle } from '../../actions';
+import ConfirmDelProveedor from './confirmDelProveedor';
+import { fetchProveedores, setAppTitle, confirmDelProveedor } from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -56,6 +57,7 @@ class TblProveedores extends React.Component {
 
     return (
       <Paper className={classes.root}>
+        <ConfirmDelProveedor />
         <Button variant="contained" color="primary" className={classes.button}
           onClick={() => history.push(`/proveedores/nuevo`) } >
           Nuevo
@@ -95,7 +97,8 @@ class TblProveedores extends React.Component {
                   onClick={() => history.push(`/proveedores/editar/${row.idProveedor}`) }>
                     <EditIcon fontSize="small" />
                   </IconButton>
-                  <IconButton aria-label="Delete" className={classes.margin}>
+                  <IconButton aria-label="Delete" className={classes.margin}
+                  onClick={() => this.props.confirmDelProveedor(row.idProveedor) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -121,6 +124,10 @@ const mapStateToProps = (state) => {
   };
 }
 
-TblProveedores = connect(mapStateToProps, { fetchProveedores, setAppTitle }) (TblProveedores);
+TblProveedores = connect(mapStateToProps, {
+  fetchProveedores,
+  setAppTitle,
+  confirmDelProveedor
+}) (TblProveedores);
 
 export default TblProveedores;
