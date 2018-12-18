@@ -1,10 +1,15 @@
 import api from '../apis/cc';
 
 async function runPromise(dispatch, type, promise) {
-  dispatch({ type: "SET_APP_CALLBACK_IN_PROGRESS", isInProgress:true });
-  const payload = await promise;
-  dispatch({ type: "SET_APP_CALLBACK_IN_PROGRESS", isInProgress:false });
-  dispatch({ type, payload });
+  try {
+    dispatch({ type: "SET_APP_CALLBACK_IN_PROGRESS", isInProgress:true });
+    const payload = await promise;
+    dispatch({ type: "SET_APP_CALLBACK_IN_PROGRESS", isInProgress:false });
+    dispatch({ type, payload });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "SET_APP_CALLBACK_IN_PROGRESS", isInProgress:false });
+  }
 }
 
 export const fetchProveedores = () => async dispatch => {
