@@ -1,5 +1,6 @@
 import api from '../apis/cc';
 
+// APP Global Actions BEGIN
 async function runPromise(dispatch, type, promise) {
   try {
     dispatch({ type: "SET_APP_CALLBACK_IN_PROGRESS", isInProgress:true });
@@ -12,6 +13,14 @@ async function runPromise(dispatch, type, promise) {
   }
 }
 
+export const setAppTitle = title => {
+  return { type: "SET_APP_TITLE", title }
+}
+
+// APP Global Actions END
+
+
+// Proveedores Actions BEGIN
 export const fetchProveedores = () => async dispatch => {
   runPromise(dispatch,
     "FETCH_PROVEEDORES",
@@ -26,13 +35,13 @@ export const fetchOneProveedor = id => async dispatch => {
 
 export const updateProveedor = data => async dispatch => {
   runPromise(dispatch,
-    "UPDATE_ONE_PROVEEDOR",
+    "UPDATE_ONE_PROVEEDORES",
     api.put(`/proveedores/${data.idProveedor}`, data));
 };
 
 export const saveProveedor = data => async dispatch => {
   runPromise(dispatch,
-    "UPDATE_ONE_PROVEEDOR",
+    "SAVE_ONE_PROVEEDORES",
     api.post(`/proveedores`, data));
 };
 
@@ -49,7 +58,45 @@ export const delProveedor = id => async dispatch => {
     "DELETE_ONE_PROVEEDORES",
     api.delete(`/proveedores/${id}`));
 };
+// Proveedores Actions END
 
-export const setAppTitle = title => {
-  return { type: "SET_APP_TITLE", title }
-}
+
+// Materiales Actions BEGIN
+export const fetchMateriales = () => async dispatch => {
+  runPromise(dispatch,
+    "FETCH_MATERIALES",
+    api.get('/materiales'));
+};
+
+export const fetchOneMaterial = id => async dispatch => {
+  runPromise(dispatch,
+    "FETCH_ONE_MATERIALES",
+    api.get(`/materiales/${id}`));
+};
+
+export const updateMaterial = data => async dispatch => {
+  runPromise(dispatch,
+    "UPDATE_ONE_MATERIALES",
+    api.put(`/materiales/${data.idProducto}`, data));
+};
+
+export const saveMaterial = data => async dispatch => {
+  runPromise(dispatch,
+    "SAVE_ONE_MATERIALES",
+    api.post(`/materiales`, data));
+};
+
+export const openConfirmDelMaterial = id => {
+  return { type: "OPEN_CONFIRM_DEL_MATERIAL", id }
+};
+
+export const closeConfirmDelMaterial = count => {
+  return { type: "CLOSE_CONFIRM_DEL_MATERIAL", count }
+};
+
+export const delMaterial = id => async dispatch => {
+  runPromise(dispatch,
+    "DELETE_ONE_MATERIALES",
+    api.delete(`/materiales/${id}`));
+};
+// Materiales Actions END
