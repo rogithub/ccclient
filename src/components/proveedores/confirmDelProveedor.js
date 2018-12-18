@@ -5,18 +5,18 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { delProveedor, confirmDelProveedor } from '../../actions';
+import { delProveedor, closeConfirmDelProveedor } from '../../actions';
 import { connect } from 'react-redux';
 
 class ConfirmDelProveedor extends React.Component {
 
   handleCancel = () => {
-    this.props.confirmDel(undefined);
+    this.props.close(0);
   };
 
   handleDelete = () => {
     var promise = this.props.delete(this.props.idToDelete);
-    promise.then(() => this.props.confirmDel(undefined));
+    promise.then((count) => this.props.close(count));
   };
 
   render() {
@@ -58,7 +58,7 @@ const mapStateToProps = (state) => {
 
 ConfirmDelProveedor = connect(mapStateToProps, {
   delete: delProveedor,
-  confirmDel: confirmDelProveedor
+  close: closeConfirmDelProveedor
 })(ConfirmDelProveedor)
 
 export default ConfirmDelProveedor;

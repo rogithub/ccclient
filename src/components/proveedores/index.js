@@ -14,7 +14,7 @@ import PersonAdd from '@material-ui/icons/PersonAdd';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelProveedor from './confirmDelProveedor';
-import { fetchProveedores, setAppTitle, confirmDelProveedor } from '../../actions';
+import { fetchProveedores, setAppTitle, openConfirmDelProveedor } from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -98,7 +98,7 @@ class TblProveedores extends React.Component {
                     <EditIcon fontSize="small" />
                   </IconButton>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => this.props.confirmDelProveedor(row.idProveedor) } >
+                  onClick={() => this.props.openConfirmDelProveedor(row.idProveedor) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -127,7 +127,7 @@ const mapStateToProps = (state) => {
 TblProveedores = connect(mapStateToProps, {
   fetchProveedores,
   setAppTitle,
-  confirmDelProveedor
+  openConfirmDelProveedor
 }) (TblProveedores);
 
 export default TblProveedores;

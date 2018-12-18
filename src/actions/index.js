@@ -36,8 +36,12 @@ export const saveProveedor = data => async dispatch => {
     api.post(`/proveedores`, data));
 };
 
-export const confirmDelProveedor = id => {
-  return { type: "CONFIRM_DEL_PROVEEDOR", id }
+export const openConfirmDelProveedor = id => {
+  return { type: "OPEN_CONFIRM_DEL_PROVEEDOR", id }
+};
+
+export const closeConfirmDelProveedor = count => {
+  return { type: "CLOSE_CONFIRM_DEL_PROVEEDOR", count }
 };
 
 export const delProveedor = id => async dispatch => {
