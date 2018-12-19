@@ -26,7 +26,7 @@ export default (state = {}, action) => {
       } else {
         return Object.assign({}, state, {
           idToDelete: undefined,
-          all: state.all.filter(it => it.idProveedor !== state.idToDelete)
+          all: state.all.filter(it => it.idProducto !== state.idToDelete)
         });
       }
 
