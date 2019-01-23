@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "http://cccm:8000",
   transformRequest: [(data) => JSON.stringify(data || undefined)],
   headers: {
     'Accept': 'application/json',
