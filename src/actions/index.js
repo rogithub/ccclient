@@ -62,10 +62,10 @@ export const delProveedor = id => async dispatch => {
 
 
 // Materiales Actions BEGIN
-export const fetchMateriales = () => async dispatch => {
+export const fetchMateriales = (offset, pageSize) => async dispatch => {
   runPromise(dispatch,
     "FETCH_MATERIALES",
-    api.get('/materiales'));
+    api.get(`/materiales?offset=${offset}&pageSize=${pageSize}`));
 };
 
 export const fetchOneMaterial = id => async dispatch => {
