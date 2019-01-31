@@ -4,7 +4,8 @@ export default (state = {}, action) => {
   switch (action.type) {
     case 'FETCH_PROVEEDORES':
       return Object.assign({}, state, {
-        all: action.payload.data
+        rows: action.payload.data.rows,
+        totalRows: action.payload.data.totalRows
       });
     case 'FETCH_ONE_PROVEEDORES':
       return Object.assign({}, state, {
@@ -26,7 +27,7 @@ export default (state = {}, action) => {
       } else {
         return Object.assign({}, state, {
           idToDelete: undefined,
-          all: state.all.filter(it => it.idProveedor !== state.idToDelete)
+          rows: state.rows.filter(it => it.idProveedor !== state.idToDelete)
         });
       }
 

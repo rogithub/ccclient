@@ -21,10 +21,10 @@ export const setAppTitle = title => {
 
 
 // Proveedores Actions BEGIN
-export const fetchProveedores = () => async dispatch => {
+export const fetchProveedores = (offset, pageSize) => async dispatch => {
   runPromise(dispatch,
     "FETCH_PROVEEDORES",
-    api.get('/proveedores'));
+    api.get(`/proveedores?offset=${offset}&pageSize=${pageSize}`));
 };
 
 export const fetchOneProveedor = id => async dispatch => {

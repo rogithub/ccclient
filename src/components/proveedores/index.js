@@ -14,6 +14,7 @@ import PersonAdd from '@material-ui/icons/PersonAdd';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelProveedor from './confirmDelProveedor';
+import TablePagination from '@material-ui/core/TablePagination';
 import { fetchProveedores, setAppTitle, openConfirmDelProveedor } from '../../actions';
 
 const styles = theme => ({
@@ -41,19 +42,36 @@ class TblProveedores extends React.Component {
   constructor(props) {
     super(props);
     this.classes = this.props;
+    this.state = {
+      page: 0,
+      rowsPerPage: 5
+    };
   }
 
-  componentDidMount() {
-    this.props.fetchProveedores();
+  componentDidMount = () =>{
+    const { rowsPerPage, page } = this.state;
+    this.props.fetchProveedores(page, rowsPerPage);
     this.props.setAppTitle("Proveedores");
   }
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.props.setAppTitle(undefined);
   }
 
+  handleChangePage = (event, page) => {
+    const { rowsPerPage } = this.state;
+    this.props.fetchProveedores((page * rowsPerPage), rowsPerPage);
+    this.setState({ page })
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value });
+  };
+
   render () {
-    const rows = this.props.proveedores || [];
+    const rows = this.props.rows || [];
     const { classes, history } = this.props;
+    const { rowsPerPage, page } = this.state;
+    const totalRows = this.props.totalRows
 
     return (
       <Paper className={classes.root}>
@@ -107,6 +125,21 @@ class TblProveedores extends React.Component {
           })}
           </TableBody>
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={totalRows}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
       </Paper>
     );
   }
@@ -120,7 +153,8 @@ TblProveedores = withStyles(styles)(TblProveedores);
 
 const mapStateToProps = (state) => {
   return {
-    proveedores: state.proveedores.all
+    rows: state.proveedores.rows,
+    totalRows: state.proveedores.totalRows
   };
 }
 

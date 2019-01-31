@@ -48,12 +48,12 @@ class TblMateriales extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { rowsPerPage, page } = this.state;
     this.props.fetchMateriales(page, rowsPerPage);
     this.props.setAppTitle("Materiales");
   }
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.props.setAppTitle(undefined);
   }
 
