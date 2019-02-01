@@ -10,6 +10,10 @@ export default (state = {}, action) => {
       return Object.assign({}, state, {
         callbackInProcess: action.isInProgress
       });
+    case 'SET_APP_PAGINATION':
+      return Object.assign({}, state, {
+        pagination: action.pagination
+      });
     default:
       return state;
   }
