@@ -15,7 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelProveedor from './confirmDelProveedor';
 import TablePagination from '@material-ui/core/TablePagination';
-import { fetchProveedores, setAppTitle, openConfirmDelProveedor } from '../../actions';
+import { setAppPagination, fetchProveedores, setAppTitle, openConfirmDelProveedor } from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -42,36 +42,34 @@ class TblProveedores extends React.Component {
   constructor(props) {
     super(props);
     this.classes = this.props;
-    this.state = {
-      page: 0,
-      rowsPerPage: 5
-    };
   }
 
-  componentDidMount = () =>{
-    const { rowsPerPage, page } = this.state;
-    this.props.fetchProveedores(page, rowsPerPage);
+  componentDidMount = () => {
     this.props.setAppTitle("Proveedores");
+    const { page, pageSize } = this.props.pagination;
+    this.props.setAppPagination({ page, pageSize });
+    this.props.fetchProveedores(page, pageSize);
   }
   componentWillUnmount = () => {
     this.props.setAppTitle(undefined);
   }
 
   handleChangePage = (event, page) => {
-    const { rowsPerPage } = this.state;
-    this.props.fetchProveedores((page * rowsPerPage), rowsPerPage);
-    this.setState({ page })
+    const { pageSize } = this.props.pagination;
+    this.props.setAppPagination({ page, pageSize});
+    this.props.fetchProveedores((page * pageSize), pageSize);
   };
 
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
+  handleChangePageSize = event => {
+    const { page } = this.props.pagination;
+    const pageSize = event.target.value;
+    this.props.setAppPagination({ pageSize, page});
+    this.props.fetchProveedores((page * pageSize), pageSize);
   };
 
   render () {
-    const rows = this.props.rows || [];
-    const { classes, history } = this.props;
-    const { rowsPerPage, page } = this.state;
-    const totalRows = this.props.totalRows
+    const { classes, history, rows, totalRows } = this.props;
+    const { page, pageSize } = this.props.pagination;
 
     return (
       <Paper className={classes.root}>
@@ -129,7 +127,7 @@ class TblProveedores extends React.Component {
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={totalRows}
-          rowsPerPage={rowsPerPage}
+          rowsPerPage={pageSize}
           page={page}
           backIconButtonProps={{
             'aria-label': 'Previous Page',
@@ -138,7 +136,7 @@ class TblProveedores extends React.Component {
             'aria-label': 'Next Page',
           }}
           onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          onChangeRowsPerPage={this.handleChangePageSize}
         />
       </Paper>
     );
@@ -153,14 +151,19 @@ TblProveedores = withStyles(styles)(TblProveedores);
 
 const mapStateToProps = (state) => {
   return {
-    rows: state.proveedores.rows,
-    totalRows: state.proveedores.totalRows
+    rows: state.proveedores.rows || [],
+    totalRows: state.proveedores.totalRows || 0,
+    pagination: state.app.pagination || {
+        page: 0,
+        pageSize: 5
+    }
   };
 }
 
 TblProveedores = connect(mapStateToProps, {
   fetchProveedores,
   setAppTitle,
+  setAppPagination,
   openConfirmDelProveedor
 }) (TblProveedores);
 
