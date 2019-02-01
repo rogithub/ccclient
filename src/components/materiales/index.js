@@ -45,9 +45,9 @@ class TblMateriales extends React.Component {
   }
 
   componentDidMount = () => {
+    this.props.setAppTitle("Materiales");
     const { page, pageSize } = this.props.pagination;
     this.props.setAppPagination({ page, pageSize });
-    this.props.setAppTitle("Materiales");
     this.props.fetchMateriales(page, pageSize);
   }
   componentWillUnmount = () => {
@@ -56,14 +56,15 @@ class TblMateriales extends React.Component {
 
   handleChangePage = (event, page) => {
     const { pageSize } = this.props.pagination;
-    this.props.fetchMateriales((page * pageSize), pageSize);
     this.props.setAppPagination({ page, pageSize});
+    this.props.fetchMateriales((page * pageSize), pageSize);
   };
 
   handleChangePageSize = event => {
-    const { page } = this.props.pagination;    
+    const { page } = this.props.pagination;
     const pageSize = event.target.value;
     this.props.setAppPagination({ pageSize, page});
+    this.props.fetchMateriales((page * pageSize), pageSize);
   };
 
   render () {
