@@ -14,7 +14,7 @@ import PersonAdd from '@material-ui/icons/PersonAdd';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelProveedor from './confirmDelProveedor';
-import TablePagination from '@material-ui/core/TablePagination';
+import TablePagination from '../forms/tblPagination';
 import { setAppPagination, fetchProveedores, setAppTitle, openConfirmDelProveedor } from '../../actions';
 
 const styles = theme => ({
@@ -124,19 +124,11 @@ class TblProveedores extends React.Component {
           </TableBody>
         </Table>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={totalRows}
-          rowsPerPage={pageSize}
+          totalRows={totalRows}
+          pageSize={pageSize}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangePageSize}
+          handleChangePage={this.handleChangePage}
+          handleChangePageSize={this.handleChangePageSize}
         />
       </Paper>
     );
