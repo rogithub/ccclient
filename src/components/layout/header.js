@@ -91,8 +91,8 @@ class MenuAppBar extends React.Component {
             icon={<Description />}
             pathname={pathname}
           />
-          <ListItemLink to="/inventario"
-            primary="Inventario"
+          <ListItemLink to="/compras"
+            primary="Compras"
             icon={<LocalOffer />}
             pathname={pathname}
           />

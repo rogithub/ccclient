@@ -15,7 +15,7 @@ class TblPagination extends React.Component {
         <TablePagination
           labelRowsPerPage="Filas por página"
           labelDisplayedRows={this.labelDisplayedRows}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 50, 100]}
           component="div"
           count={totalRows}
           rowsPerPage={pageSize}
