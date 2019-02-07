@@ -179,28 +179,7 @@ class IntegrationAutosuggest extends React.Component {
     };
 
     return (
-      <div className={classes.root}>
-        <Autosuggest
-          {...autosuggestProps}
-          inputProps={{
-            classes,
-            placeholder: 'Search a country (start with a)',
-            value: this.state.single,
-            onChange: this.handleChange('single'),
-          }}
-          theme={{
-            container: classes.container,
-            suggestionsContainerOpen: classes.suggestionsContainerOpen,
-            suggestionsList: classes.suggestionsList,
-            suggestion: classes.suggestion,
-          }}
-          renderSuggestionsContainer={options => (
-            <Paper {...options.containerProps} square>
-              {options.children}
-            </Paper>
-          )}
-        />
-        <div className={classes.divider} />
+      <div className={classes.root}>        
         <Autosuggest
           {...autosuggestProps}
           inputProps={{
