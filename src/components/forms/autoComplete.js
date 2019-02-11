@@ -56,7 +56,6 @@ const styles = theme => ({
 
 class AutoComplete extends React.Component {
   state = {
-    single: '',
     popper: '',
     suggestions: [],
   };
@@ -100,7 +99,7 @@ class AutoComplete extends React.Component {
             classes,
             label: label,
             placeholder: placeholder,
-            value: this.state.popper,
+            value: this.state.popper,            
             onChange: this.handleChange('popper'),
             inputRef: node => {
               this.popperNode = node;

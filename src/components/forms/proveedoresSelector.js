@@ -22,61 +22,72 @@ const suggestions = [
   {idProveedor:14,empresa:"Importación y distribución de todo tipo de material para mochileros",contacto:"Luis Alberto Caballera Herrera",domicilio:"Republica del Salvador 127-C Col. Centreo Deleg. Cuahutemoc. México D.F. C.P. 06060",telefono:"5542 1049",email:"plasticos.atzin@hotmail.com",comentarios:"NO COMENTARIOS",activo:true}
 ];
 
-function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.empresa, query);
-  const parts = parse(suggestion.empresa, matches);
 
-  return (
-    <MenuItem selected={isHighlighted} component="div">
+class ProveedoresSelector extends React.Component {
+  state = {
+    selectedId: -1
+  };
+
+  getSuggestionValue = (suggestion) => {
+    this.setState({
+      selectedId: suggestion.idProveedor
+    });
+    
+    return suggestion.empresa;
+  }
+
+  renderSuggestion = (suggestion, { query, isHighlighted }) => {
+    const matches = match(suggestion.empresa, query);
+    const parts = parse(suggestion.empresa, matches);
+
+    return (
+      <MenuItem selected={isHighlighted} component="div">
+        <div>
+          {parts.map((part, index) =>
+            part.highlight ? (
+              <span key={String(index)} style={{ fontWeight: 500 }}>
+                {part.text}
+              </span>
+            ) : (
+              <strong key={String(index)} style={{ fontWeight: 300 }}>
+                {part.text}
+              </strong>
+            ),
+          )}
+        </div>
+      </MenuItem>
+    );
+  }
+
+  getSuggestions = (value) => {
+    const inputValue = deburr(value.trim()).toLowerCase();
+    const inputLength = inputValue.length;
+    let count = 0;
+
+    return inputLength === 0
+      ? []
+      : suggestions.filter(suggestion => {
+          const keep =
+            count < 5 && suggestion.empresa.slice(0, inputLength).toLowerCase() === inputValue;
+
+          if (keep) {
+            count += 1;
+          }
+
+          return keep;
+        });
+  }
+
+  render() {
+    return (
       <div>
-        {parts.map((part, index) =>
-          part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </strong>
-          ),
-        )}
+        <AutoComplete label="Proveedor" placeholder="Escriba el nombre"
+        getSuggestions={this.getSuggestions}
+        getSuggestionValue={this.getSuggestionValue}
+        renderSuggestion={this.renderSuggestion} />
       </div>
-    </MenuItem>
-  );
+    );
+  }
 }
 
-
-function getSuggestions(value) {
-  const inputValue = deburr(value.trim()).toLowerCase();
-  const inputLength = inputValue.length;
-  let count = 0;
-
-  return inputLength === 0
-    ? []
-    : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 && suggestion.empresa.slice(0, inputLength).toLowerCase() === inputValue;
-
-        if (keep) {
-          count += 1;
-        }
-
-        return keep;
-      });
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.empresa;
-}
-
-export default () => {
-
-  return (
-    <div>
-      <AutoComplete label="Proveedor" placeholder="Escriba el nombre"
-      getSuggestions={getSuggestions}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion} />
-    </div>
-  );
-}
+export default ProveedoresSelector;
