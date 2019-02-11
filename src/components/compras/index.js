@@ -27,7 +27,6 @@ function getSuggestions(value) {
   return inputLength === 0
     ? []
     : suggestions.filter(suggestion => {
-        console.log(suggestion);
         const keep =
           count < 5 && suggestion.empresa.slice(0, inputLength).toLowerCase() === inputValue;
 
@@ -40,7 +39,7 @@ function getSuggestions(value) {
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.idProveedor;
+  return suggestion.empresa;
 }
 
 class Compras extends React.Component {
