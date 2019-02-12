@@ -2,6 +2,10 @@
 
 export default (state = {}, action) => {
   switch (action.type) {
+    case 'SET_SELECTED_MATERIAL':
+      return Object.assign({}, state, {
+        selectedId: action.id
+      });
     case 'FETCH_MATERIALES':
       return Object.assign({}, state, {
         rows: action.payload.data.rows,

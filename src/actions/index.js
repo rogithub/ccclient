@@ -70,6 +70,10 @@ export const delProveedor = id => async dispatch => {
 
 
 // Materiales Actions BEGIN
+export const setSelectedMaterial = id => {
+  return { type: "SET_SELECTED_MATERIAL", id }
+}
+
 export const fetchMateriales = (offset, pageSize, name) => async dispatch => {
   runPromise(dispatch,
     "FETCH_MATERIALES",

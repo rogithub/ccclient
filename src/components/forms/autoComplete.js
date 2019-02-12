@@ -27,8 +27,7 @@ function renderInputComponent(inputProps) {
 }
 
 const styles = theme => ({
-  root: {
-    height: 250,
+  root: {    
     flexGrow: 1,
   },
   container: {
