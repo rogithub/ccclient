@@ -69,7 +69,7 @@ class TblMateriales extends React.Component {
 
   render () {
     const { classes, history, rows, totalRows } = this.props;
-    const { page, pageSize } = this.props.pagination;
+    const { page, pageSize } = this.props.pagination || { page: 0, pageSize: 5};
 
     return (
       <Paper className={classes.root}>
@@ -95,8 +95,8 @@ class TblMateriales extends React.Component {
           <TableBody>
           {rows.map(row => {
             return (
-              <TableRow hover key={row.idProducto}>
-                <TableCell numeric>{row.idProducto}</TableCell>
+              <TableRow hover key={row.idMaterial}>
+                <TableCell numeric>{row.idMaterial}</TableCell>
                 <TableCell>{row.nombre}</TableCell>
                 <TableCell>{row.color}</TableCell>
                 <TableCell>{row.unidad}</TableCell>

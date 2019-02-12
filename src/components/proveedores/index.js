@@ -69,7 +69,7 @@ class TblProveedores extends React.Component {
 
   render () {
     const { classes, history, rows, totalRows } = this.props;
-    const { page, pageSize } = this.props.pagination;
+    const { page, pageSize } = this.props.pagination || { page: 0, pageSize: 5};
 
     return (
       <Paper className={classes.root}>
