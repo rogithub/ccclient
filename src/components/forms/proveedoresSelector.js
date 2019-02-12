@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AutoComplete from './autoComplete';
-import deburr from 'lodash/deburr';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -43,25 +42,13 @@ class ProveedoresSelector extends React.Component {
   }
 
   getSuggestions = (value) => {
-    const inputValue = deburr(value.trim()).toLowerCase();
+    const inputValue = value.trim();
     const inputLength = inputValue.length;
     let count = 0;
 
     const { page, pageSize } = this.props.pagination;
-    this.props.fetchProveedores(page, pageSize, value);
-
-    return inputLength === 0
-      ? []
-      : this.props.rows.filter(row => {
-          const keep =
-            count < 5 && row.empresa.slice(0, inputLength).toLowerCase() === inputValue;
-
-          if (keep) {
-            count += 1;
-          }
-
-          return keep;
-        });
+    this.props.fetchProveedores(page, pageSize, inputValue);
+    return inputLength === 0 ? [] : this.props.rows;
   }
 
   render() {
