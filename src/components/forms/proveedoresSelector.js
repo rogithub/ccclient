@@ -55,14 +55,14 @@ class ProveedoresSelector extends React.Component {
       return this.props.setSelectedProveedor(-1);
     }
 
-    if (suggestions.filter(it => it.empresa === newValue).length === 0){
+    if (suggestions.filter(it => it.empresa === newValue).length === 0) {
       return this.props.setSelectedProveedor(-1);
     }
   };
 
   render() {
     return (
-      <div>        
+      <div>
         <AutoComplete label="Proveedor" placeholder="Escriba el nombre"
         getSuggestions={this.getSuggestions}
         getSuggestionValue={this.getSuggestionValue}
