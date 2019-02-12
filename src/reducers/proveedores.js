@@ -4,7 +4,7 @@ export default (state = {}, action) => {
   switch (action.type) {
     case 'SET_SELECTED_PROVEEDOR':
       return Object.assign({}, state, {
-        selectedId: action.id
+        selected: action.proveedor
       });
     case 'FETCH_PROVEEDORES':
       return Object.assign({}, state, {

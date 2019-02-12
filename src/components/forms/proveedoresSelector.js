@@ -9,12 +9,12 @@ import { fetchProveedores, setSelectedProveedor, setAppPagination } from '../../
 class ProveedoresSelector extends React.Component {
 
   componentDidMount = () => {
-    this.props.setSelectedProveedor(-1);
+    this.props.setSelectedProveedor();
     this.props.setAppPagination({ page:0, pageSize:5 });
   };
 
   getSuggestionValue = (row) => {
-    this.props.setSelectedProveedor(row.idProveedor);
+    this.props.setSelectedProveedor(row);
     return row.empresa;
   };
 
@@ -52,11 +52,11 @@ class ProveedoresSelector extends React.Component {
 
   handleChange = (newValue, suggestions) => {
     if (!newValue) {
-      return this.props.setSelectedProveedor(-1);
+      return this.props.setSelectedProveedor();
     }
 
     if (suggestions.filter(it => it.empresa === newValue).length === 0) {
-      return this.props.setSelectedProveedor(-1);
+      return this.props.setSelectedProveedor();
     }
   };
 
@@ -76,7 +76,7 @@ class ProveedoresSelector extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedId: state.proveedores.selectedId,
+    selected: state.proveedores.selected,
     rows: state.proveedores.rows || [],
     totalRows: state.proveedores.totalRows || 0,
     pagination: state.app.pagination
