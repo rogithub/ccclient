@@ -32,7 +32,7 @@ export const setSelectedProveedor = id => {
 export const fetchProveedores = (offset, pageSize, name) => async dispatch => {
   runPromise(dispatch,
     "FETCH_PROVEEDORES",
-    api.get(`/proveedores?offset=${offset}&pageSize=${pageSize}&name=${name}`));
+    api.get(`/proveedores?offset=${offset}&pageSize=${pageSize}&name=${encodeURIComponent(name)}`));
 };
 
 export const fetchOneProveedor = id => async dispatch => {
@@ -77,7 +77,7 @@ export const setSelectedMaterial = id => {
 export const fetchMateriales = (offset, pageSize, name) => async dispatch => {
   runPromise(dispatch,
     "FETCH_MATERIALES",
-    api.get(`/materiales?offset=${offset}&pageSize=${pageSize}&name=${name}`));
+    api.get(`/materiales?offset=${offset}&pageSize=${pageSize}&name=${encodeURIComponent(name)}`));
 };
 
 export const fetchOneMaterial = id => async dispatch => {
