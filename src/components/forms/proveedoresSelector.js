@@ -5,9 +5,14 @@ import deburr from 'lodash/deburr';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import MenuItem from '@material-ui/core/MenuItem';
-import { fetchProveedores, setSelectedProveedor } from '../../actions';
+import { fetchProveedores, setSelectedProveedor, setAppPagination } from '../../actions';
 
 class ProveedoresSelector extends React.Component {
+
+  componentDidMount = () => {
+    this.props.setSelectedProveedor(-1);
+    this.props.setAppPagination({ page:0, pageSize:5 });
+  }
 
   getSuggestionValue = (row) => {
     this.props.setSelectedProveedor(row.idProveedor);
@@ -76,16 +81,14 @@ const mapStateToProps = (state) => {
     selectedId: state.proveedores.selectedId,
     rows: state.proveedores.rows || [],
     totalRows: state.proveedores.totalRows || 0,
-    pagination: state.app.pagination || {
-        page: 0,
-        pageSize: 5
-    }
+    pagination: state.app.pagination
   };
 }
 
 ProveedoresSelector = connect(mapStateToProps, {
   fetchProveedores,
-  setSelectedProveedor
+  setSelectedProveedor,
+  setAppPagination
 }) (ProveedoresSelector);
 
 export default ProveedoresSelector;
