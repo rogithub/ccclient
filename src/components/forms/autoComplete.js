@@ -74,9 +74,11 @@ class AutoComplete extends React.Component {
   };
 
   handleChange = name => (event, { newValue }) => {
+    const { handleChange } = this.props;
     this.setState({
       [name]: newValue,
     });
+    handleChange(newValue, this.state.suggestions);
   };
 
   render() {
@@ -99,7 +101,7 @@ class AutoComplete extends React.Component {
             classes,
             label: label,
             placeholder: placeholder,
-            value: this.state.popper,            
+            value: this.state.popper,
             onChange: this.handleChange('popper'),
             inputRef: node => {
               this.popperNode = node;

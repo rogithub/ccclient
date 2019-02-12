@@ -11,12 +11,12 @@ class ProveedoresSelector extends React.Component {
   componentDidMount = () => {
     this.props.setSelectedProveedor(-1);
     this.props.setAppPagination({ page:0, pageSize:5 });
-  }
+  };
 
   getSuggestionValue = (row) => {
     this.props.setSelectedProveedor(row.idProveedor);
     return row.empresa;
-  }
+  };
 
   renderSuggestion = (row, { query, isHighlighted }) => {
     const matches = match(row.empresa, query);
@@ -39,25 +39,36 @@ class ProveedoresSelector extends React.Component {
         </div>
       </MenuItem>
     );
-  }
+  };
 
   getSuggestions = (value) => {
     const inputValue = value.trim();
     const inputLength = inputValue.length;
-    let count = 0;
 
     const { page, pageSize } = this.props.pagination;
     this.props.fetchProveedores(page, pageSize, inputValue);
     return inputLength === 0 ? [] : this.props.rows;
-  }
+  };
+
+  handleChange = (newValue, suggestions) => {
+    if (!newValue) {
+      return this.props.setSelectedProveedor(-1);
+    }
+
+    if (suggestions.filter(it => it.empresa === newValue).length === 0){
+      return this.props.setSelectedProveedor(-1);
+    }
+  };
 
   render() {
     return (
-      <div>
+      <div>        
         <AutoComplete label="Proveedor" placeholder="Escriba el nombre"
         getSuggestions={this.getSuggestions}
         getSuggestionValue={this.getSuggestionValue}
-        renderSuggestion={this.renderSuggestion} />
+        renderSuggestion={this.renderSuggestion}
+        handleChange={this.handleChange}
+         />
       </div>
     );
   }
