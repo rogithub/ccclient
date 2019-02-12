@@ -25,6 +25,10 @@ export const setAppPagination = pagination => {
 
 
 // Proveedores Actions BEGIN
+export const setSelectedProveedor = id => {
+  return { type: "SET_SELECTED_PROVEEDOR", id }
+}
+
 export const fetchProveedores = (offset, pageSize, name) => async dispatch => {
   runPromise(dispatch,
     "FETCH_PROVEEDORES",
