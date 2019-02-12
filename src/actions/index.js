@@ -20,9 +20,17 @@ export const setAppTitle = title => {
 export const setAppPagination = pagination => {
   return { type: "SET_APP_PAGINATION", pagination }
 };
-
 // APP Global Actions END
 
+
+// Compras BEGIN
+export const addMaterial = material => {
+  return { type: "COMPRAS_ADD_MATERIAL", material }
+};
+export const addServicio = servicio => {
+  return { type: "COMPRAS_ADD_SERVICIO", servicio }
+};
+// Compras END
 
 // Proveedores Actions BEGIN
 export const setSelectedProveedor = proveedor => {

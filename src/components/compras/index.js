@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ProveedoresSelector from '../forms/proveedoresSelector';
-import MaterialesSelector from '../forms/materialesSelector';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,11 +12,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Icon from '@material-ui/core/Icon';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 
-import { setAppTitle } from '../../actions';
+import { setAppTitle, addMaterial, addServicio } from '../../actions';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -39,18 +37,8 @@ class Compras extends React.Component {
     this.props.setAppTitle("Compras");
   };
 
-  addMaterial = () => {
-    this.props.rows.push("Material");
-    console.log(this.props.rows);
-  };
-
-  addServicio = () => {
-    this.props.rows.push("Servicio");
-    console.log(this.props.rows);
-  };
-
   rendertable = () => {
-    const { classes, rows } = this.props;
+    const { classes, addMaterial, addServicio, rows } = this.props;
 
     return (
       <div>
@@ -58,12 +46,12 @@ class Compras extends React.Component {
 
         <div>
           <Button variant="contained" size="small" className={classes.button}
-            onClick={() => this.addMaterial() } >
+            onClick={() => addMaterial({id: 1}) } >
             <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
             Material
           </Button>
           <Button variant="contained" size="small" className={classes.button}
-            onClick={() => this.addServicio() } >
+            onClick={() => addServicio({id: 2}) } >
             <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
             Servicio
           </Button>
@@ -84,7 +72,7 @@ class Compras extends React.Component {
           <TableBody>
           {rows.map(row => {
             return (
-              <TableRow hover key={1}>
+              <TableRow hover key={rows.indexOf(row)}>
                 <TableCell numeric>{1}</TableCell>
                 <TableCell>Hilo Nylon #30</TableCell>
                 <TableCell>Rollo</TableCell>
@@ -120,7 +108,6 @@ class Compras extends React.Component {
   }
 }
 
-
 Compras.propTypes = {
   classes: PropTypes.object.isRequired,
 };
@@ -129,13 +116,16 @@ Compras = withStyles(styles)(Compras);
 
 const mapStateToProps = (state) => {
   return {
-    rows: [],
+    rows: state.compras.rows,
+    compra: state.compras.compra,
     selected: state.proveedores.selected
   };
 }
 
 Compras = connect(mapStateToProps, {
   setAppTitle,
+  addMaterial,
+  addServicio,
 }) (Compras);
 
 export default Compras;
