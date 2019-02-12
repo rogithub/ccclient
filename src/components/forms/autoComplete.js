@@ -82,7 +82,12 @@ class AutoComplete extends React.Component {
   };
 
   render() {
-    const { classes, getSuggestionValue, renderSuggestion, label, placeholder } = this.props;
+    const {
+      classes,
+      getSuggestionValue,
+      renderSuggestion,
+      label,
+      placeholder } = this.props;
 
     const autosuggestProps = {
       renderInputComponent,
