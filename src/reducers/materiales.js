@@ -27,7 +27,7 @@ export default (state = {}, action) => {
       } else {
         return Object.assign({}, state, {
           idToDelete: undefined,
-          rows: state.rows.filter(it => it.idProducto !== state.idToDelete)
+          rows: state.rows.filter(it => it.idMaterial !== state.idToDelete)
         });
       }
 

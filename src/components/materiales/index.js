@@ -105,11 +105,11 @@ class TblMateriales extends React.Component {
                 <TableCell>{row.comentarios}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Edit" className={classes.margin}
-                  onClick={() => history.push(`/materiales/editar/${row.idProducto}`) }>
+                  onClick={() => history.push(`/materiales/editar/${row.idMaterial}`) }>
                     <EditIcon fontSize="small" />
                   </IconButton>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => this.props.openConfirmDelMaterial(row.idProducto) } >
+                  onClick={() => this.props.openConfirmDelMaterial(row.idMaterial) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>

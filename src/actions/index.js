@@ -85,7 +85,7 @@ export const fetchOneMaterial = id => async dispatch => {
 export const updateMaterial = data => async dispatch => {
   runPromise(dispatch,
     "UPDATE_ONE_MATERIALES",
-    api.put(`/materiales/${data.idProducto}`, data));
+    api.put(`/materiales/${data.idMaterial}`, data));
 };
 
 export const saveMaterial = data => async dispatch => {
