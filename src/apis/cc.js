@@ -1,7 +1,9 @@
 import axios from 'axios';
+const protocol = "http";
+const port = "8000";
 
 export default axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: `${protocol}://${window.location.hostname}:${port}`,
   transformRequest: [(data) => JSON.stringify(data || undefined)],
   headers: {
     'Accept': 'application/json',
