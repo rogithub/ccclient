@@ -25,10 +25,10 @@ export const setAppPagination = pagination => {
 
 
 // Proveedores Actions BEGIN
-export const fetchProveedores = (offset, pageSize) => async dispatch => {
+export const fetchProveedores = (offset, pageSize, name) => async dispatch => {
   runPromise(dispatch,
     "FETCH_PROVEEDORES",
-    api.get(`/proveedores?offset=${offset}&pageSize=${pageSize}`));
+    api.get(`/proveedores?offset=${offset}&pageSize=${pageSize}&name=${name}`));
 };
 
 export const fetchOneProveedor = id => async dispatch => {
@@ -66,10 +66,10 @@ export const delProveedor = id => async dispatch => {
 
 
 // Materiales Actions BEGIN
-export const fetchMateriales = (offset, pageSize) => async dispatch => {
+export const fetchMateriales = (offset, pageSize, name) => async dispatch => {
   runPromise(dispatch,
     "FETCH_MATERIALES",
-    api.get(`/materiales?offset=${offset}&pageSize=${pageSize}`));
+    api.get(`/materiales?offset=${offset}&pageSize=${pageSize}&name=${name}`));
 };
 
 export const fetchOneMaterial = id => async dispatch => {
