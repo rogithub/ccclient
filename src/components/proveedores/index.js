@@ -46,7 +46,7 @@ class TblProveedores extends React.Component {
 
   componentDidMount = () => {
     this.props.setAppTitle("Proveedores");
-    const { page, pageSize } = this.props.pagination;
+    const page = 0; const pageSize = 5;
     this.props.setAppPagination({ page, pageSize });
     this.props.fetchProveedores(page, pageSize, "");
   }
@@ -145,10 +145,7 @@ const mapStateToProps = (state) => {
   return {
     rows: state.proveedores.rows || [],
     totalRows: state.proveedores.totalRows || 0,
-    pagination: state.app.pagination || {
-        page: 0,
-        pageSize: 5
-    }
+    pagination: state.app.pagination
   };
 }
 

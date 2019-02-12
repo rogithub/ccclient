@@ -46,7 +46,7 @@ class TblMateriales extends React.Component {
 
   componentDidMount = () => {
     this.props.setAppTitle("Materiales");
-    const { page, pageSize } = this.props.pagination;
+    const page = 0; const pageSize = 5;
     this.props.setAppPagination({ page, pageSize });
     this.props.fetchMateriales(page, pageSize, "");
   }
@@ -141,10 +141,7 @@ const mapStateToProps = (state) => {
   return {
     rows: state.materiales.rows || [],
     totalRows: state.materiales.totalRows || 0,
-    pagination: state.app.pagination || {
-        page: 0,
-        pageSize: 5
-    }
+    pagination: state.app.pagination
   };
 }
 
