@@ -66,12 +66,12 @@ class MaterialesSelector extends React.Component {
 
   render() {
     return (
-        <AutoComplete label="Material" placeholder="Escriba el nombre"
+        <AutoComplete label="Material" placeholder="Buscar..."
           getSuggestions={this.getSuggestions}
           getSuggestionValue={this.getSuggestionValue}
           renderSuggestion={this.renderSuggestion}
           handleChange={this.handleChange}
-         />      
+         />
     );
   }
 }
