@@ -33,6 +33,10 @@ export const addServicio = servicio => {
 export const delCompraItem = item => {
   return { type: "COMPRAS_REMOVE_ITEM", item }
 };
+export const showDlgAddMaterial = show => {
+  return { type: "COMPRAS_DLG_ADD_MATERIAL", show }
+};
+
 // Compras END
 
 // Proveedores Actions BEGIN
