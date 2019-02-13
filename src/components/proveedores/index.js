@@ -75,7 +75,7 @@ class TblProveedores extends React.Component {
   }
 
   handleDeleteRow = () => {
-    const row = this.props.selected;    
+    const row = this.props.selected;
     this.props.delProveedor(row.idProveedor);
     this.props.removeProveedorRow(row);
   }
@@ -88,7 +88,7 @@ class TblProveedores extends React.Component {
       <Paper className={classes.root}>
         <ConfirmDelProveedor
           handleConfirm={this.handleDeleteRow}
-          title="¿Desea borrar?"
+          title="¿Desea borrar éste proveedor?"
           confirmText="Borrar">
           <DialogContentText id="alert-dialog-description">
             { this.props.selected ?

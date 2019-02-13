@@ -91,8 +91,8 @@ export const removeProveedorRow = row => {
 
 
 // Materiales Actions BEGIN
-export const setSelectedMaterial = id => {
-  return { type: "SET_SELECTED_MATERIAL", id }
+export const setSelectedMaterial = material => {
+  return { type: "SET_SELECTED_MATERIAL", material }
 }
 
 export const fetchMateriales = (offset, pageSize, name) => async dispatch => {
@@ -131,5 +131,9 @@ export const delMaterial = id => async dispatch => {
   runPromise(dispatch,
     "DELETE_ONE_MATERIALES",
     api.delete(`/materiales/${id}`));
+};
+
+export const removeMaterialRow = row => {
+  return { type: "REMOVE_MATERIAL_ROW", row }
 };
 // Materiales Actions END

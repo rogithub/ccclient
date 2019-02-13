@@ -44,7 +44,7 @@ class NewMaterial extends React.Component {
 
   onSubmit = formValues => {
     var postData = Object.assign({}, formValues, {
-      idProducto: 0,
+      idMaterial: 0,
       activo: true
     });
     var promise = this.props.save(postData);
