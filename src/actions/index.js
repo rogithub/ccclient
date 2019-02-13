@@ -22,6 +22,12 @@ export const setAppPagination = pagination => {
 };
 // APP Global Actions END
 
+// Dialogs BEGIN
+export const showConfirm = show => {
+  return { type: "DIALOGS_SHOW_CONFIRM", show }
+};
+// Dialogs END
+
 
 // Compras BEGIN
 export const addMaterial = material => {
