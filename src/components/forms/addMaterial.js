@@ -57,7 +57,7 @@ class AddMaterial extends React.Component {
               Cancelar
               <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
             </Button>
-            <Button type="submit" variant="contained" color="primary" className={classes.button}>
+            <Button variant="contained" color="primary" className={classes.button}>
               Guardar
               <Save className={classes.rightIcon}>send</Save>
             </Button>
