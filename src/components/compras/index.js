@@ -33,34 +33,74 @@ const styles = theme => ({
 
 class Compras extends React.Component {
 
+  state = {
+    mode: "Normal"
+  };
+
   componentDidMount = () => {
     this.props.setAppTitle("Compras");
+  };
+
+  renderButtons = () => {
+    const {
+      classes
+    } = this.props;
+
+    return (
+      <div>
+        <Button variant="contained" size="small" className={classes.button}
+          onClick={() => this.setState({ mode: "AddMaterial" }) } >
+          <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Material
+        </Button>
+        <Button variant="contained" size="small" className={classes.button}
+          onClick={() => this.setState({ mode: "AddServicio" }) } >
+          <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Servicio
+        </Button>
+      </div>
+    );
+  };
+
+  renderAddMaterial = () => {
+    return (
+        <div>
+          Add Material
+        </div>
+    );
+  };
+
+  renderAddServicio = () => {
+    return (
+      <div>
+        Add Servicio
+      </div>
+    );
+  };
+
+  renderEditArea = () => {
+    switch(this.state.mode) {
+      case "Normal":
+        return this.renderButtons()
+      case "AddMaterial":
+        return this.renderAddMaterial()
+      case "AddServicio":
+          return this.renderAddServicio()
+      default:
+        return this.renderButtons();
+    }
   };
 
   rendertable = () => {
     const {
       classes,
-      addServicio,
-      addMaterial,
       delCompraItem,
       rows } = this.props;
 
     return (
       <div>
         <h1>{this.props.selected.empresa}</h1>
-        <div>
-          <Button variant="contained" size="small" className={classes.button}
-            onClick={() => addMaterial({id: 2}) } >
-            <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-            Material
-          </Button>
-          <Button variant="contained" size="small" className={classes.button}
-            onClick={() => addServicio({id: 2}) } >
-            <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-            Servicio
-          </Button>
-        </div>
-
+        { this.renderEditArea() }
         <Table>
           <TableHead>
             <TableRow>
