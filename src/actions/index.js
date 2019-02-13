@@ -78,10 +78,6 @@ export const openConfirmDelProveedor = id => {
   return { type: "OPEN_CONFIRM_DEL_PROVEEDOR", id }
 };
 
-export const closeConfirmDelProveedor = count => {
-  return { type: "CLOSE_CONFIRM_DEL_PROVEEDOR", count }
-};
-
 export const delProveedor = id => async dispatch => {
   runPromise(dispatch,
     "DELETE_ONE_PROVEEDORES",

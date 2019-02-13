@@ -19,22 +19,6 @@ export default (state = {}, action) => {
       return Object.assign({}, state, {
         deleted: action.payload.data
       });
-    case 'OPEN_CONFIRM_DEL_PROVEEDOR':
-      return Object.assign({}, state, {
-        idToDelete: action.id
-      });
-    case 'CLOSE_CONFIRM_DEL_PROVEEDOR':
-      if (action.count === 0) {
-        return Object.assign({}, state, {
-          idToDelete: undefined,
-        });
-      } else {
-        return Object.assign({}, state, {
-          idToDelete: undefined,
-          rows: state.rows.filter(it => it.idProveedor !== state.idToDelete)
-        });
-      }
-
     default:
       return state;
   }
