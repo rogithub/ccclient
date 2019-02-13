@@ -12,6 +12,7 @@ function renderInputComponent(inputProps) {
   return (
     <TextField
       fullWidth
+      margin="normal"
       InputProps={{
         inputRef: node => {
           ref(node);
@@ -27,7 +28,7 @@ function renderInputComponent(inputProps) {
 }
 
 const styles = theme => ({
-  root: {    
+  root: {
     flexGrow: 1,
   },
   container: {

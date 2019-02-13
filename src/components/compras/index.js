@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ProveedoresSelector from '../forms/proveedoresSelector';
+import AddMaterialForm from '../forms/addMaterial';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
+
 
 import { setAppTitle, addServicio, addMaterial, delCompraItem } from '../../actions';
 const styles = theme => ({
@@ -62,30 +64,14 @@ class Compras extends React.Component {
     );
   };
 
-  renderAddMaterial = () => {
-    return (
-        <div>
-          Add Material
-        </div>
-    );
-  };
-
-  renderAddServicio = () => {
-    return (
-      <div>
-        Add Servicio
-      </div>
-    );
-  };
-
   renderEditArea = () => {
     switch(this.state.mode) {
       case "Normal":
-        return this.renderButtons()
+        return this.renderButtons();
       case "AddMaterial":
-        return this.renderAddMaterial()
+        return <AddMaterialForm />;
       case "AddServicio":
-          return this.renderAddServicio()
+          return <AddMaterialForm />;
       default:
         return this.renderButtons();
     }
