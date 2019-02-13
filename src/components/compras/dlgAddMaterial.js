@@ -5,12 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import MaterialesSelector from '../forms/materialesSelector';
 import { showDlgAddMaterial, addMaterial } from '../../actions';
 import { connect } from 'react-redux';
 
 class DlgAddMaterial extends React.Component {
 
-  handleCancel = () => {
+  handleClose = () => {
     this.props.show(false);
   };
 
@@ -23,26 +25,35 @@ class DlgAddMaterial extends React.Component {
     const { open } = this.props;
     return (
       <div>
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">Agregar Material</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              ¿Está segura de que desea borrar éste proveedor?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleCancel} color="primary">
-              Cancelar
-            </Button>
-            <Button onClick={this.handleAdd} color="primary" autoFocus>
-              Guardar
-            </Button>
-          </DialogActions>
-        </Dialog>
+      <Dialog
+        open={open}
+        onClose={this.handleClose}
+        aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Agregar Material</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here. We will send
+            updates occasionally.
+          </DialogContentText>
+          <MaterialesSelector />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="concepto"
+            label="Concepto"
+            type="text"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={this.handleAdd} color="primary">
+            Guardar
+          </Button>
+        </DialogActions>
+      </Dialog>
       </div>
     );
   }
@@ -50,7 +61,7 @@ class DlgAddMaterial extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    open: state.compras.showAddMaterial,
+    open: state.compras.showAddMaterial || false,
    };
 };
 

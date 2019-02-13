@@ -41,7 +41,6 @@ class Compras extends React.Component {
   rendertable = () => {
     const {
       classes,
-      addMaterial,
       addServicio,
       delCompraItem,
       rows } = this.props;
@@ -122,7 +121,7 @@ Compras = withStyles(styles)(Compras);
 
 const mapStateToProps = (state) => {
   return {
-    rows: state.compras.rows,
+    rows: state.compras.rows || [],
     compra: state.compras.compra,
     selected: state.proveedores.selected
   };

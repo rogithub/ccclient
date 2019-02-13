@@ -1,7 +1,6 @@
 // Compras reducers
 
-export default (state = {}, action) => {
-  state.rows = state.rows || [];
+export default (state = {}, action) => {  
 
   switch (action.type) {
     case 'COMPRAS_ADD_MATERIAL':
