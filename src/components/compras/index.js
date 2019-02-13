@@ -14,9 +14,8 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
-import DlgAddMaterial from './dlgAddMaterial';
 
-import { setAppTitle, addServicio, delCompraItem, showDlgAddMaterial } from '../../actions';
+import { setAppTitle, addServicio, addMaterial, delCompraItem } from '../../actions';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -42,16 +41,16 @@ class Compras extends React.Component {
     const {
       classes,
       addServicio,
+      addMaterial,
       delCompraItem,
       rows } = this.props;
 
     return (
       <div>
         <h1>{this.props.selected.empresa}</h1>
-        <DlgAddMaterial />
         <div>
           <Button variant="contained" size="small" className={classes.button}
-            onClick={() => this.props.showDlgAddMaterial(true) } >
+            onClick={() => addMaterial({id: 2}) } >
             <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
             Material
           </Button>
@@ -130,8 +129,8 @@ const mapStateToProps = (state) => {
 Compras = connect(mapStateToProps, {
   setAppTitle,
   addServicio,
+  addMaterial,
   delCompraItem,
-  showDlgAddMaterial,
 }) (Compras);
 
 export default Compras;
