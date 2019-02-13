@@ -30,6 +30,9 @@ export const addMaterial = material => {
 export const addServicio = servicio => {
   return { type: "COMPRAS_ADD_SERVICIO", servicio }
 };
+export const delCompraItem = item => {
+  return { type: "COMPRAS_REMOVE_ITEM", item }
+};
 // Compras END
 
 // Proveedores Actions BEGIN

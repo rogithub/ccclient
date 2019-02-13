@@ -15,7 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 
-import { setAppTitle, addMaterial, addServicio } from '../../actions';
+import { setAppTitle, addMaterial, addServicio, delCompraItem } from '../../actions';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -38,7 +38,12 @@ class Compras extends React.Component {
   };
 
   rendertable = () => {
-    const { classes, addMaterial, addServicio, rows } = this.props;
+    const {
+      classes,
+      addMaterial,
+      addServicio,
+      delCompraItem,
+      rows } = this.props;
 
     return (
       <div>
@@ -81,7 +86,7 @@ class Compras extends React.Component {
                 <TableCell>$1,500.00</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => alert("clicked!") } >
+                  onClick={() => delCompraItem(row) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -126,6 +131,7 @@ Compras = connect(mapStateToProps, {
   setAppTitle,
   addMaterial,
   addServicio,
+  delCompraItem,
 }) (Compras);
 
 export default Compras;
