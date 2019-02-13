@@ -62,14 +62,12 @@ class ProveedoresSelector extends React.Component {
 
   render() {
     return (
-      <div>
         <AutoComplete label="Proveedor" placeholder="Escriba el nombre"
-        getSuggestions={this.getSuggestions}
-        getSuggestionValue={this.getSuggestionValue}
-        renderSuggestion={this.renderSuggestion}
-        handleChange={this.handleChange}
+          getSuggestions={this.getSuggestions}
+          getSuggestionValue={this.getSuggestionValue}
+          renderSuggestion={this.renderSuggestion}
+          handleChange={this.handleChange}
          />
-      </div>
     );
   }
 }
