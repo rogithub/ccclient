@@ -38,35 +38,31 @@ class AddMaterial extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <MaterialesSelector  />
         <form className={classes.container} noValidate autoComplete="off">
-
+          <MaterialesSelector  />
           <TextField
             id="cantidad"
             label="Cantidad"
             className={classes.textField}
             margin="normal"
           />
-
           <TextField
             id="precioUnitario"
             label="Precio Unitario"
             className={classes.textField}
             margin="normal"
           />
+          <div>
+            <Button variant="contained" color="default" className={classes.button}>
+              Cancelar
+              <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
+            </Button>
+            <Button type="submit" variant="contained" color="primary" className={classes.button}>
+              Guardar
+              <Save className={classes.rightIcon}>send</Save>
+            </Button>
+          </div>
         </form>
-        <div>
-          <Button variant="contained" color="default" className={classes.button}>
-            Cancelar
-            <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
-          </Button>
-          <Button type="submit" variant="contained" color="primary" className={classes.button}>
-            Guardar
-            <Save className={classes.rightIcon}>send</Save>
-          </Button>
-        </div>
-      </div>
     );
   }
 }
