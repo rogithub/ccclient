@@ -11,13 +11,17 @@ export default (state = {}, action) => {
         rows: action.payload.data.rows,
         totalRows: action.payload.data.totalRows
       });
+    case 'REMOVE_PROVEEDOR_ROW':
+      return Object.assign({}, state, {
+        rows: state.rows.filter(it => it !== action.row)
+      });
     case 'FETCH_ONE_PROVEEDORES':
       return Object.assign({}, state, {
         selected: action.payload.data
       });
     case 'DELETE_ONE_PROVEEDORES':
       return Object.assign({}, state, {
-        deleted: action.payload.data
+        deletedCount: action.payload.data
       });
     default:
       return state;

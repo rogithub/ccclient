@@ -17,7 +17,7 @@ import ConfirmDelProveedor from '../dialogs/dlgConfirm';
 import TablePagination from '../forms/tblPagination';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { setAppPagination, fetchProveedores, setAppTitle, showConfirm,
-  delProveedor, setSelectedProveedor } from '../../actions';
+  delProveedor, setSelectedProveedor, removeProveedorRow } from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -75,9 +75,9 @@ class TblProveedores extends React.Component {
   }
 
   handleDeleteRow = () => {
-    const row = this.props.selected;
+    const row = this.props.selected;    
     this.props.delProveedor(row.idProveedor);
-    this.props.rows = this.props.rows.filter(it => it !== row);
+    this.props.removeProveedorRow(row);
   }
 
   render () {
@@ -180,7 +180,8 @@ TblProveedores = connect(mapStateToProps, {
   setAppPagination,
   delProveedor,
   showConfirm,
-  setSelectedProveedor
+  setSelectedProveedor,
+  removeProveedorRow
 }) (TblProveedores);
 
 export default TblProveedores;

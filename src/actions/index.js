@@ -83,6 +83,10 @@ export const delProveedor = id => async dispatch => {
     "DELETE_ONE_PROVEEDORES",
     api.delete(`/proveedores/${id}`));
 };
+
+export const removeProveedorRow = row => {
+  return { type: "REMOVE_PROVEEDOR_ROW", row }
+};
 // Proveedores Actions END
 
 
