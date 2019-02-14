@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ProveedoresSelector from '../forms/proveedoresSelector';
-import AddMaterialForm from '../forms/addMaterial';
+import AddMaterialExistente from '../forms/addMaterialExistente';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -39,6 +39,10 @@ class Compras extends React.Component {
     mode: "Normal"
   };
 
+  handleFormCancel = () => {    
+    this.setState({ mode: "Normal" })
+  };
+
   componentDidMount = () => {
     this.props.setAppTitle("Compras");
   };
@@ -53,7 +57,12 @@ class Compras extends React.Component {
         <Button variant="contained" size="small" className={classes.button}
           onClick={() => this.setState({ mode: "AddMaterial" }) } >
           <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-          Material
+          Material Existente
+        </Button>
+        <Button variant="contained" size="small" className={classes.button}
+          onClick={() => this.setState({ mode: "AddMaterial" }) } >
+          <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Material Nuevo
         </Button>
         <Button variant="contained" size="small" className={classes.button}
           onClick={() => this.setState({ mode: "AddServicio" }) } >
@@ -69,9 +78,9 @@ class Compras extends React.Component {
       case "Normal":
         return this.renderButtons();
       case "AddMaterial":
-        return <AddMaterialForm />;
+        return <AddMaterialExistente onCancel={this.handleFormCancel} />;
       case "AddServicio":
-          return <AddMaterialForm />;
+          return <AddMaterialExistente onCancel={this.handleFormCancel} />;
       default:
         return this.renderButtons();
     }

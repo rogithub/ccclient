@@ -34,11 +34,20 @@ const styles = theme => ({
 
 class AddMaterial extends React.Component {
 
+  handleCancel = () => {    
+    document.getElementById("add-material-existente-form").reset();
+    if (this.props.onCancel) {
+      this.props.onCancel();
+    }
+  };
+
   render() {
     const { classes } = this.props;
 
     return (
-        <form className={classes.container} noValidate autoComplete="off">
+        <form className={classes.container} noValidate
+        id="add-material-existente-form"
+        autoComplete="off">
           <MaterialesSelector  />
           <TextField
             id="cantidad"
@@ -53,7 +62,8 @@ class AddMaterial extends React.Component {
             margin="normal"
           />
           <div>
-            <Button variant="contained" color="default" className={classes.button}>
+            <Button variant="contained" color="default" className={classes.button}
+              onClick={ () => this.handleCancel() } >
               Cancelar
               <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
             </Button>
