@@ -39,7 +39,7 @@ class Compras extends React.Component {
     mode: "Normal"
   };
 
-  handleFormCancel = () => {    
+  handleFormCancel = () => {
     this.setState({ mode: "Normal" })
   };
 
@@ -94,11 +94,10 @@ class Compras extends React.Component {
 
     return (
       <div>
+      { this.renderEditArea() }
       <Typography gutterBottom variant="title">
         {this.props.selected.empresa}
       </Typography>
-
-        { this.renderEditArea() }
         <Table>
           <TableHead>
             <TableRow>

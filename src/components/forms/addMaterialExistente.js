@@ -6,6 +6,7 @@ import MaterialesSelector from './materialesSelector';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
+import { Field, reduxForm } from "redux-form";
 
 const styles = theme => ({
   container: {
@@ -32,29 +33,36 @@ const styles = theme => ({
 });
 
 
-class AddMaterial extends React.Component {
+class AddMaterialExistente extends React.Component {
 
-  handleCancel = () => {    
+  handleCancel = () => {
     document.getElementById("add-material-existente-form").reset();
     if (this.props.onCancel) {
       this.props.onCancel();
     }
   };
 
+  onSubmit = formValues => {
+    alert(JSON.stringify(formValues));
+  };
+
   render() {
-    const { classes } = this.props;
+    const { handleSubmit, classes } = this.props;
 
     return (
         <form className={classes.container} noValidate
+        onSubmit={handleSubmit(this.onSubmit)}
         id="add-material-existente-form"
         autoComplete="off">
-          <MaterialesSelector  />
+        <Field name="idMaterial" disabled={true} component={MaterialesSelector} />
+
           <TextField
             id="cantidad"
             label="Cantidad"
             className={classes.textField}
             margin="normal"
           />
+
           <TextField
             id="precioUnitario"
             label="Precio Unitario"
@@ -67,7 +75,7 @@ class AddMaterial extends React.Component {
               Cancelar
               <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
             </Button>
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button type="submit" variant="contained" color="primary" className={classes.button}>
               Guardar
               <Save className={classes.rightIcon}>send</Save>
             </Button>
@@ -77,8 +85,23 @@ class AddMaterial extends React.Component {
   }
 }
 
-AddMaterial.propTypes = {
+const validate = values => {
+  const errors = {}
+  if (!values.cantidad) {
+    errors.cantidad = '* Requerido'
+  }
+
+  return errors
+};
+
+AddMaterialExistente = reduxForm({
+  form: 'addMaterialExistente',
+  validate,
+  enableReinitialize: true
+})(AddMaterialExistente);
+
+AddMaterialExistente.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddMaterial);
+export default withStyles(styles)(AddMaterialExistente);
