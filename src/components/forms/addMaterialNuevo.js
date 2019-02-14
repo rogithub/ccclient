@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import MaterialesSelector from './materialesSelector';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
@@ -34,7 +32,7 @@ const styles = theme => ({
 });
 
 
-class AddMaterialExistente extends React.Component {
+class AddMaterialNuevo extends React.Component {
   getComposedName = (material) => {
     return `${material.nombre || ""} ${material.color || ""} ${material.marca || ""} ${material.modelo || ""}`
   }
@@ -58,7 +56,7 @@ class AddMaterialExistente extends React.Component {
     }
     document.getElementById("add-material-existente-form").reset();
   };
-
+  
   renderField = (field) => {
     const { classes } = this.props;
     const error = field.meta.touched && field.meta.invalid;
@@ -81,9 +79,9 @@ class AddMaterialExistente extends React.Component {
         onSubmit={handleSubmit(this.onSubmit)}
         id="add-material-existente-form"
         autoComplete="off">
-        <Field name="idMaterial" component={MaterialesSelector} />
-        <Field name="cantidad" label="Cantidad" component={this.renderField} />
-        <Field name="precio" label="Precio" component={this.renderField} />
+
+        <Field name="cantidad" label="Cantidad" component={this.renderCantidad} />
+        <Field name="precio" label="Precio" component={this.renderPrecio} />
 
           <div>
             <Button variant="contained" color="default" className={classes.button}
@@ -126,24 +124,14 @@ const validate = values => {
   return errors
 };
 
-const mapStateToProps = (state) => {
-  return {
-    material: state.materiales.selected
-  };
-}
-
-AddMaterialExistente = connect(mapStateToProps, {
-
-}) (AddMaterialExistente);
-
-AddMaterialExistente = reduxForm({
+AddMaterialNuevo = reduxForm({
   form: 'addMaterialExistente',
   validate,
   enableReinitialize: true
 })(AddMaterialExistente);
 
-AddMaterialExistente.propTypes = {
+AddMaterialNuevo.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddMaterialExistente);
+export default withStyles(styles)(AddMaterialNuevo);
