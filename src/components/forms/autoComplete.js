@@ -7,12 +7,16 @@ import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 
 function renderInputComponent(inputProps) {
-  const { showError, classes, inputRef = () => {}, ref, ...other } = inputProps;
+  const {
+    classes,
+    inputRef = () => {},
+    ref,
+    componentProps,
+    ...other } = inputProps;
 
   return (
     <TextField
-      error={showError}
-      fullWidth      
+      fullWidth
       InputProps={{
         inputRef: node => {
           ref(node);
@@ -22,6 +26,7 @@ function renderInputComponent(inputProps) {
           input: classes.input,
         },
       }}
+      {...componentProps}
       {...other}
     />
   );
@@ -83,12 +88,11 @@ class AutoComplete extends React.Component {
 
   render() {
     const {
-      showError,
       classes,
       getSuggestionValue,
-      renderSuggestion,
-      label,
-      placeholder } = this.props;
+      renderSuggestion,      
+      componentProps
+    } = this.props;
 
     const autosuggestProps = {
       renderInputComponent,
@@ -104,10 +108,8 @@ class AutoComplete extends React.Component {
         <Autosuggest
           {...autosuggestProps}
           inputProps={{
-            showError: showError || false,
+            componentProps,
             classes,
-            label: label,
-            placeholder: placeholder,
             value: this.state.popper,
             onChange: this.handleChange('popper'),
             inputRef: node => {

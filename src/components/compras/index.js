@@ -148,7 +148,10 @@ class Compras extends React.Component {
         <Paper>
             { this.props.selected ?
               this.rendertable() :
-              <ProveedoresSelector />
+              <ProveedoresSelector componentProps={{
+                                      label: "Proveedor",
+                                      placeholder: "Buscar..."
+                                    }} />
             }
         </Paper>
       </div>

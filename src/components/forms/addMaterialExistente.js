@@ -67,7 +67,11 @@ class AddMaterialExistente extends React.Component {
         onSubmit={handleSubmit(this.onSubmit)}
         id="add-material-existente-form"
         autoComplete="off">
-          <Field name="idMaterial" component={MaterialesSelector} />
+          <Field name="idMaterial" componentProps={{
+                                      label: "Material",
+                                      placeholder: "Buscar..."
+                                    }}
+           component={MaterialesSelector} />
           <Field name="cantidad" componentProps={{
             label: "Cantidad",
             className: classes.textField
@@ -78,14 +82,14 @@ class AddMaterialExistente extends React.Component {
           }} component={TextFieldComponent} />
 
           <div>
+            <Button type="submit" variant="contained" color="primary" className={classes.button}>
+              Guardar
+              <Save className={classes.rightIcon}>send</Save>
+            </Button>
             <Button variant="contained" color="default" className={classes.button}
               onClick={ () => this.handleCancel() } >
               Cancelar
               <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
-            </Button>
-            <Button type="submit" variant="contained" color="primary" className={classes.button}>
-              Guardar
-              <Save className={classes.rightIcon}>send</Save>
             </Button>
           </div>
         </form>
