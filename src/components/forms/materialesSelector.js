@@ -70,8 +70,11 @@ class MaterialesSelector extends React.Component {
   };
 
   render() {
+    const { meta } = this.props;
+    const showErrors = meta.touched && meta.invalid;
     return (
       <AutoComplete label="Material" placeholder="Buscar..."
+        showError={showErrors}
         getSuggestions={this.getSuggestions}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}

@@ -87,8 +87,8 @@ class AddMaterialExistente extends React.Component {
 
 const validate = values => {
   const errors = {}
-  if (!values.cantidad) {
-    errors.cantidad = '* Requerido'
+  if (values.idMaterial <= 0) {
+    errors.idMaterial = '* Requerido'
   }
 
   return errors
