@@ -19,7 +19,7 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-import { setAppTitle, addCompraRow, delCompraRow } from '../../actions';
+import { setAppTitle, addCompraRow, delCompraRow, setSelectedProveedor } from '../../actions';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -57,6 +57,11 @@ class Compras extends React.Component {
     this.props.setAppTitle("Compras");
   };
 
+  handleCompraCancel = () => {
+    this.setState({ mode: "Normal" });
+    this.props.setSelectedProveedor();
+  };
+
   renderButtons = () => {
     const {
       classes
@@ -64,6 +69,12 @@ class Compras extends React.Component {
 
     return (
       <div>
+        <Button variant="contained" size="small" className={classes.button}
+          color="secondary"
+          onClick={() => this.handleCompraCancel() } >
+          <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Cancelar
+        </Button>
         <Button variant="contained" size="small" className={classes.button}
           onClick={() => this.setState({ mode: "AddMaterialExistente" }) } >
           <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
@@ -190,7 +201,8 @@ const mapStateToProps = (state) => {
 Compras = connect(mapStateToProps, {
   setAppTitle,
   addCompraRow,
-  delCompraRow
+  delCompraRow,
+  setSelectedProveedor,
 }) (Compras);
 
 export default Compras;
