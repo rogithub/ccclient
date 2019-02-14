@@ -12,13 +12,18 @@ class MaterialesSelector extends React.Component {
     return `${row.nombre || ""} ${row.color || ""} ${row.unidad || ""} ${row.marca || ""} ${row.modelo || ""}`
   }
 
+  setValue = (row) => {
+    this.props.input.onChange(row ? row.idMaterial : -1);
+    this.props.setSelectedMaterial(row);
+  }
+
   componentDidMount = () => {
-    this.props.setSelectedMaterial(-1);
+    this.setValue();
     this.props.setAppPagination({ page:0, pageSize:5 });
   };
 
   getSuggestionValue = (row) => {
-    this.props.setSelectedMaterial(row.idMaterial);
+    this.setValue(row);
     return this.getComposedName(row);
   };
 
@@ -56,39 +61,39 @@ class MaterialesSelector extends React.Component {
 
   handleChange = (newValue, suggestions) => {
     if (!newValue) {
-      return this.props.setSelectedMaterial(-1);
+      return this.setValue();
     }
 
     if (suggestions.filter(it => this.getComposedName(it) === newValue).length === 0) {
-      return this.props.setSelectedMaterial(-1);
+      return this.setValue();
     }
   };
 
   render() {
     return (
-        <AutoComplete label="Material" placeholder="Buscar..."
-          getSuggestions={this.getSuggestions}
-          getSuggestionValue={this.getSuggestionValue}
-          renderSuggestion={this.renderSuggestion}
-          handleChange={this.handleChange}
-         />
+      <AutoComplete label="Material" placeholder="Buscar..."
+        getSuggestions={this.getSuggestions}
+        getSuggestionValue={this.getSuggestionValue}
+        renderSuggestion={this.renderSuggestion}
+        handleChange={this.handleChange}
+       />
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    selectedId: state.materiales.selectedId,
+    selected: state.materiales.selected,
     rows: state.materiales.rows || [],
     totalRows: state.materiales.totalRows || 0,
-    pagination: state.app.pagination
+    pagination: state.app.pagination,
   };
 }
 
 MaterialesSelector = connect(mapStateToProps, {
   fetchMateriales,
+  setAppPagination,
   setSelectedMaterial,
-  setAppPagination
 }) (MaterialesSelector);
 
 export default MaterialesSelector;
