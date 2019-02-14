@@ -69,9 +69,11 @@ class MaterialesSelector extends React.Component {
     }
   };
 
-  render() {    
+  render() {
     return (
-      <AutoComplete componentProps={this.props.componentProps}
+      <AutoComplete
+        meta={this.props.meta}
+        componentProps={this.props.componentProps}
         getSuggestions={this.getSuggestions}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}

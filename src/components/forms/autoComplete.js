@@ -8,14 +8,17 @@ import { withStyles } from '@material-ui/core/styles';
 
 function renderInputComponent(inputProps) {
   const {
+    meta,
     classes,
     inputRef = () => {},
     ref,
     componentProps,
     ...other } = inputProps;
+  const error = meta ? meta.touched && meta.invalid : false;
 
   return (
     <TextField
+      error={error}
       fullWidth
       InputProps={{
         inputRef: node => {
@@ -90,7 +93,7 @@ class AutoComplete extends React.Component {
     const {
       classes,
       getSuggestionValue,
-      renderSuggestion,      
+      renderSuggestion,
       componentProps
     } = this.props;
 
@@ -108,6 +111,7 @@ class AutoComplete extends React.Component {
         <Autosuggest
           {...autosuggestProps}
           inputProps={{
+            meta: this.props.meta,
             componentProps,
             classes,
             value: this.state.popper,
