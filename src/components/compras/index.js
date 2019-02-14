@@ -44,6 +44,9 @@ class Compras extends React.Component {
     mode: "Normal"
   };
 
+  componentWillUnmount() {
+    this.props.setAppTitle();
+  }
   handleFormCancel = () => {
     this.setState({ mode: "Normal" });
   };
