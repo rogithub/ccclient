@@ -68,11 +68,11 @@ class AddMaterialExistente extends React.Component {
         id="add-material-existente-form"
         autoComplete="off">
           <Field name="idMaterial" component={MaterialesSelector} />
-          <Field name="cantidad" inputProps={{
+          <Field name="cantidad" componentProps={{
             label: "Cantidad",
             className: classes.textField
           }} component={TextFieldComponent} />
-          <Field name="precio" inputProps={{
+          <Field name="precio" componentProps={{
             label: "Precio",
             className: classes.textField
           }} component={TextFieldComponent} />
@@ -115,9 +115,7 @@ const validate = values => {
     errors.precio = '* Numérico';
   }
 
-  console.log(errors);
   return errors;
-
 };
 
 const mapStateToProps = (state) => {

@@ -8,6 +8,6 @@ export default (field) => {
   const error = field.meta.touched && field.meta.invalid;
 
   return (
-      <TextField {...field.input} error={error} {...field.inputProps} />
+      <TextField {...field.input} error={error} {...field.componentProps} />
   );
 }
