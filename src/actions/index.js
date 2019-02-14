@@ -30,14 +30,11 @@ export const showConfirm = show => {
 
 
 // Compras BEGIN
-export const addMaterial = material => {
-  return { type: "COMPRAS_ADD_MATERIAL", material }
+export const addCompraRow = row => {
+  return { type: "COMPRAS_ADD_ROW", row }
 };
-export const addServicio = servicio => {
-  return { type: "COMPRAS_ADD_SERVICIO", servicio }
-};
-export const delCompraItem = item => {
-  return { type: "COMPRAS_REMOVE_ITEM", item }
+export const delCompraRow = row => {
+  return { type: "COMPRAS_REMOVE_ROW", row }
 };
 
 // Compras END

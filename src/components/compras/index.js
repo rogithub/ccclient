@@ -18,7 +18,7 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-import { setAppTitle, addServicio, addMaterial, delCompraItem } from '../../actions';
+import { setAppTitle, addCompraRow, delCompraRow } from '../../actions';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -48,7 +48,7 @@ class Compras extends React.Component {
   };
 
   handleAddMaterial = (row) => {
-    this.props.addMaterial(row);
+    this.props.addCompraRow(row);
     this.setState({ mode: "Normal" });
   };
 
@@ -103,7 +103,7 @@ class Compras extends React.Component {
   rendertable = () => {
     const {
       classes,
-      delCompraItem,
+      delCompraRow,
       rows } = this.props;
 
     return (
@@ -136,7 +136,7 @@ class Compras extends React.Component {
                 <TableCell>{r.cantidad * r.precio}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => delCompraItem(r) } >
+                  onClick={() => delCompraRow(r) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -182,9 +182,8 @@ const mapStateToProps = (state) => {
 
 Compras = connect(mapStateToProps, {
   setAppTitle,
-  addServicio,
-  addMaterial,
-  delCompraItem,
+  addCompraRow,
+  delCompraRow
 }) (Compras);
 
 export default Compras;
