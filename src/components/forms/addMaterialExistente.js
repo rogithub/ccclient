@@ -46,6 +46,34 @@ class AddMaterialExistente extends React.Component {
     alert(JSON.stringify(formValues));
   };
 
+  renderCantidad = (field) => {
+    const { classes } = this.props;
+    const error = field.meta.touched && field.meta.invalid;
+    return (
+      <TextField
+        {...field.input}
+        error={error}
+        label="Cantidad"
+        className={classes.textField}
+        margin="normal"
+      />
+    );
+  }
+
+  renderPrecio = (field) => {
+    const { classes } = this.props;
+    const error = field.meta.touched && field.meta.invalid;
+    return (
+      <TextField
+        {...field.input}
+        error={error}
+        label="Precio"
+        className={classes.textField}
+        margin="normal"
+      />
+    );
+  }
+
   render() {
     const { handleSubmit, classes } = this.props;
 
@@ -55,20 +83,9 @@ class AddMaterialExistente extends React.Component {
         id="add-material-existente-form"
         autoComplete="off">
         <Field name="idMaterial" component={MaterialesSelector} />
+        <Field name="cantidad" component={this.renderCantidad} />
+        <Field name="precio" component={this.renderPrecio} />
 
-          <TextField
-            id="cantidad"
-            label="Cantidad"
-            className={classes.textField}
-            margin="normal"
-          />
-
-          <TextField
-            id="precioUnitario"
-            label="Precio Unitario"
-            className={classes.textField}
-            margin="normal"
-          />
           <div>
             <Button variant="contained" color="default" className={classes.button}
               onClick={ () => this.handleCancel() } >
@@ -89,6 +106,22 @@ const validate = values => {
   const errors = {}
   if (values.idMaterial <= 0) {
     errors.idMaterial = '* Requerido'
+  }
+
+  if (isNaN(values.cantidad)) {
+    errors.cantidad = '* Numérico'
+  }
+
+  if (values.cantidad <= 0) {
+    errors.cantidad = '* Requerido'
+  }
+
+  if (isNaN(values.precio)) {
+    errors.precio = '* Numérico'
+  }
+
+  if (values.precio <= 0) {
+    errors.precio = '* Requerido'
   }
 
   return errors
