@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ProveedoresSelector from '../forms/proveedoresSelector';
 import AddMaterialExistente from '../forms/addMaterialExistente';
+import AddMaterialNuevo from '../forms/addMaterialNuevo';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -34,6 +35,9 @@ const styles = theme => ({
 });
 
 class Compras extends React.Component {
+  getComposedName = (material) => {
+    return `${material.nombre || ""} ${material.color || ""} ${material.marca || ""} ${material.modelo || ""}`
+  }
 
   state = {
     mode: "Normal"
@@ -43,7 +47,7 @@ class Compras extends React.Component {
     this.setState({ mode: "Normal" });
   };
 
-  handleAddExisting = (row) => {
+  handleAddMaterial = (row) => {
     this.props.addMaterial(row);
     this.setState({ mode: "Normal" });
   };
@@ -60,12 +64,12 @@ class Compras extends React.Component {
     return (
       <div>
         <Button variant="contained" size="small" className={classes.button}
-          onClick={() => this.setState({ mode: "AddMaterial" }) } >
+          onClick={() => this.setState({ mode: "AddMaterialExistente" }) } >
           <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
           Material Existente
         </Button>
         <Button variant="contained" size="small" className={classes.button}
-          onClick={() => this.setState({ mode: "AddMaterial" }) } >
+          onClick={() => this.setState({ mode: "AddMaterialNuevo" }) } >
           <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
           Material Nuevo
         </Button>
@@ -82,12 +86,15 @@ class Compras extends React.Component {
     switch(this.state.mode) {
       case "Normal":
         return this.renderButtons();
-      case "AddMaterial":
+      case "AddMaterialExistente":
         return <AddMaterialExistente
-        onCancel={this.handleFormCancel} onSave={this.handleAddExisting} />;
+        onCancel={this.handleFormCancel} onSave={this.handleAddMaterial} />;
+      case "AddMaterialNuevo":
+        return <AddMaterialNuevo
+        onCancel={this.handleFormCancel} onSave={this.handleAddMaterial} />;
       case "AddServicio":
         return <AddMaterialExistente
-        onCancel={this.handleFormCancel} onSave={this.handleAddExisting} />;
+        onCancel={this.handleFormCancel} onSave={this.handleAddMaterial} />;
       default:
         return this.renderButtons();
     }
@@ -121,9 +128,9 @@ class Compras extends React.Component {
           {rows.map(r => {
             return (
               <TableRow hover key={rows.indexOf(r)}>
-                <TableCell numeric>{r.idMaterial}</TableCell>
-                <TableCell>{r.nombre}</TableCell>
-                <TableCell>{r.unidad}</TableCell>
+                <TableCell numeric>{r.material.idMaterial}</TableCell>
+                <TableCell>{this.getComposedName(r.material)}</TableCell>
+                <TableCell>{r.material.unidad}</TableCell>
                 <TableCell>{r.cantidad}</TableCell>
                 <TableCell>{r.precio}</TableCell>
                 <TableCell>{r.cantidad * r.precio}</TableCell>

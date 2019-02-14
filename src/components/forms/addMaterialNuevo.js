@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import TextFieldComponent from './textFieldComponent';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
@@ -33,42 +34,30 @@ const styles = theme => ({
 
 
 class AddMaterialNuevo extends React.Component {
-  getComposedName = (material) => {
-    return `${material.nombre || ""} ${material.color || ""} ${material.marca || ""} ${material.modelo || ""}`
-  }
 
   handleCancel = () => {
-    document.getElementById("add-material-existente-form").reset();
     if (this.props.onCancel) {
       this.props.onCancel();
     }
   };
 
   onSubmit = formValues => {
-    const m = this.props.material;
     if (this.props.onSave) {
       this.props.onSave({
-        ...formValues,
-        nombre: this.getComposedName(m),
-        idMaterial: m.idMaterial,
-        unidad: m.unidad
+        cantidad: formValues.cantidad,
+        precio: formValues.cantidad,
+        material: {
+          idMaterial:0,
+          activo:true,
+          nombre: formValues.nombre,
+          color: formValues.color,
+          unidad: formValues.unidad,
+          marca: formValues.marca,
+          modelo: formValues.modelo,
+          comentarios: formValues.comentarios,
+        }
       });
     }
-    document.getElementById("add-material-existente-form").reset();
-  };
-  
-  renderField = (field) => {
-    const { classes } = this.props;
-    const error = field.meta.touched && field.meta.invalid;
-    return (
-      <TextField
-        {...field.input}
-        error={error}
-        label={field.label}
-        className={classes.textField}
-        margin="normal"
-      />
-    );
   };
 
   render() {
@@ -77,21 +66,56 @@ class AddMaterialNuevo extends React.Component {
     return (
         <form className={classes.container} noValidate
         onSubmit={handleSubmit(this.onSubmit)}
-        id="add-material-existente-form"
         autoComplete="off">
 
-        <Field name="cantidad" label="Cantidad" component={this.renderCantidad} />
-        <Field name="precio" label="Precio" component={this.renderPrecio} />
+          <Field name="nombre" componentProps={{
+            label: "Nombre",
+            className: classes.textField
+          }} component={TextFieldComponent} />
+
+          <Field name="color" componentProps={{
+            label: "Color",
+            className: classes.textField
+          }} component={TextFieldComponent} />
+
+          <Field name="unidad" componentProps={{
+            label: "Unidad",
+            className: classes.textField
+          }} component={TextFieldComponent} />
+
+          <Field name="marca" componentProps={{
+            label: "Marca",
+            className: classes.textField
+          }} component={TextFieldComponent} />
+
+          <Field name="modelo" componentProps={{
+            label: "Modelo",
+            className: classes.textField
+          }} component={TextFieldComponent} />
+
+          <Field name="comentarios" componentProps={{
+            label: "Comentarios",
+            className: classes.textField
+          }} component={TextFieldComponent} />
+
+          <Field name="cantidad" componentProps={{
+            label: "Cantidad",
+            className: classes.textField
+          }} component={TextFieldComponent} />
+          <Field name="precio" componentProps={{
+            label: "Precio",
+            className: classes.textField
+          }} component={TextFieldComponent} />
 
           <div>
+            <Button type="submit" variant="contained" color="primary" className={classes.button}>
+              Guardar
+              <Save className={classes.rightIcon}>send</Save>
+            </Button>
             <Button variant="contained" color="default" className={classes.button}
               onClick={ () => this.handleCancel() } >
               Cancelar
               <NavigateBefore className={classes.rightIcon}>send</NavigateBefore>
-            </Button>
-            <Button type="submit" variant="contained" color="primary" className={classes.button}>
-              Guardar
-              <Save className={classes.rightIcon}>send</Save>
             </Button>
           </div>
         </form>
@@ -101,34 +125,52 @@ class AddMaterialNuevo extends React.Component {
 
 const validate = values => {
   const errors = {}
-  if (values.idMaterial <= 0) {
-    errors.idMaterial = '* Requerido'
+  if (!values.nombre) {
+    errors.nombre = '* Requerido'
+  }
+
+  if (!values.color) {
+    errors.color = '* Requerido'
+  }
+
+  if (!values.unidad) {
+    errors.unidad = '* Requerido'
+  }
+
+  if (!values.cantidad) {
+    errors.cantidad = '* Requerido';
   }
 
   if (isNaN(values.cantidad)) {
-    errors.cantidad = '* Numérico'
+    errors.cantidad = '* Numérico';
   }
 
-  if (values.cantidad <= 0) {
-    errors.cantidad = '* Requerido'
+  if (!values.precio) {
+    errors.precio = '* Requerido';
   }
 
   if (isNaN(values.precio)) {
-    errors.precio = '* Numérico'
+    errors.precio = '* Numérico';
   }
 
-  if (values.precio <= 0) {
-    errors.precio = '* Requerido'
-  }
-
-  return errors
+  return errors;
 };
 
+const mapStateToProps = (state) => {
+  return {
+
+  };
+}
+
+AddMaterialNuevo = connect(mapStateToProps, {
+
+}) (AddMaterialNuevo);
+
 AddMaterialNuevo = reduxForm({
-  form: 'addMaterialExistente',
+  form: 'frmAddMaterialNuevo',
   validate,
   enableReinitialize: true
-})(AddMaterialExistente);
+})(AddMaterialNuevo);
 
 AddMaterialNuevo.propTypes = {
   classes: PropTypes.object.isRequired,

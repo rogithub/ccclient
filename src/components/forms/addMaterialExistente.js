@@ -35,10 +35,6 @@ const styles = theme => ({
 
 
 class AddMaterialExistente extends React.Component {
-  getComposedName = (material) => {
-    return `${material.nombre || ""} ${material.color || ""} ${material.marca || ""} ${material.modelo || ""}`
-  }
-
   handleCancel = () => {
     if (this.props.onCancel) {
       this.props.onCancel();
@@ -49,10 +45,9 @@ class AddMaterialExistente extends React.Component {
     const m = this.props.material;
     if (this.props.onSave) {
       this.props.onSave({
-        ...formValues,
-        nombre: this.getComposedName(m),
-        idMaterial: m.idMaterial,
-        unidad: m.unidad
+        cantidad: formValues.cantidad,
+        precio: formValues.cantidad,
+        material: m
       });
     }
   };
@@ -62,7 +57,7 @@ class AddMaterialExistente extends React.Component {
 
     return (
         <form className={classes.container} noValidate
-        onSubmit={handleSubmit(this.onSubmit)}        
+        onSubmit={handleSubmit(this.onSubmit)}
         autoComplete="off">
           <Field name="idMaterial" componentProps={{
                                       label: "Material",
@@ -130,7 +125,7 @@ AddMaterialExistente = connect(mapStateToProps, {
 }) (AddMaterialExistente);
 
 AddMaterialExistente = reduxForm({
-  form: 'addMaterialExistente',
+  form: 'frmAddMaterialExistente',
   validate,
   enableReinitialize: true
 })(AddMaterialExistente);
