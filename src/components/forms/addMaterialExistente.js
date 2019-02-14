@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -34,6 +35,9 @@ const styles = theme => ({
 
 
 class AddMaterialExistente extends React.Component {
+  getComposedName = (material) => {
+    return `${material.nombre || ""} ${material.color || ""} ${material.marca || ""} ${material.modelo || ""}`
+  }
 
   handleCancel = () => {
     document.getElementById("add-material-existente-form").reset();
@@ -43,7 +47,16 @@ class AddMaterialExistente extends React.Component {
   };
 
   onSubmit = formValues => {
-    alert(JSON.stringify(formValues));
+    const m = this.props.material;
+    if (this.props.onSave) {
+      this.props.onSave({
+        ...formValues,
+        nombre: this.getComposedName(m),
+        idMaterial: m.idMaterial,
+        unidad: m.unidad
+      });
+    }
+    document.getElementById("add-material-existente-form").reset();
   };
 
   renderCantidad = (field) => {
@@ -126,6 +139,16 @@ const validate = values => {
 
   return errors
 };
+
+const mapStateToProps = (state) => {
+  return {
+    material: state.materiales.selected
+  };
+}
+
+AddMaterialExistente = connect(mapStateToProps, {
+
+}) (AddMaterialExistente);
 
 AddMaterialExistente = reduxForm({
   form: 'addMaterialExistente',

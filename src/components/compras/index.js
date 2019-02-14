@@ -40,7 +40,12 @@ class Compras extends React.Component {
   };
 
   handleFormCancel = () => {
-    this.setState({ mode: "Normal" })
+    this.setState({ mode: "Normal" });
+  };
+
+  handleAddExisting = (row) => {
+    this.props.addMaterial(row);
+    this.setState({ mode: "Normal" });
   };
 
   componentDidMount = () => {
@@ -78,9 +83,11 @@ class Compras extends React.Component {
       case "Normal":
         return this.renderButtons();
       case "AddMaterial":
-        return <AddMaterialExistente onCancel={this.handleFormCancel} />;
+        return <AddMaterialExistente
+        onCancel={this.handleFormCancel} onSave={this.handleAddExisting} />;
       case "AddServicio":
-          return <AddMaterialExistente onCancel={this.handleFormCancel} />;
+        return <AddMaterialExistente
+        onCancel={this.handleFormCancel} onSave={this.handleAddExisting} />;
       default:
         return this.renderButtons();
     }
@@ -111,18 +118,18 @@ class Compras extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-          {rows.map(row => {
+          {rows.map(r => {
             return (
-              <TableRow hover key={rows.indexOf(row)}>
-                <TableCell numeric>{1}</TableCell>
-                <TableCell>Hilo Nylon #30</TableCell>
-                <TableCell>Rollo</TableCell>
-                <TableCell>10</TableCell>
-                <TableCell>$150.00</TableCell>
-                <TableCell>$1,500.00</TableCell>
+              <TableRow hover key={rows.indexOf(r)}>
+                <TableCell numeric>{r.idMaterial}</TableCell>
+                <TableCell>{r.nombre}</TableCell>
+                <TableCell>{r.unidad}</TableCell>
+                <TableCell>{r.cantidad}</TableCell>
+                <TableCell>{r.precio}</TableCell>
+                <TableCell>{r.cantidad * r.precio}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => delCompraItem(row) } >
+                  onClick={() => delCompraItem(r) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
