@@ -39,12 +39,7 @@ class AddMaterialExistente extends React.Component {
     return `${material.nombre || ""} ${material.color || ""} ${material.marca || ""} ${material.modelo || ""}`
   }
 
-  resetForm = () => {
-    document.getElementById("add-material-existente-form").reset();    
-  }
-
   handleCancel = () => {
-    this.resetForm();
     if (this.props.onCancel) {
       this.props.onCancel();
     }
@@ -59,7 +54,6 @@ class AddMaterialExistente extends React.Component {
         idMaterial: m.idMaterial,
         unidad: m.unidad
       });
-      this.resetForm();
     }
   };
 
@@ -68,8 +62,7 @@ class AddMaterialExistente extends React.Component {
 
     return (
         <form className={classes.container} noValidate
-        onSubmit={handleSubmit(this.onSubmit)}
-        id="add-material-existente-form"
+        onSubmit={handleSubmit(this.onSubmit)}        
         autoComplete="off">
           <Field name="idMaterial" componentProps={{
                                       label: "Material",
