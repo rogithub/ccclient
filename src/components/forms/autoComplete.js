@@ -12,8 +12,7 @@ function renderInputComponent(inputProps) {
   return (
     <TextField
       error={showError}
-      fullWidth
-      margin="normal"
+      fullWidth      
       InputProps={{
         inputRef: node => {
           ref(node);

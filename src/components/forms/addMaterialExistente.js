@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import MaterialesSelector from './materialesSelector';
+import TextFieldComponent from './textFieldComponent';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
@@ -59,20 +59,6 @@ class AddMaterialExistente extends React.Component {
     document.getElementById("add-material-existente-form").reset();
   };
 
-  renderField = (field) => {
-    const { classes } = this.props;
-    const error = field.meta.touched && field.meta.invalid;
-    return (
-      <TextField
-        {...field.input}
-        error={error}
-        label={field.label}
-        className={classes.textField}
-        margin="normal"
-      />
-    );
-  };
-
   render() {
     const { handleSubmit, classes } = this.props;
 
@@ -82,8 +68,8 @@ class AddMaterialExistente extends React.Component {
         id="add-material-existente-form"
         autoComplete="off">
         <Field name="idMaterial" component={MaterialesSelector} />
-        <Field name="cantidad" label="Cantidad" component={this.renderField} />
-        <Field name="precio" label="Precio" component={this.renderField} />
+        <Field name="cantidad" label="Cantidad" className={classes.textField} component={TextFieldComponent} />
+        <Field name="precio" label="Precio" className={classes.textField} component={TextFieldComponent} />
 
           <div>
             <Button variant="contained" color="default" className={classes.button}
