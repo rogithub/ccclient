@@ -68,11 +68,11 @@ class AddMaterialExistente extends React.Component {
         id="add-material-existente-form"
         autoComplete="off">
           <Field name="idMaterial" component={MaterialesSelector} />
-          <Field name="cantidad" input={{
+          <Field name="cantidad" inputProps={{
             label: "Cantidad",
             className: classes.textField
           }} component={TextFieldComponent} />
-          <Field name="precio" input={{
+          <Field name="precio" inputProps={{
             label: "Precio",
             className: classes.textField
           }} component={TextFieldComponent} />
@@ -95,27 +95,29 @@ class AddMaterialExistente extends React.Component {
 
 const validate = values => {
   const errors = {}
-  if (values.idMaterial <= 0) {
-    errors.idMaterial = '* Requerido'
+  if (!values.idMaterial || values.idMaterial <= 0) {
+    errors.idMaterial = '* Requerido';
+  }
+
+  if (!values.cantidad) {
+    errors.cantidad = '* Requerido';
   }
 
   if (isNaN(values.cantidad)) {
-    errors.cantidad = '* Numérico'
+    errors.cantidad = '* Numérico';
   }
 
-  if (values.cantidad <= 0) {
-    errors.cantidad = '* Requerido'
+  if (!values.precio) {
+    errors.precio = '* Requerido';
   }
 
   if (isNaN(values.precio)) {
-    errors.precio = '* Numérico'
+    errors.precio = '* Numérico';
   }
 
-  if (values.precio <= 0) {
-    errors.precio = '* Requerido'
-  }
+  console.log(errors);
+  return errors;
 
-  return errors
 };
 
 const mapStateToProps = (state) => {
