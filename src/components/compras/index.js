@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import ProveedoresSelector from '../forms/proveedoresSelector';
 import AddMaterialExistente from '../forms/addMaterialExistente';
 import AddMaterialNuevo from '../forms/addMaterialNuevo';
+import AddServicio from '../forms/addServicio';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -47,7 +48,7 @@ class Compras extends React.Component {
     this.setState({ mode: "Normal" });
   };
 
-  handleAddMaterial = (row) => {
+  handleAddRow = (row) => {
     this.props.addCompraRow(row);
     this.setState({ mode: "Normal" });
   };
@@ -88,13 +89,13 @@ class Compras extends React.Component {
         return this.renderButtons();
       case "AddMaterialExistente":
         return <AddMaterialExistente
-        onCancel={this.handleFormCancel} onSave={this.handleAddMaterial} />;
+        onCancel={this.handleFormCancel} onSave={this.handleAddRow} />;
       case "AddMaterialNuevo":
         return <AddMaterialNuevo
-        onCancel={this.handleFormCancel} onSave={this.handleAddMaterial} />;
+        onCancel={this.handleFormCancel} onSave={this.handleAddRow} />;
       case "AddServicio":
-        return <AddMaterialExistente
-        onCancel={this.handleFormCancel} onSave={this.handleAddMaterial} />;
+        return <AddServicio
+        onCancel={this.handleFormCancel} onSave={this.handleAddRow} />;
       default:
         return this.renderButtons();
     }
@@ -128,9 +129,15 @@ class Compras extends React.Component {
           {rows.map(r => {
             return (
               <TableRow hover key={rows.indexOf(r)}>
-                <TableCell numeric>{r.material.idMaterial}</TableCell>
-                <TableCell>{this.getComposedName(r.material)}</TableCell>
-                <TableCell>{r.material.unidad}</TableCell>
+                <TableCell numeric>
+                  { r.material ? r.material.idMaterial : rows.indexOf(r) }
+                </TableCell>
+                <TableCell>
+                  { r.material ? this.getComposedName(r.material) : r.descripcion }
+                  </TableCell>
+                <TableCell>
+                  { r.material ? r.material.unidad: "Servicio" }
+                </TableCell>
                 <TableCell>{r.cantidad}</TableCell>
                 <TableCell>{r.precio}</TableCell>
                 <TableCell>{r.cantidad * r.precio}</TableCell>
