@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
+import SaveIcon from '@material-ui/icons/Save';
 import Typography from '@material-ui/core/Typography';
 import { setAppTitle, addCompraRow, delCompraRow, setSelectedProveedor } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
@@ -39,6 +40,9 @@ const styles = theme => ({
   iconSmall: {
     fontSize: 20,
   },
+  alignRight: {
+    'text-align': 'right'
+  }
 });
 
 class Compras extends React.Component {
@@ -80,12 +84,6 @@ class Compras extends React.Component {
     return (
       <div>
         <Button variant="contained" size="small" className={classes.button}
-          color="secondary"
-          onClick={() => this.handleCompraCancel() } >
-          <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-          Cancelar
-        </Button>
-        <Button variant="contained" size="small" className={classes.button}
           onClick={() => this.setState({ mode: "AddMaterialExistente" }) } >
           <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
           Material Existente
@@ -124,19 +122,14 @@ class Compras extends React.Component {
 
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
-  rendertable = () => {
+  renderTable = () => {
     const {
       iva,
       classes,
       delCompraRow,
       rows } = this.props;
-
     return (
       <div>
-      { this.renderEditArea() }
-      <Typography gutterBottom variant="title">
-        {this.props.selected.empresa}
-      </Typography>
         <Table>
           <TableHead>
             <TableRow>
@@ -176,27 +169,61 @@ class Compras extends React.Component {
           })}
             <TableRow>
               <TableCell colSpan={4} />
-              <TableCell align="right">Subtotal</TableCell>
-              <TableCell align="right">{getSubtotalCurr(rows, this.subtotalReducer)}</TableCell>
+              <TableCell className={classes.alignRight}>Subtotal</TableCell>
+              <TableCell>{getSubtotalCurr(rows, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
-              <TableCell align="right">
-                $ {iva}
+              <TableCell className={classes.alignRight}>
+                IVA {iva}%
               </TableCell>
-              <TableCell align="right">{getSubtotalMasIVACurr(rows, iva, this.subtotalReducer)}</TableCell>
+              <TableCell>{getSubtotalMasIVACurr(rows, iva, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
-              <TableCell align="right">Total</TableCell>
-              <TableCell align="right">{getTotalCurr(rows, iva, this.subtotalReducer)}</TableCell>
+              <TableCell className={classes.alignRight}>Total</TableCell>
+              <TableCell>{getTotalCurr(rows, iva, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
         </Table>
+        <div className={classes.alignRight}>
+          <Button variant="contained" size="small" className={classes.button}
+            color="secondary"
+            onClick={() => this.handleCompraCancel() } >
+            <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+            Cancelar
+          </Button>
+          <Button variant="contained" size="small" className={classes.button}
+            color="primary"
+            onClick={() => this.handleCompraCancel() } >
+            <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+            Guardar
+          </Button>
+        </div>
       </div>
+    );
+  }
+
+  renderSelectProveedor = () => {
+    return <ProveedoresSelector
+      componentProps={{
+        label: "Proveedor",
+        placeholder: "Buscar..."
+    }} />
+  };
+
+  renderMainArea = () => {
+    return (
+      <div>
+        { this.renderEditArea() }
+        <Typography gutterBottom variant="title">
+          {this.props.selected.empresa}
+        </Typography>
+        { this.renderTable() }
+        </div>
     );
   };
 
@@ -206,11 +233,8 @@ class Compras extends React.Component {
       <div>
         <Paper className={classes.root}>
             { this.props.selected ?
-              this.rendertable() :
-              <ProveedoresSelector componentProps={{
-                                      label: "Proveedor",
-                                      placeholder: "Buscar..."
-                                    }} />
+              this.renderMainArea() :
+              this.renderSelectProveedor()
             }
         </Paper>
       </div>
