@@ -51,7 +51,7 @@ class Compras extends React.Component {
   }
 
   state = {
-    mode: "Normal"
+    mode: "Main"
   };
 
   componentWillUnmount= () => {
@@ -59,12 +59,12 @@ class Compras extends React.Component {
   };
 
   handleFormCancel = () => {
-    this.setState({ mode: "Normal" });
+    this.setState({ mode: "Main" });
   };
 
   handleAddRow = (row) => {
     this.props.addCompraRow(row);
-    this.setState({ mode: "Normal" });
+    this.setState({ mode: "Main" });
   };
 
   componentDidMount = () => {
@@ -72,7 +72,7 @@ class Compras extends React.Component {
   };
 
   handleCompraCancel = () => {
-    this.setState({ mode: "Normal" });
+    this.setState({ mode: "Main" });
     this.props.setSelectedProveedor();
   };
 
@@ -102,19 +102,41 @@ class Compras extends React.Component {
     );
   };
 
+  renderWithTitle = (title, control) => {
+    return (
+      <div>
+        <Typography gutterBottom variant="title">
+          {title}
+        </Typography>
+        {control}
+      </div>
+    );
+  };
+
   renderEditArea = () => {
     switch(this.state.mode) {
-      case "Normal":
+      case "Main":
         return this.renderButtons();
       case "AddMaterialExistente":
-        return <AddMaterialExistente
-        onCancel={this.handleFormCancel} onSave={this.handleAddRow} />;
+        return this.renderWithTitle("Agregar Material Existente",
+          <AddMaterialExistente
+          onCancel={this.handleFormCancel}
+          onSave={this.handleAddRow} />
+        );
+
       case "AddMaterialNuevo":
-        return <AddMaterialNuevo
-        onCancel={this.handleFormCancel} onSave={this.handleAddRow} />;
+        return this.renderWithTitle("Agregar Material Nuevo",
+          <AddMaterialNuevo
+          onCancel={this.handleFormCancel}
+          onSave={this.handleAddRow} />
+        );
+
       case "AddServicio":
-        return <AddServicio
-        onCancel={this.handleFormCancel} onSave={this.handleAddRow} />;
+        return this.renderWithTitle("Agregar Servicio",
+          <AddServicio
+          onCancel={this.handleFormCancel}
+          onSave={this.handleAddRow} />
+        );
       default:
         return this.renderButtons();
     }
@@ -123,6 +145,7 @@ class Compras extends React.Component {
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
   renderTable = () => {
+    if (this.state.mode !== "Main") return null;
     const {
       iva,
       classes,
@@ -208,20 +231,21 @@ class Compras extends React.Component {
   }
 
   renderSelectProveedor = () => {
-    return <ProveedoresSelector
-      componentProps={{
-        label: "Proveedor",
-        placeholder: "Buscar..."
-    }} />
+    return this.renderWithTitle("Seleccionar Proveedor",
+      <ProveedoresSelector
+        componentProps={{
+          placeholder: "Escriba aquí para comenzar a buscar..."
+      }} />
+    );
   };
 
   renderMainArea = () => {
     return (
       <div>
-        { this.renderEditArea() }
         <Typography gutterBottom variant="title">
           {this.props.selected.empresa}
         </Typography>
+        { this.renderEditArea() }
         { this.renderTable() }
         </div>
     );
