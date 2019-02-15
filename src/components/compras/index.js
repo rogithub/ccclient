@@ -21,6 +21,11 @@ import Typography from '@material-ui/core/Typography';
 
 import { setAppTitle, addCompraRow, delCompraRow, setSelectedProveedor } from '../../actions';
 const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
   button: {
     margin: theme.spacing.unit,
   },
@@ -171,9 +176,10 @@ class Compras extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <Paper>
+        <Paper className={classes.root}>
             { this.props.selected ?
               this.rendertable() :
               <ProveedoresSelector componentProps={{
