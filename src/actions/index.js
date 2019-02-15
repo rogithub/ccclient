@@ -37,6 +37,9 @@ export const delCompraRow = row => {
 export const setRowToDeleteCompra = row => {
   return { type: "SET_TO_DELETE_COMPRAS", row }
 }
+export const resetCompra = () => {
+  return { type: "RESET_COMPRAS" }
+}
 // Compras END
 
 // Proveedores Actions BEGIN

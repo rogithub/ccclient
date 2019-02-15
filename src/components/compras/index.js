@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router";
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -22,7 +23,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import Typography from '@material-ui/core/Typography';
 import DialogConfirm from '../dialogs/dlgConfirm';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor } from '../../actions';
+import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor, resetCompra, } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
 
 const styles = theme => ({
@@ -83,7 +84,8 @@ class Compras extends React.Component {
 
   handleConfirmCompraCancell = () => {
     this.setState({ showCancelCompraDialog: false });
-    alert("Cancelling...");
+    this.props.resetCompra();
+    this.props.history.push(`/`);
   }
 
   handleCompraCancel = () => {
@@ -345,8 +347,7 @@ class Compras extends React.Component {
           Cancelar
         </Button>
         : // note ternary operator hasRows
-        <Button variant="contained" size="small" className={classes.button}
-          color="primary"
+        <Button variant="contained" size="small" className={classes.button}          
           onClick={() => this.handleCompraCancel() } >
           <NavigateBefore className={classNames(classes.leftIcon, classes.iconSmall)} />
           Cancelar
@@ -388,6 +389,8 @@ Compras.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+Compras = withRouter(Compras);
+
 Compras = withStyles(styles)(Compras);
 
 const mapStateToProps = (state) => {
@@ -405,6 +408,7 @@ Compras = connect(mapStateToProps, {
   delCompraRow,
   setRowToDeleteCompra,
   setSelectedProveedor,
+  resetCompra
 }) (Compras);
 
 export default Compras;

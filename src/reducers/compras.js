@@ -13,7 +13,12 @@ export default (state = {}, action) => {
       return Object.assign({}, state, {
         rows: state.rows.filter(it => it !== action.row),
         toDelete: undefined
-      });    
+      });
+    case 'RESET_COMPRAS':
+      return Object.assign({}, state, {
+        toDelete: undefined,
+        rows: []
+      });
     default:
       return state;
   }
