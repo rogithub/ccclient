@@ -157,7 +157,7 @@ class Compras extends React.Component {
                 </TableCell>
                 <TableCell>{r.cantidad}</TableCell>
                 <TableCell>{formatCurrency(r.precio)}</TableCell>
-                <TableCell>{formatCurrency(r.cantidad * r.precio)}</TableCell>
+                <TableCell className={classes.alignRight}>{formatCurrency(r.cantidad * r.precio)}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
                   onClick={() => delCompraRow(r) } >
@@ -170,7 +170,7 @@ class Compras extends React.Component {
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell className={classes.alignRight}>Subtotal</TableCell>
-              <TableCell>{getSubtotalCurr(rows, this.subtotalReducer)}</TableCell>
+              <TableCell className={classes.alignRight}>{getSubtotalCurr(rows, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
@@ -178,13 +178,13 @@ class Compras extends React.Component {
               <TableCell className={classes.alignRight}>
                 IVA {iva}%
               </TableCell>
-              <TableCell>{getSubtotalMasIVACurr(rows, iva, this.subtotalReducer)}</TableCell>
+              <TableCell className={classes.alignRight}>{getSubtotalMasIVACurr(rows, iva, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell className={classes.alignRight}>Total</TableCell>
-              <TableCell>{getTotalCurr(rows, iva, this.subtotalReducer)}</TableCell>
+              <TableCell className={classes.alignRight}>{getTotalCurr(rows, iva, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
