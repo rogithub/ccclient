@@ -16,8 +16,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelMaterial from '../dialogs/dlgConfirm';
 import TablePagination from '../forms/tblPagination';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import { setAppPagination, fetchMateriales, setAppTitle, showConfirm,
-delMaterial, setSelectedMaterial, removeMaterialRow } from '../../actions';
+import { setAppPagination, fetchMateriales, setAppTitle,
+  delMaterial, setRowToDeleteMaterial, removeMaterialRow } from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -69,30 +69,27 @@ class TblMateriales extends React.Component {
     this.props.fetchMateriales((page * pageSize), pageSize, "");
   };
 
-  handleSelectRow = row => {
-    this.props.setSelectedMaterial(row);
-    this.props.showConfirm(true);
-  }
-
   handleDeleteRow = () => {
-    const row = this.props.selected;
+    const row = this.props.toDelete;
     this.props.delMaterial(row.idMaterial);
     this.props.removeMaterialRow(row);
   }
 
   render () {
-    const { classes, history, rows, totalRows } = this.props;
+    const { classes, history, rows, totalRows, setRowToDeleteMaterial } = this.props;
     const { page, pageSize } = this.props.pagination || { page: 0, pageSize: 5};
 
     return (
       <Paper className={classes.root}>
         <ConfirmDelMaterial
+          open={this.props.toDelete !== undefined}
           handleConfirm={this.handleDeleteRow}
+          handleCancel={() => setRowToDeleteMaterial()}
           title="¿Desea borrar éste material?"
           confirmText="Borrar">
           <DialogContentText id="alert-dialog-description">
-            { this.props.selected ?
-              <b>{"[Folio: " + this.props.selected.idMaterial + "] " + this.props.selected.nombre}</b> :
+            { this.props.toDelete ?
+              <b>{"[Folio: " + this.props.toDelete.idMaterial + "] " + this.props.toDelete.nombre}</b> :
               null
             }
           </DialogContentText>
@@ -132,7 +129,7 @@ class TblMateriales extends React.Component {
                     <EditIcon fontSize="small" />
                   </IconButton>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => this.handleSelectRow(row) } >
+                  onClick={() => setRowToDeleteMaterial(row)} >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -165,7 +162,7 @@ const mapStateToProps = (state) => {
     rows: state.materiales.rows || [],
     totalRows: state.materiales.totalRows || 0,
     pagination: state.app.pagination,
-    selected: state.materiales.selected
+    toDelete: state.materiales.toDelete,
   };
 }
 
@@ -174,8 +171,7 @@ TblMateriales = connect(mapStateToProps, {
   setAppTitle,
   setAppPagination,
   delMaterial,
-  showConfirm,
-  setSelectedMaterial,
+  setRowToDeleteMaterial,
   removeMaterialRow
 }) (TblMateriales);
 

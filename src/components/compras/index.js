@@ -21,7 +21,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import Typography from '@material-ui/core/Typography';
 import DialogConfirm from '../dialogs/dlgConfirm';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import { setAppTitle, addCompraRow, delCompraRow, selCompraRow, showConfirm, setSelectedProveedor } from '../../actions';
+import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
 
 const styles = theme => ({
@@ -150,19 +150,13 @@ class Compras extends React.Component {
     alert("Guardar al server!");
   };
 
-  handleSelectRow = row => {
-    this.props.selCompraRow(row);
-    this.props.showConfirm(true);
-  };
-
   handleDeleteRow = () => {
-    const row = this.props.selected;
+    const row = this.props.toDelete;
     this.props.delCompraRow(row);
-    this.props.selCompraRow();
   }
 
-  getDelRowDialogContent = () => {    
-    const r = this.props.selected;
+  getDelRowDialogContent = () => {
+    const r = this.props.toDelete;
     if (!r) return null
 
     return (<DialogContentText id="alert-dialog-description">
@@ -177,12 +171,15 @@ class Compras extends React.Component {
     const {
       iva,
       classes,
-      rows
+      rows,
+      setRowToDeleteCompra
      } = this.props;
     return (
       <div>
         <DialogConfirm
+          open={this.props.toDelete !== undefined}
           handleConfirm={this.handleDeleteRow}
+          handleCancel={() => setRowToDeleteCompra()}
           title="¿Desea borrar éste renglón?"
           confirmText="Borrar">
           {this.getDelRowDialogContent()}
@@ -217,7 +214,7 @@ class Compras extends React.Component {
                 <TableCell className={classes.alignRight}>{formatCurrency(r.cantidad * r.precio)}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => this.handleSelectRow(r) } >
+                  onClick={() => setRowToDeleteCompra(r) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -310,7 +307,7 @@ const mapStateToProps = (state) => {
   return {
     iva: state.app.iva,
     rows: state.compras.rows || [],
-    selected: state.compras.selected,
+    toDelete: state.compras.toDelete,
     proveedor: state.proveedores.selected,
   };
 }
@@ -319,9 +316,8 @@ Compras = connect(mapStateToProps, {
   setAppTitle,
   addCompraRow,
   delCompraRow,
-  selCompraRow,
+  setRowToDeleteCompra,
   setSelectedProveedor,
-  showConfirm,
 }) (Compras);
 
 export default Compras;

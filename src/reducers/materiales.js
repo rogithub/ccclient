@@ -2,6 +2,10 @@
 
 export default (state = {}, action) => {
   switch (action.type) {
+    case 'SET_TO_DELETE_MATERIAL':
+      return Object.assign({}, state, {
+        toDelete: action.row
+      });
     case 'SET_SELECTED_MATERIAL':
       return Object.assign({}, state, {
         selected: action.material
@@ -13,7 +17,8 @@ export default (state = {}, action) => {
       });
     case 'REMOVE_MATERIAL_ROW':
       return Object.assign({}, state, {
-        rows: state.rows.filter(it => it !== action.row)
+        rows: state.rows.filter(it => it !== action.row),
+        toDelete: undefined
       });
     case 'FETCH_ONE_MATERIALES':
       return Object.assign({}, state, {

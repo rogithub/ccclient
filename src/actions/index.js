@@ -26,12 +26,6 @@ export const setAppPagination = pagination => {
 };
 // APP Global Actions END
 
-// Dialogs BEGIN
-export const showConfirm = show => {
-  return { type: "DIALOGS_SHOW_CONFIRM", show }
-};
-// Dialogs END
-
 
 // Compras BEGIN
 export const addCompraRow = row => {
@@ -40,12 +34,16 @@ export const addCompraRow = row => {
 export const delCompraRow = row => {
   return { type: "COMPRAS_REMOVE_ROW", row }
 };
-export const selCompraRow = row => {
-  return { type: "COMPRAS_SELECT_ROW", row }
-};
+export const setRowToDeleteCompra = row => {
+  return { type: "SET_TO_DELETE_COMPRAS", row }
+}
 // Compras END
 
 // Proveedores Actions BEGIN
+export const setRowToDeleteProveedor = row => {
+  return { type: "SET_TO_DELETE_PROVEEDOR", row }
+}
+
 export const setSelectedProveedor = proveedor => {
   return { type: "SET_SELECTED_PROVEEDOR", proveedor }
 }
@@ -93,6 +91,10 @@ export const removeProveedorRow = row => {
 // Materiales Actions BEGIN
 export const setSelectedMaterial = material => {
   return { type: "SET_SELECTED_MATERIAL", material }
+}
+
+export const setRowToDeleteMaterial = row => {
+  return { type: "SET_TO_DELETE_MATERIAL", row }
 }
 
 export const fetchMateriales = (offset, pageSize, name) => async dispatch => {

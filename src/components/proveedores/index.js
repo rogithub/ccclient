@@ -16,8 +16,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelProveedor from '../dialogs/dlgConfirm';
 import TablePagination from '../forms/tblPagination';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import { setAppPagination, fetchProveedores, setAppTitle, showConfirm,
-  delProveedor, setSelectedProveedor, removeProveedorRow } from '../../actions';
+import { setAppPagination, fetchProveedores, setAppTitle, setRowToDeleteProveedor,
+  delProveedor, removeProveedorRow } from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -69,30 +69,27 @@ class TblProveedores extends React.Component {
     this.props.fetchProveedores((page * pageSize), pageSize, "");
   };
 
-  handleSelectRow = row => {
-    this.props.setSelectedProveedor(row);
-    this.props.showConfirm(true);
-  }
-
   handleDeleteRow = () => {
-    const row = this.props.selected;
+    const row = this.props.toDelete;
     this.props.delProveedor(row.idProveedor);
     this.props.removeProveedorRow(row);
   }
 
   render () {
-    const { classes, history, rows, totalRows } = this.props;
+    const { classes, history, rows, totalRows, setRowToDeleteProveedor } = this.props;
     const { page, pageSize } = this.props.pagination || { page: 0, pageSize: 5};
 
     return (
       <Paper className={classes.root}>
         <ConfirmDelProveedor
+          open={this.props.toDelete !== undefined}
           handleConfirm={this.handleDeleteRow}
+          handleCancel={() => setRowToDeleteProveedor()}
           title="¿Desea borrar éste proveedor?"
           confirmText="Borrar">
           <DialogContentText id="alert-dialog-description">
-            { this.props.selected ?
-              <b>{"[Folio: " + this.props.selected.idProveedor + "] " + this.props.selected.empresa}</b> :
+            { this.props.toDelete ?
+              <b>{"[Folio: " + this.props.toDelete.idProveedor + "] " + this.props.toDelete.empresa}</b> :
               null
             }
           </DialogContentText>
@@ -138,7 +135,7 @@ class TblProveedores extends React.Component {
                     <EditIcon fontSize="small" />
                   </IconButton>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => this.handleSelectRow(row) } >
+                  onClick={() => setRowToDeleteProveedor(row) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -169,8 +166,8 @@ const mapStateToProps = (state) => {
   return {
     rows: state.proveedores.rows || [],
     totalRows: state.proveedores.totalRows || 0,
-    pagination: state.app.pagination,
-    selected: state.proveedores.selected
+    pagination: state.app.pagination,  
+    toDelete: state.proveedores.toDelete,
   };
 }
 
@@ -179,9 +176,8 @@ TblProveedores = connect(mapStateToProps, {
   setAppTitle,
   setAppPagination,
   delProveedor,
-  showConfirm,
-  setSelectedProveedor,
-  removeProveedorRow
+  removeProveedorRow,
+  setRowToDeleteProveedor,
 }) (TblProveedores);
 
 export default TblProveedores;

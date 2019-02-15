@@ -4,29 +4,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { showConfirm } from '../../actions';
-import { connect } from 'react-redux';
 
 class DlgConfirmText extends React.Component {
 
-  handleCancel = () => {
-    const { handleCancel } = this.props;
-    if (handleCancel) {
-      handleCancel();
-    }
-    this.props.show(false);
-  };
-
-  handleConfirm = () => {
-    const { handleConfirm } = this.props;
-    if (handleConfirm) {
-      handleConfirm();
-    }
-    this.props.show(false);
-  };
-
   render() {
-    const { open, title, confirmText, cancelText } = this.props;
+    const { open, title, handleCancel, handleConfirm, confirmText, cancelText } = this.props;
     return (
       <div>
         <Dialog
@@ -39,10 +21,10 @@ class DlgConfirmText extends React.Component {
             {this.props.children}
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCancel} color="primary">
+            <Button onClick={handleCancel} color="primary">
               {cancelText || "Cancelar"}
             </Button>
-            <Button onClick={this.handleConfirm} color="primary" autoFocus>
+            <Button onClick={handleConfirm} color="primary" autoFocus>
               {confirmText || "Aceptar"}
             </Button>
           </DialogActions>
@@ -51,15 +33,5 @@ class DlgConfirmText extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    open: state.dialogs.showConfirm || false
-   };
-};
-
-DlgConfirmText = connect(mapStateToProps, {
-  show: showConfirm
-})(DlgConfirmText)
 
 export default DlgConfirmText;

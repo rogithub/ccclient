@@ -2,6 +2,10 @@
 
 export default (state = {}, action) => {
   switch (action.type) {
+    case 'SET_TO_DELETE_PROVEEDOR':
+      return Object.assign({}, state, {
+        toDelete: action.row
+      });
     case 'SET_SELECTED_PROVEEDOR':
       return Object.assign({}, state, {
         selected: action.proveedor
@@ -13,7 +17,8 @@ export default (state = {}, action) => {
       });
     case 'REMOVE_PROVEEDOR_ROW':
       return Object.assign({}, state, {
-        rows: state.rows.filter(it => it !== action.row)
+        rows: state.rows.filter(it => it !== action.row),
+        toDelete: undefined
       });
     case 'FETCH_ONE_PROVEEDORES':
       return Object.assign({}, state, {
