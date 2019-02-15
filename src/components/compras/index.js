@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
@@ -53,7 +54,8 @@ class Compras extends React.Component {
   }
 
   state = {
-    mode: "Main"
+    mode: "Main",
+    showDeleteDialog: false
   };
 
   componentWillUnmount= () => {
@@ -73,9 +75,18 @@ class Compras extends React.Component {
     this.props.setAppTitle("Compras");
   };
 
-  handleCompraCancel = () => {
-    this.setState({ mode: "Main" });
+  handleConfirmCancel = () => {
     this.props.setSelectedProveedor();
+    this.setState({ mode: "Main", showDeleteDialog: false });
+  };
+
+  handleCompraCancel = () => {
+    if (this.props.rows && this.props.rows.length > 0) {
+      this.setState({ showDeleteDialog: true });
+      return;
+    }
+
+    this.handleConfirmCancel();
   };
 
   renderButtons = () => {
@@ -155,11 +166,21 @@ class Compras extends React.Component {
     this.props.delCompraRow(row);
   }
 
+  getDelCompraDialogContent = () => {
+    const p = this.props.proveedor;
+    if (!p) return null
+
+    return (<DialogContentText>
+      {
+        p.empresa
+      }
+    </DialogContentText>);
+  }
   getDelRowDialogContent = () => {
     const r = this.props.toDelete;
     if (!r) return null
 
-    return (<DialogContentText id="alert-dialog-description">
+    return (<DialogContentText>
       {
         r.material ? this.getComposedName(r.material) : r.descripcion
       }
@@ -172,7 +193,7 @@ class Compras extends React.Component {
       iva,
       classes,
       rows,
-      setRowToDeleteCompra
+      setRowToDeleteCompra,
      } = this.props;
     return (
       <div>
@@ -183,6 +204,15 @@ class Compras extends React.Component {
           title="¿Desea borrar éste renglón?"
           confirmText="Borrar">
           {this.getDelRowDialogContent()}
+        </DialogConfirm>
+
+        <DialogConfirm
+          open={this.state.showDeleteDialog}
+          handleConfirm={this.handleConfirmCancel }
+          handleCancel={() => this.setState({ showDeleteDialog: false }) }
+          title="¿Desea cambiar éste proveedor?"
+          confirmText="Continuar">
+          {this.getDelCompraDialogContent()}
         </DialogConfirm>
         <Table>
           <TableHead>
@@ -245,10 +275,9 @@ class Compras extends React.Component {
         </Table>
         <div className={classes.alignRight}>
           <Button variant="contained" size="small" className={classes.button}
-            color="secondary"
             onClick={() => this.handleCompraCancel() } >
-            <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-            Cancelar
+            <NavigateBefore className={classNames(classes.leftIcon, classes.iconSmall)} />
+            Cambiar Proveedor
           </Button>
           <Button variant="contained" size="small" className={classes.button}
             color="primary"
