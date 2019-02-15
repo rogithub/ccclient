@@ -126,7 +126,7 @@ AddServicio = connect(mapStateToProps, {
 }) (AddServicio);
 
 AddServicio = reduxForm({
-  form: 'frmAddMaterialNuevo',
+  form: 'frmAddServicio',
   validate,
   enableReinitialize: true
 })(AddServicio);
