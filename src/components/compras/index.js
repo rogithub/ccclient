@@ -47,12 +47,18 @@ class Compras extends React.Component {
   }
 
   state = {
-    mode: "Normal"
+    mode: "Normal",
+    iva: 16.00
   };
 
-  componentWillUnmount() {
+  componentWillUnmount= () => {
     this.props.setAppTitle();
-  }
+  };
+
+  handleIvaChange= (e) => {
+    this.setState({ iva: e.target.value });
+  };
+
   handleFormCancel = () => {
     this.setState({ mode: "Normal" });
   };
@@ -125,7 +131,19 @@ class Compras extends React.Component {
     if (!rows) return 0;
     const reducer = (acc, r) => acc + (r.cantidad * r.precio);
     return rows.reduce( reducer, 0 );
+  };
+
+  getSubtotalMasIVA = (rows, iva) => {
+    return this.getSubtotal(rows)*(iva/100);
+  };
+
+  getTotal = (rows, iva) => {
+    return this.getSubtotal(rows)*(1 + (iva/100));
   }
+
+  isValidIVA = () => {
+    return !this.state.iva || isNaN(this.state.iva);
+  };
 
   rendertable = () => {
     const {
@@ -185,15 +203,18 @@ class Compras extends React.Component {
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">
-                <TextField label="% de IVA" value="16.0" />
+                <TextField label="% de IVA"
+                error={this.isValidIVA()}
+                value={this.state.iva}
+                onChange={this.handleIvaChange} />
               </TableCell>
-              <TableCell align="right">$0.00</TableCell>
+              <TableCell align="right">$ {this.getSubtotalMasIVA(rows, this.state.iva)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">Total</TableCell>
-              <TableCell align="right">$0.00</TableCell>
+              <TableCell align="right">$ {this.getTotal(rows, this.state.iva)}</TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
