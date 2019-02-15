@@ -129,6 +129,8 @@ class Compras extends React.Component {
 
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
+  formatCurrency = (number) => `$ ${number.toFixed(2)}`
+
   getSubtotal = (rows, reducer) => {
     if (!rows) return 0;
     return rows.reduce( reducer, 0 );
@@ -184,8 +186,8 @@ class Compras extends React.Component {
                   { r.material ? r.material.unidad: "Servicio" }
                 </TableCell>
                 <TableCell>{r.cantidad}</TableCell>
-                <TableCell>$ {r.precio.toFixed(2)}</TableCell>
-                <TableCell>$ {(r.cantidad * r.precio).toFixed(2)}</TableCell>
+                <TableCell>{this.formatCurrency(r.precio)}</TableCell>
+                <TableCell>{this.formatCurrency(r.cantidad * r.precio)}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
                   onClick={() => delCompraRow(r) } >
@@ -198,7 +200,7 @@ class Compras extends React.Component {
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">Subtotal</TableCell>
-              <TableCell align="right">$ {this.getSubtotal(rows, this.subtotalReducer).toFixed(2)}</TableCell>
+              <TableCell align="right">{this.formatCurrency(this.getSubtotal(rows, this.subtotalReducer))}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
@@ -209,13 +211,13 @@ class Compras extends React.Component {
                 value={this.state.iva}
                 onChange={this.handleIvaChange} />
               </TableCell>
-              <TableCell align="right">$ {this.getSubtotalMasIVA(rows, this.state.iva, this.subtotalReducer).toFixed(2)}</TableCell>
+              <TableCell align="right">{this.formatCurrency(this.getSubtotalMasIVA(rows, this.state.iva, this.subtotalReducer))}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">Total</TableCell>
-              <TableCell align="right">$ {this.getTotal(rows, this.state.iva, this.subtotalReducer).toFixed(2)}</TableCell>
+              <TableCell align="right">{this.formatCurrency(this.getTotal(rows, this.state.iva, this.subtotalReducer))}</TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
