@@ -127,18 +127,19 @@ class Compras extends React.Component {
     }
   };
 
-  getSubtotal = (rows) => {
+  subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
+
+  getSubtotal = (rows, reducer) => {
     if (!rows) return 0;
-    const reducer = (acc, r) => acc + (r.cantidad * r.precio);
     return rows.reduce( reducer, 0 );
   };
 
-  getSubtotalMasIVA = (rows, iva) => {
-    return this.getSubtotal(rows)*(iva/100);
+  getSubtotalMasIVA = (rows, iva, subtotalReducer) => {
+    return this.getSubtotal(rows, subtotalReducer)*(iva/100);
   };
 
-  getTotal = (rows, iva) => {
-    return this.getSubtotal(rows)*(1 + (iva/100));
+  getTotal = (rows, iva, subtotalReducer) => {
+    return this.getSubtotal(rows, subtotalReducer)*(1 + (iva/100));
   }
 
   isValidIVA = () => {
@@ -197,7 +198,7 @@ class Compras extends React.Component {
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">Subtotal</TableCell>
-              <TableCell align="right">$ {this.getSubtotal(rows).toFixed(2)}</TableCell>
+              <TableCell align="right">$ {this.getSubtotal(rows, this.subtotalReducer).toFixed(2)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
@@ -208,13 +209,13 @@ class Compras extends React.Component {
                 value={this.state.iva}
                 onChange={this.handleIvaChange} />
               </TableCell>
-              <TableCell align="right">$ {this.getSubtotalMasIVA(rows, this.state.iva)}</TableCell>
+              <TableCell align="right">$ {this.getSubtotalMasIVA(rows, this.state.iva, this.subtotalReducer).toFixed(2)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">Total</TableCell>
-              <TableCell align="right">$ {this.getTotal(rows, this.state.iva)}</TableCell>
+              <TableCell align="right">$ {this.getTotal(rows, this.state.iva, this.subtotalReducer).toFixed(2)}</TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
