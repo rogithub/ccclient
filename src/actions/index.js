@@ -40,7 +40,9 @@ export const addCompraRow = row => {
 export const delCompraRow = row => {
   return { type: "COMPRAS_REMOVE_ROW", row }
 };
-
+export const selCompraRow = row => {
+  return { type: "COMPRAS_SELECT_ROW", row }
+};
 // Compras END
 
 // Proveedores Actions BEGIN

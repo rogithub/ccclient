@@ -19,7 +19,9 @@ import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 import Typography from '@material-ui/core/Typography';
-import { setAppTitle, addCompraRow, delCompraRow, setSelectedProveedor } from '../../actions';
+import DialogConfirm from '../dialogs/dlgConfirm';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import { setAppTitle, addCompraRow, delCompraRow, selCompraRow, showConfirm, setSelectedProveedor } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
 
 const styles = theme => ({
@@ -144,15 +146,47 @@ class Compras extends React.Component {
 
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
+  handleSave = () => {
+    alert("Guardar al server!");
+  };
+
+  handleSelectRow = row => {
+    this.props.selCompraRow(row);
+    this.props.showConfirm(true);
+  };
+
+  handleDeleteRow = () => {
+    const row = this.props.selected;
+    this.props.delCompraRow(row);
+    this.props.selCompraRow();
+  }
+
+  getDelRowDialogContent = () => {    
+    const r = this.props.selected;
+    if (!r) return null
+
+    return (<DialogContentText id="alert-dialog-description">
+      {
+        r.material ? this.getComposedName(r.material) : r.descripcion
+      }
+    </DialogContentText>);
+  }
+
   renderTable = () => {
     if (this.state.mode !== "Main") return null;
     const {
       iva,
       classes,
-      delCompraRow,
-      rows } = this.props;
+      rows
+     } = this.props;
     return (
       <div>
+        <DialogConfirm
+          handleConfirm={this.handleDeleteRow}
+          title="¿Desea borrar éste renglón?"
+          confirmText="Borrar">
+          {this.getDelRowDialogContent()}
+        </DialogConfirm>
         <Table>
           <TableHead>
             <TableRow>
@@ -183,7 +217,7 @@ class Compras extends React.Component {
                 <TableCell className={classes.alignRight}>{formatCurrency(r.cantidad * r.precio)}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
-                  onClick={() => delCompraRow(r) } >
+                  onClick={() => this.handleSelectRow(r) } >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -221,7 +255,7 @@ class Compras extends React.Component {
           </Button>
           <Button variant="contained" size="small" className={classes.button}
             color="primary"
-            onClick={() => this.handleCompraCancel() } >
+            onClick={() => this.handleSave() } >
             <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
             Guardar
           </Button>
@@ -243,7 +277,7 @@ class Compras extends React.Component {
     return (
       <div>
         <Typography gutterBottom variant="title">
-          {this.props.selected.empresa}
+          {this.props.proveedor.empresa}
         </Typography>
         { this.renderEditArea() }
         { this.renderTable() }
@@ -256,7 +290,7 @@ class Compras extends React.Component {
     return (
       <div>
         <Paper className={classes.root}>
-            { this.props.selected ?
+            { this.props.proveedor ?
               this.renderMainArea() :
               this.renderSelectProveedor()
             }
@@ -276,8 +310,8 @@ const mapStateToProps = (state) => {
   return {
     iva: state.app.iva,
     rows: state.compras.rows || [],
-    compra: state.compras.compra,
-    selected: state.proveedores.selected
+    selected: state.compras.selected,
+    proveedor: state.proveedores.selected,
   };
 }
 
@@ -285,7 +319,9 @@ Compras = connect(mapStateToProps, {
   setAppTitle,
   addCompraRow,
   delCompraRow,
+  selCompraRow,
   setSelectedProveedor,
+  showConfirm,
 }) (Compras);
 
 export default Compras;
