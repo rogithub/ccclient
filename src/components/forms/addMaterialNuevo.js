@@ -44,8 +44,8 @@ class AddMaterialNuevo extends React.Component {
   onSubmit = formValues => {
     if (this.props.onSave) {
       this.props.onSave({
-        cantidad: formValues.cantidad,
-        precio: formValues.cantidad,
+        cantidad: parseFloat(formValues.cantidad),
+        precio: parseFloat(formValues.precio),
         material: {
           idMaterial:0,
           activo:true,

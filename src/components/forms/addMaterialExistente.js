@@ -45,8 +45,8 @@ class AddMaterialExistente extends React.Component {
     const m = this.props.material;
     if (this.props.onSave) {
       this.props.onSave({
-        cantidad: formValues.cantidad,
-        precio: formValues.cantidad,
+        cantidad: parseFloat(formValues.cantidad),
+        precio: parseFloat(formValues.precio),
         material: m
       });
     }

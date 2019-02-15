@@ -18,6 +18,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 import { setAppTitle, addCompraRow, delCompraRow, setSelectedProveedor } from '../../actions';
 const styles = theme => ({
@@ -120,6 +121,12 @@ class Compras extends React.Component {
     }
   };
 
+  getSubtotal = (rows) => {
+    if (!rows) return 0;
+    const reducer = (acc, r) => acc + (r.cantidad * r.precio);
+    return rows.reduce( reducer, 0 );
+  }
+
   rendertable = () => {
     const {
       classes,
@@ -158,8 +165,8 @@ class Compras extends React.Component {
                   { r.material ? r.material.unidad: "Servicio" }
                 </TableCell>
                 <TableCell>{r.cantidad}</TableCell>
-                <TableCell>{r.precio}</TableCell>
-                <TableCell>{r.cantidad * r.precio}</TableCell>
+                <TableCell>$ {r.precio.toFixed(2)}</TableCell>
+                <TableCell>$ {(r.cantidad * r.precio).toFixed(2)}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
                   onClick={() => delCompraRow(r) } >
@@ -169,6 +176,26 @@ class Compras extends React.Component {
               </TableRow>
             );
           })}
+            <TableRow>
+              <TableCell colSpan={4} />
+              <TableCell align="right">Subtotal</TableCell>
+              <TableCell align="right">$ {this.getSubtotal(rows).toFixed(2)}</TableCell>
+              <TableCell />
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={4} />
+              <TableCell align="right">
+                <TextField label="% de IVA" value="16.0" />
+              </TableCell>
+              <TableCell align="right">$0.00</TableCell>
+              <TableCell />
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={4} />
+              <TableCell align="right">Total</TableCell>
+              <TableCell align="right">$0.00</TableCell>
+              <TableCell />
+            </TableRow>
           </TableBody>
         </Table>
       </div>
