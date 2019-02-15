@@ -142,8 +142,8 @@ class Compras extends React.Component {
     return this.getSubtotal(rows, subtotalReducer)*(1 + (iva/100));
   }
 
-  isValidIVA = () => {
-    return !this.state.iva || isNaN(this.state.iva);
+  isValidIVA = (iva) => {
+    return !iva || isNaN(iva);
   };
 
   rendertable = () => {
@@ -205,7 +205,7 @@ class Compras extends React.Component {
               <TableCell colSpan={4} />
               <TableCell align="right">
                 <TextField label="% de IVA"
-                error={this.isValidIVA()}
+                error={this.isValidIVA(this.state.iva)}
                 value={this.state.iva}
                 onChange={this.handleIvaChange} />
               </TableCell>
