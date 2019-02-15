@@ -277,7 +277,7 @@ class Compras extends React.Component {
           <Button variant="contained" size="small" className={classes.button}
             onClick={() => this.handleCompraCancel() } >
             <NavigateBefore className={classNames(classes.leftIcon, classes.iconSmall)} />
-            Cambiar Proveedor
+            Regresar
           </Button>
           <Button variant="contained" size="small" className={classes.button}
             color="primary"
