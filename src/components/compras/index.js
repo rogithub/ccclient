@@ -55,7 +55,8 @@ class Compras extends React.Component {
 
   state = {
     mode: "Main",
-    showDeleteDialog: false
+    showDeleteDialog: false,
+    showCancelCompraDialog: false
   };
 
   componentWillUnmount= () => {
@@ -75,18 +76,36 @@ class Compras extends React.Component {
     this.props.setAppTitle("Compras");
   };
 
-  handleConfirmCancel = () => {
+  handleConfirmChangeProveedor = () => {
     this.props.setSelectedProveedor();
     this.setState({ mode: "Main", showDeleteDialog: false });
   };
 
+  handleConfirmCompraCancell = () => {
+    this.setState({ showCancelCompraDialog: false });
+    alert("Cancelling...");
+  }
+
   handleCompraCancel = () => {
-    if (this.props.rows && this.props.rows.length > 0) {
+    if (this.hasRows()) {
+      this.setState({ showCancelCompraDialog: true });
+      return;
+    }
+
+    this.handleConfirmCompraCancell();
+  };
+
+  hasRows = () => {
+    return this.props.rows && this.props.rows.length > 0;
+  }
+
+  handleChangeProveedor = () => {
+    if (this.hasRows()) {
       this.setState({ showDeleteDialog: true });
       return;
     }
 
-    this.handleConfirmCancel();
+    this.handleConfirmChangeProveedor();
   };
 
   renderButtons = () => {
@@ -166,6 +185,12 @@ class Compras extends React.Component {
     this.props.delCompraRow(row);
   }
 
+  getCancelCompraDialogContent = () => {
+    return (<DialogContentText>
+      Se perderán todas las filas capturadas
+    </DialogContentText>);
+  };
+
   getDelCompraDialogContent = () => {
     const p = this.props.proveedor;
     if (!p) return null
@@ -175,7 +200,7 @@ class Compras extends React.Component {
         p.empresa
       }
     </DialogContentText>);
-  }
+  };
   getDelRowDialogContent = () => {
     const r = this.props.toDelete;
     if (!r) return null
@@ -185,7 +210,7 @@ class Compras extends React.Component {
         r.material ? this.getComposedName(r.material) : r.descripcion
       }
     </DialogContentText>);
-  }
+  };
 
   renderTable = () => {
     if (this.state.mode !== "Main") return null;
@@ -208,7 +233,7 @@ class Compras extends React.Component {
 
         <DialogConfirm
           open={this.state.showDeleteDialog}
-          handleConfirm={this.handleConfirmCancel }
+          handleConfirm={this.handleConfirmChangeProveedor }
           handleCancel={() => this.setState({ showDeleteDialog: false }) }
           title="¿Desea cambiar éste proveedor?"
           confirmText="Continuar">
@@ -275,7 +300,7 @@ class Compras extends React.Component {
         </Table>
         <div className={classes.alignRight}>
           <Button variant="contained" size="small" className={classes.button}
-            onClick={() => this.handleCompraCancel() } >
+            onClick={() => this.handleChangeProveedor() } >
             <NavigateBefore className={classNames(classes.leftIcon, classes.iconSmall)} />
             Regresar
           </Button>
@@ -291,11 +316,44 @@ class Compras extends React.Component {
   }
 
   renderSelectProveedor = () => {
+    const {
+      classes,
+     } = this.props;
+
     return this.renderWithTitle("Seleccionar Proveedor",
+    <div>
+      <DialogConfirm
+        open={this.state.showCancelCompraDialog}
+        handleConfirm={this.handleConfirmCompraCancell }
+        handleCancel={() => this.setState({ showCancelCompraDialog: false }) }
+        title="¿Desea cancalar la compra?"
+        cancelText="No"
+        confirmText="Sí">
+        {this.getCancelCompraDialogContent()}
+      </DialogConfirm>
       <ProveedoresSelector
         componentProps={{
           placeholder: "Escriba aquí para comenzar a buscar..."
       }} />
+      <div className={classes.alignRight}>
+      {
+        this.hasRows() ?
+        <Button variant="contained" size="small" className={classes.button}
+          color="secondary"
+          onClick={() => this.handleCompraCancel() } >
+          <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Cancelar
+        </Button>
+        : // note ternary operator hasRows
+        <Button variant="contained" size="small" className={classes.button}
+          color="primary"
+          onClick={() => this.handleCompraCancel() } >
+          <NavigateBefore className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Cancelar
+        </Button>
+      }
+      </div>
+    </div>
     );
   };
 
