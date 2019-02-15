@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Inicio from './inicio';
+import { connect } from 'react-redux';
 import Proveedores from './proveedores';
 import EditProveedor from './proveedores/editProveedor';
 import NewProveedor from './proveedores/newProveedor';
@@ -9,8 +10,13 @@ import NewMaterial from './materiales/newMaterial';
 import { Header, Footer } from './layout';
 import { BrowserRouter, Route } from "react-router-dom";
 import Compras from './compras';
+import { setAppIVA } from "../actions";
 
-export default class extends Component {
+class App extends Component {
+  componentDidMount = () => {
+    this.props.setAppIVA(16);
+  };
+
   render() {
     return (
       <BrowserRouter>
@@ -32,3 +38,14 @@ export default class extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {    
+  };
+}
+
+App = connect(mapStateToProps, {
+  setAppIVA,
+}) (App);
+
+export default App;

@@ -18,9 +18,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-
 import { setAppTitle, addCompraRow, delCompraRow, setSelectedProveedor } from '../../actions';
+import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -47,16 +47,11 @@ class Compras extends React.Component {
   }
 
   state = {
-    mode: "Normal",
-    iva: 16.00
+    mode: "Normal"
   };
 
   componentWillUnmount= () => {
     this.props.setAppTitle();
-  };
-
-  handleIvaChange= (e) => {
-    this.setState({ iva: e.target.value });
   };
 
   handleFormCancel = () => {
@@ -129,27 +124,9 @@ class Compras extends React.Component {
 
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
-  formatCurrency = (number) => `$ ${number.toFixed(2)}`
-
-  getSubtotal = (rows, reducer) => {
-    if (!rows) return 0;
-    return rows.reduce( reducer, 0 );
-  };
-
-  getSubtotalMasIVA = (rows, iva, subtotalReducer) => {
-    return this.getSubtotal(rows, subtotalReducer)*(iva/100);
-  };
-
-  getTotal = (rows, iva, subtotalReducer) => {
-    return this.getSubtotal(rows, subtotalReducer)*(1 + (iva/100));
-  }
-
-  isValidIVA = (iva) => {
-    return !iva || isNaN(iva);
-  };
-
   rendertable = () => {
     const {
+      iva,
       classes,
       delCompraRow,
       rows } = this.props;
@@ -186,8 +163,8 @@ class Compras extends React.Component {
                   { r.material ? r.material.unidad: "Servicio" }
                 </TableCell>
                 <TableCell>{r.cantidad}</TableCell>
-                <TableCell>{this.formatCurrency(r.precio)}</TableCell>
-                <TableCell>{this.formatCurrency(r.cantidad * r.precio)}</TableCell>
+                <TableCell>{formatCurrency(r.precio)}</TableCell>
+                <TableCell>{formatCurrency(r.cantidad * r.precio)}</TableCell>
                 <TableCell>
                   <IconButton aria-label="Delete" className={classes.margin}
                   onClick={() => delCompraRow(r) } >
@@ -200,24 +177,21 @@ class Compras extends React.Component {
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">Subtotal</TableCell>
-              <TableCell align="right">{this.formatCurrency(this.getSubtotal(rows, this.subtotalReducer))}</TableCell>
+              <TableCell align="right">{getSubtotalCurr(rows, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">
-                <TextField label="% de IVA"
-                error={this.isValidIVA(this.state.iva)}
-                value={this.state.iva}
-                onChange={this.handleIvaChange} />
+                $ {iva}
               </TableCell>
-              <TableCell align="right">{this.formatCurrency(this.getSubtotalMasIVA(rows, this.state.iva, this.subtotalReducer))}</TableCell>
+              <TableCell align="right">{getSubtotalMasIVACurr(rows, iva, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell align="right">Total</TableCell>
-              <TableCell align="right">{this.formatCurrency(this.getTotal(rows, this.state.iva, this.subtotalReducer))}</TableCell>
+              <TableCell align="right">{getTotalCurr(rows, iva, this.subtotalReducer)}</TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
@@ -252,6 +226,7 @@ Compras = withStyles(styles)(Compras);
 
 const mapStateToProps = (state) => {
   return {
+    iva: state.app.iva,
     rows: state.compras.rows || [],
     compra: state.compras.compra,
     selected: state.proveedores.selected

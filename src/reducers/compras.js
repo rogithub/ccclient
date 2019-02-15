@@ -1,7 +1,5 @@
 // Compras reducers
-
-export default (state = {}, action) => {
-
+export default (state = {}, action) => {  
   switch (action.type) {
     case 'COMPRAS_ADD_ROW':
       return Object.assign({}, state, {

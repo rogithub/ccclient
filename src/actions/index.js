@@ -17,6 +17,10 @@ export const setAppTitle = title => {
   return { type: "SET_APP_TITLE", title }
 }
 
+export const setAppIVA = iva => {
+  return { type: "SET_APP_IVA", iva }
+}
+
 export const setAppPagination = pagination => {
   return { type: "SET_APP_PAGINATION", pagination }
 };
