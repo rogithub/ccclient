@@ -192,7 +192,8 @@ class Compras extends React.Component {
 
   handleSave = () => {
     const data = {
-      idProveedor: this.props.proveedor.idProveedor,
+      idCompra: 0,
+      proveedorId: this.props.proveedor.idProveedor,
       rows: this.props.rows,
       iva: this.getIva()
     }
