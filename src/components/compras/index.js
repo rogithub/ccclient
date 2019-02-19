@@ -23,6 +23,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import Typography from '@material-ui/core/Typography';
 import DialogConfirm from '../dialogs/dlgConfirm';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor, resetCompra, } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
 
@@ -57,10 +59,20 @@ class Compras extends React.Component {
   state = {
     mode: "Main",
     showDeleteDialog: false,
-    showCancelCompraDialog: false
+    showCancelCompraDialog: false,
+    ivaCobrado: true
   };
 
-  componentWillUnmount= () => {
+  getIva = () => {
+    return this.state.ivaCobrado === true ?
+      this.props.iva : 0;
+  };
+
+  handleIvaChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
+  componentWillUnmount = () => {
     this.props.setAppTitle();
   };
 
@@ -179,7 +191,12 @@ class Compras extends React.Component {
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
   handleSave = () => {
-    alert("Guardar al server!");
+    const data = {
+      idProveedor: this.props.proveedor.idProveedor,
+      rows: this.props.rows,
+      iva: this.getIva()
+    }
+    alert(JSON.stringify(data));
   };
 
   handleDeleteRow = () => {
@@ -216,8 +233,8 @@ class Compras extends React.Component {
 
   renderTable = () => {
     if (this.state.mode !== "Main") return null;
+    const iva = this.getIva();
     const {
-      iva,
       classes,
       rows,
       setRowToDeleteCompra,
@@ -287,6 +304,16 @@ class Compras extends React.Component {
             <TableRow>
               <TableCell colSpan={4} />
               <TableCell className={classes.alignRight}>
+              <FormControlLabel
+                  control={
+                    <Switch
+                      checked={this.state.ivaCobrado}
+                      onChange={this.handleIvaChange('ivaCobrado')}
+                      value="ivaCobrado"
+                    />
+                  }
+                  label="Iva Cobrado"
+                />
                 IVA {iva}%
               </TableCell>
               <TableCell className={classes.alignRight}>{getSubtotalMasIVACurr(rows, iva, this.subtotalReducer)}</TableCell>
@@ -347,7 +374,7 @@ class Compras extends React.Component {
           Cancelar
         </Button>
         : // note ternary operator hasRows
-        <Button variant="contained" size="small" className={classes.button}          
+        <Button variant="contained" size="small" className={classes.button}
           onClick={() => this.handleCompraCancel() } >
           <NavigateBefore className={classNames(classes.leftIcon, classes.iconSmall)} />
           Cancelar

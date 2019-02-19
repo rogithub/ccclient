@@ -44,9 +44,10 @@ class AddServicio extends React.Component {
   onSubmit = formValues => {
     if (this.props.onSave) {
       this.props.onSave({
+        idServicio: 0,
+        descripcion: formValues.descripcion,
         cantidad: parseFloat(formValues.cantidad),
         precio: parseFloat(formValues.precio),
-        descripcion: formValues.descripcion
       });
     }
   };
