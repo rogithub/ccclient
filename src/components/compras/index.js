@@ -25,8 +25,11 @@ import DialogConfirm from '../dialogs/dlgConfirm';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
+
 import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor, resetCompra, } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
+import { datePickerToday } from '../services/dates';
 
 const styles = theme => ({
   root: {
@@ -60,7 +63,8 @@ class Compras extends React.Component {
     mode: "Main",
     showDeleteDialog: false,
     showCancelCompraDialog: false,
-    ivaCobrado: true
+    ivaCobrado: true,
+    date: ''
   };
 
   getIva = () => {
@@ -70,6 +74,10 @@ class Compras extends React.Component {
 
   handleIvaChange = name => event => {
     this.setState({ [name]: event.target.checked });
+  };
+
+  handleDateChange = event => {
+    this.setState({ fecha: event.target.value });
   };
 
   componentWillUnmount = () => {
@@ -87,6 +95,8 @@ class Compras extends React.Component {
 
   componentDidMount = () => {
     this.props.setAppTitle("Compras");
+    const fecha = datePickerToday();
+    this.setState({ fecha });
   };
 
   handleConfirmChangeProveedor = () => {
@@ -191,12 +201,15 @@ class Compras extends React.Component {
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
   handleSave = () => {
+    const fecha =  Date.parse(this.state.fecha);
     const data = {
       idCompra: 0,
       proveedorId: this.props.proveedor.idProveedor,
       rows: this.props.rows,
-      iva: this.getIva()
-    }
+      iva: this.getIva(),
+      activo: true,
+      fecha
+    }    
     alert(JSON.stringify(data));
   };
 
@@ -234,6 +247,8 @@ class Compras extends React.Component {
 
   renderTable = () => {
     if (this.state.mode !== "Main") return null;
+    const fecha = this.state.fecha;
+
     const iva = this.getIva();
     const {
       classes,
@@ -242,6 +257,19 @@ class Compras extends React.Component {
      } = this.props;
     return (
       <div>
+
+        <div className={classes.alignRight}>
+          <TextField type="date"
+            label="Fecha"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            defaultValue={fecha}
+            onChange={this.handleDateChange}
+          />
+        </div>
+
+
         <DialogConfirm
           open={this.props.toDelete !== undefined}
           handleConfirm={this.handleDeleteRow}
