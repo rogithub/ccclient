@@ -40,6 +40,12 @@ export const setRowToDeleteCompra = row => {
 export const resetCompra = () => {
   return { type: "RESET_COMPRAS" }
 }
+export const saveCompra = data => async dispatch => {
+  runPromise(dispatch,
+    "SAVE_ONE_COMPRA",
+    api.post(`/compras`, data));
+};
+
 // Compras END
 
 // Proveedores Actions BEGIN

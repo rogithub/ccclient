@@ -10,7 +10,14 @@ export const datePickerToday = () => {
 
   if (mm < 10) {
     mm = '0' + mm;
-  }  
+  }
   //defaultValue="2017-05-24"
   return yyyy + '-' + mm + '-' + dd;
 };
+
+
+// dateStr="yyyy-mm-dd"
+export const toDotNetTime = (dateStr) => {
+  const fecha =  Date.parse(dateStr);
+  return "/Date("+fecha+")/";
+}

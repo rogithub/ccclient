@@ -27,9 +27,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
-import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor, resetCompra, } from '../../actions';
+import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor, resetCompra, saveCompra } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
-import { datePickerToday } from '../services/dates';
+import { datePickerToday, toDotNetTime } from '../services/dates';
 
 const styles = theme => ({
   root: {
@@ -201,16 +201,15 @@ class Compras extends React.Component {
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
   handleSave = () => {
-    const fecha =  Date.parse(this.state.fecha);
     const data = {
+      activo: true,
       idCompra: 0,
       proveedorId: this.props.proveedor.idProveedor,
-      rows: this.props.rows,
+      fecha: toDotNetTime(this.state.fecha),
       iva: this.getIva(),
-      activo: true,
-      fecha
-    }    
-    alert(JSON.stringify(data));
+      rows: this.props.rows
+    }
+    this.props.saveCompra(data);
   };
 
   handleDeleteRow = () => {
@@ -464,7 +463,8 @@ Compras = connect(mapStateToProps, {
   delCompraRow,
   setRowToDeleteCompra,
   setSelectedProveedor,
-  resetCompra
+  resetCompra,
+  saveCompra
 }) (Compras);
 
 export default Compras;
