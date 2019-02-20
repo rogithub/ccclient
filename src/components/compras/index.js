@@ -207,7 +207,9 @@ class Compras extends React.Component {
       proveedorId: this.props.proveedor.idProveedor,
       fecha: toDotNetTime(this.state.fecha),
       iva: this.getIva(),
-      rows: this.props.rows
+      materialesNuevo: this.props.rows.filter(r => r.material && r.material.idMaterial === 0),
+      materialesExistente: this.props.rows.filter(r => r.material && r.material.idMaterial > 0),
+      servicios: this.props.rows.filter(r => r.idServicio === 0),
     }
     this.props.saveCompra(data);
   };
