@@ -7,6 +7,7 @@ import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
 import { Field, reduxForm } from "redux-form";
+import id4 from 'uuid/v4';
 
 const styles = theme => ({
   container: {
@@ -44,7 +45,8 @@ class AddServicio extends React.Component {
   onSubmit = formValues => {
     if (this.props.onSave) {
       this.props.onSave({
-        idServicio: 0,
+        idCompraServicio: 0,
+        guidCompraServicio: id4(),  
         descripcion: formValues.descripcion,
         cantidad: parseFloat(formValues.cantidad),
         precio: parseFloat(formValues.precio),

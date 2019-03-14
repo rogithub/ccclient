@@ -7,6 +7,7 @@ import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
 import { Field, reduxForm } from "redux-form";
+import id4 from "uuid/v4";
 
 const styles = theme => ({
   container: {
@@ -48,6 +49,7 @@ class AddMaterialNuevo extends React.Component {
         precio: parseFloat(formValues.precio),
         material: {
           idMaterial:0,
+	  guidMaterial: id4(),
           activo:true,
           nombre: formValues.nombre,
           color: formValues.color,
