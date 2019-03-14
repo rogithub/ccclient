@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import Save from '@material-ui/icons/Save';
+import id4 from 'uuid/v4';
 
 const styles = theme => ({
   container: {
@@ -45,6 +46,7 @@ class NewMaterial extends React.Component {
   onSubmit = formValues => {
     var postData = Object.assign({}, formValues, {
       idMaterial: 0,
+      guidMaterial: id4(),
       activo: true
     });
     var promise = this.props.save(postData);
