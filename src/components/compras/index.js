@@ -201,21 +201,20 @@ class Compras extends React.Component {
 
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
-    handleSave = () => {
-        
-    const data = {
-      activo: true,
-      idCompra: 0,
-      guidCompra: id4(),
-      guidProveedor: this.props.proveedor.guidProveedor,
-      fecha: toDotNetTime(this.state.fecha),
-      iva: this.getIva(),
-      materialesNuevo: this.props.rows.filter(r => r.material && r.material.idMaterial === 0),
-      materialesExistente: this.props.rows.filter(r => r.material && r.material.idMaterial > 0),
-      servicios: this.props.rows.filter(r => r.idCompraServicio === 0),
-    }
-    this.props.saveCompra(data);
-  };
+    handleSave = () => {        
+	const data = {
+	    activo: true,
+	    idCompra: 0,
+	    guidCompra: id4(),
+	    guidProveedor: this.props.proveedor.guidProveedor,
+	    fecha: toDotNetTime(this.state.fecha),
+	    iva: this.getIva(),
+	    materialesNuevo: this.props.rows.filter(r => r.material && r.material.idMaterial === 0),
+	    materialesExistente: this.props.rows.filter(r => r.material && r.material.idMaterial > 0),
+	    servicios: this.props.rows.filter(r => r.idCompraServicio === 0),
+	}
+	this.props.saveCompra(data); 
+    };
 
   handleDeleteRow = () => {
     const row = this.props.toDelete;
