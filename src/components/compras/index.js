@@ -26,6 +26,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import id4 from 'uuid/v4';
 
 import { setAppTitle, addCompraRow, delCompraRow, setRowToDeleteCompra, setSelectedProveedor, resetCompra, saveCompra } from '../../actions';
 import { formatCurrency, getSubtotalCurr, getSubtotalMasIVACurr, getTotalCurr } from '../services/sumatorias';
@@ -200,16 +201,18 @@ class Compras extends React.Component {
 
   subtotalReducer = (acc, r) => acc + (r.cantidad * r.precio);
 
-  handleSave = () => {
+    handleSave = () => {
+        
     const data = {
       activo: true,
       idCompra: 0,
-      proveedorId: this.props.proveedor.idProveedor,
+      guidCompra: id4(),
+      guidProveedor: this.props.proveedor.guidProveedor,
       fecha: toDotNetTime(this.state.fecha),
       iva: this.getIva(),
       materialesNuevo: this.props.rows.filter(r => r.material && r.material.idMaterial === 0),
       materialesExistente: this.props.rows.filter(r => r.material && r.material.idMaterial > 0),
-      servicios: this.props.rows.filter(r => r.idServicio === 0),
+      servicios: this.props.rows.filter(r => r.idCompraServicio === 0),
     }
     this.props.saveCompra(data);
   };
