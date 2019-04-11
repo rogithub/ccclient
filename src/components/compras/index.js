@@ -307,7 +307,7 @@ class Compras extends React.Component {
             return (
               <TableRow hover key={rows.indexOf(r)}>
                 <TableCell numeric>
-                  { r.material ? r.material.idMaterial : rows.indexOf(r) }
+                  { r.material ? r.material.idMaterial : 0 }
                 </TableCell>
                 <TableCell>
                   { r.material ? this.getComposedName(r.material) : r.descripcion }
