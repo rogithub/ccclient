@@ -238,7 +238,7 @@ class Compras extends React.Component {
 		    precio: x.precio
 		}
 	    }),
-	    servicios: this.props.rows.map ( s => {
+	    servicios: this.props.rows.filter(r => r.idCompraServicio === 0).map (s => {
 		return {		  
 		    idCompraServicio: s.idCompraServicio,
 		    guidCompraServicio: s.guidCompraServicio,
