@@ -210,8 +210,8 @@ class Compras extends React.Component {
 		guidCompra: guidCompra,
 		proveedorId: this.props.proveedor.guidProveedor,
 		fecha: toDotNetTime(this.state.fecha),
-		docIdFacturaPdf: "",
-		docIdFacturaXml: "",
+		//docIdFacturaPdf: "", not sending this
+		//docIdFacturaXml: "", not sending this
 		iva: this.getIva(),
 		activo: true,
 	    },
